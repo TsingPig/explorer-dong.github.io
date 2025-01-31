@@ -1493,7 +1493,7 @@
         
   
   <span class="md-ellipsis">
-    matplotlib 入门指南
+    matplotlib 基础
     
   </span>
   
@@ -1515,7 +1515,7 @@
         
   
   <span class="md-ellipsis">
-    numpy 入门指南
+    numpy 基础
     
   </span>
   
@@ -4263,7 +4263,7 @@
         
   
   <span class="md-ellipsis">
-    Git 指南大全
+    Git 基础
     
   </span>
   
@@ -5200,7 +5200,7 @@
 <p>基础算法的「例题解析」。</p>
 <h2 id="贪心">贪心<a class="headerlink" href="#贪心" title="页面定位">&para;</a></h2>
 <h3 id="1-green_gold_dog-array-and-permutation">1. green_gold_dog, array and permutation<a class="headerlink" href="#1-green_gold_dog-array-and-permutation" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1867/problem/A</p>
+<p><a href="https://codeforces.com/contest/1867/problem/A">https://codeforces.com/contest/1867/problem/A</a></p>
 <blockquote>
 <p>题意：给定n个数a[i]，其中可能有重复数，请构造一个n个数的排列b[i]，使得c[i]=a[i]-b[i]中，c[i]的不同数字的个数最多</p>
 <p>思路：思路比较好想，就是最大的数匹配最小的数，次大的数匹配次小的数，以此类推。起初我想通过将原数列的拷贝数列降序排序后，创建一个哈希表来记录每一个数的排位，最终通过原数列的数作为键，通过哈希表直接输出排位，但是问题是原数列中的数可能会有重复的，那么在哈希的时候如果有重复的数，那么后来再次出现的数就会顶替掉原来的数的排位，故错误。</p>
@@ -5310,7 +5310,7 @@
 </span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="2-good-kid">2. Good Kid<a class="headerlink" href="#2-good-kid" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1873/problem/B</p>
+<p><a href="https://codeforces.com/contest/1873/problem/B">https://codeforces.com/contest/1873/problem/B</a></p>
 <blockquote>
 <p>题意：对于一个数列，现在可以选择其中的一个数使其+1，问如何选择这个数，可以使得修改后的数列中的所有数之积的值最大</p>
 <p>思路：其实就是选择n-1个数的乘积值加一倍，关键在于选哪一个n-1个数的乘积值，逆向思维就是对于n个数，去掉那个最小值，那么剩下来的n-1个数之积就会最大了，于是就是选择最小的数+1，最终数列之积就是答案了。</p>
@@ -5370,7 +5370,7 @@
 </span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="3-1d-eraser">3. 1D Eraser<a class="headerlink" href="#3-1d-eraser" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1873/problem/D</p>
+<p><a href="https://codeforces.com/contest/1873/problem/D">https://codeforces.com/contest/1873/problem/D</a></p>
 <blockquote>
 <p>题意：给定一个只有B和W两种字符的字符串，现在有一种操作可以将一个指定大小的区间（大小为k）中所有的字符全部变为W，问对于这个字符串，至少需要几次上述操作才可以将字符串全部变为W字符</p>
 <p>思路：我们直接遍历一边字符串即可，在遍历到B字符的时候，指针向后移动k位，如果是W字符，指针向后移动1位即可，最终统计一下遇到B字符的次数即可。</p>
@@ -5440,7 +5440,7 @@
 </span><span id="__span-2-32"><a id="__codelineno-2-32" name="__codelineno-2-32"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="4-abbc-or-bacb">4. ABBC or BACB<a class="headerlink" href="#4-abbc-or-bacb" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1873/problem/G</p>
+<p><a href="https://codeforces.com/contest/1873/problem/G">https://codeforces.com/contest/1873/problem/G</a></p>
 <blockquote>
 <p>题意：现在有一个只有A和B两种字符的字符串，有如下两种操作：第一种，可以将AB转化为BC，第二种，可以将BA转化为CB。问最多可以执行上述操作几次</p>
 <p>思路：其实一开始想到了之前做过的翻转数字为-1，最后的逻辑是将数字向左右移动，于是这道题就有了突破口了。上述两种操作就可以看做将A和B两种字符交换位置，并且B保持不变，A变为另一种字符C。由于C是无法执行上述操作得到，因此就可以理解为B走过的路就不可以再走了，那么就是说对于一个字符串，最终都会变成B走过的路C。并且只要有B，那么一个方向上所有的A都会被利用转化为C（直到遇到下一个B停止），那么我们就可以将B看做一个独立的个体，他可以选择一个方向上的所有的A并且执行操作将该方向的A全部转化为C，那么在左和右的抉择中，就是要选择A数量最多的方向进行操作，但是如果B的足够多，那就不需要考虑哪个方向了，所有的A都可以获得一次操作机会。现在就转向考虑B需要多少呢，</p>
@@ -5531,7 +5531,7 @@
 </span><span id="__span-3-42"><a id="__codelineno-3-42" name="__codelineno-3-42"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="5-smilo-and-monsters">5. Smilo and Monsters<a class="headerlink" href="#5-smilo-and-monsters" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1891/problem/C</p>
+<p><a href="https://codeforces.com/contest/1891/problem/C">https://codeforces.com/contest/1891/problem/C</a></p>
 <blockquote>
 <p>题意：给定一个序列，其中每一个元素代表一个怪物群中的怪物的数量。现在有两种操作：</p>
 <ol>
@@ -5606,7 +5606,7 @@
 </span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="6-通关">6. 通关<a class="headerlink" href="#6-通关" title="页面定位">&para;</a></h3>
-<p>https://www.lanqiao.cn/problems/5889/learning/?contest_id=145</p>
+<p><a href="https://www.lanqiao.cn/problems/5889/learning/?contest_id=145">https://www.lanqiao.cn/problems/5889/learning/?contest_id=145</a></p>
 <blockquote>
 <p>声明：谨以此题记录我的第一道正式图论题（存图技巧抛弃了y总的纯数组，转而使用动态数组<code>vector</code>进行建图）e.g.</p>
 <div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
@@ -5718,7 +5718,7 @@
 </span><span id="__span-6-46"><a id="__codelineno-6-46" name="__codelineno-6-46"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="7-串门">7. 串门<a class="headerlink" href="#7-串门" title="页面定位">&para;</a></h3>
-<p>https://www.lanqiao.cn/problems/5890/learning/?contest_id=145</p>
+<p><a href="https://www.lanqiao.cn/problems/5890/learning/?contest_id=145">https://www.lanqiao.cn/problems/5890/learning/?contest_id=145</a></p>
 <blockquote>
 <p>题意：给定一棵无向树，边权为正。现在询问在访问到每一个结点的情况下最小化行走的路径长度</p>
 <p>思路：首先我们不管路径长度的长短，我们直接开始串门。可以发现，我们一点会有访问的起点和终点，那么在起点到终点的这条路上，可能会有很多个分叉，对于每一个分叉，我们都需要进入再返回来确保分叉中的结点也被访问到，那么最终的路径长度就是总路径长度的2倍 - 起点到终点的距离，知道了这个性质后。我们可以发现，路径的总长度是一个定值，我们只有最大化起点到终点距离才能确保行走路径长度的最小值。那么问题就转化为了求解一棵树中，最长路径长度的问题。即求解树的直径的问题。</p>
@@ -5855,31 +5855,31 @@
 </span><span id="__span-7-62"><a id="__codelineno-7-62" name="__codelineno-7-62"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="8-codeforces-rating">8. Codeforces rating<a class="headerlink" href="#8-codeforces-rating" title="页面定位">&para;</a></h3>
-<p>https://vijos.org/d/nnu_contest/p/1532</p>
+<p><a href="https://vijos.org/d/nnu_contest/p/1532">https://vijos.org/d/nnu_contest/p/1532</a></p>
 <blockquote>
 <p>题意：现在已知一个初始值R，现在给定了n个P值，选择其中的合适的值，使得最终的 <span class="arithmatex">\(R'=3/4 R + 1/4 P\)</span> 最大</p>
 <p>思路：首先一点就是我们一定要选择P比当前R大的值，接下来就是选择合适的P使得最终迭代出来的R'最大。首先我们知道，对于筛选出来的比当前R大的P集合，任意选择其中的一个P，都会让R增大，但是不管增加多少都是不会超过选择的P。那么显然，如果筛选出来的P集合是一个递增序列，那么就可以让R不断的增加。但是这一定是最大的吗？我们不妨反证一下，现在我们有两个P，分别为x，y，其中 <span class="arithmatex">\(x&lt;y\)</span>。</p>
-<p>那么按照上述思路，首先就是 
-$$
+<p>那么按照上述思路，首先就是 </p>
+<div class="arithmatex">\[
 R'=\frac{3}{4}R+\frac{1}{4}x(R'&lt;x)
-$$
-接着就是 
-$$
+\]</div>
+<p>接着就是 </p>
+<div class="arithmatex">\[
 R''_1=\frac{3}{4}R'+\frac{1}{4}y(R''_1&lt;y)=\frac{9}{16}R+\frac{3}{16}x+\frac{1}{4}y
-$$
-<strong>反之</strong>，首先选择一个较大的P=y，再选择一个较小的P=x，即首先就是
-$$
+\]</div>
+<p><strong>反之</strong>，首先选择一个较大的P=y，再选择一个较小的P=x，即首先就是</p>
+<div class="arithmatex">\[
 R'=\frac{3}{4}R+\frac{1}{4}y(R'&lt;y)
-$$
-此时我们还不一点可以继续选择x，因为此时的R'可能已经超过了x的值，那么我们按照最优的情况计算，可以选择x，那么就是
-$$
+\]</div>
+<p>此时我们还不一点可以继续选择x，因为此时的R'可能已经超过了x的值，那么我们按照最优的情况计算，可以选择x，那么就是</p>
+<div class="arithmatex">\[
 R''_2=\frac{3}{4}R'+\frac{1}{4}x(R''_2&lt;x)=\frac{9}{16}R+\frac{3}{16}y+\frac{1}{4}x
-$$
-可以发现
-$$
+\]</div>
+<p>可以发现</p>
+<div class="arithmatex">\[
 R''_2-R''_1=\frac{1}{16}(x-y)&lt;0
-$$
-即会使得最终的答案变小。因此最优的策略就是按照增序进行叠加计算</p>
+\]</div>
+<p>即会使得最终的答案变小。因此最优的策略就是按照增序进行叠加计算</p>
 <p>==注意点：==</p>
 <p>四舍五入的语句</p>
 <div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="p">)(</span><span class="n">res</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">0.5</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
@@ -5932,7 +5932,7 @@ $$
 </span><span id="__span-9-23"><a id="__codelineno-9-23" name="__codelineno-9-23"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="9-货运公司">9. 货运公司<a class="headerlink" href="#9-货运公司" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5380/</p>
+<p><a href="https://www.acwing.com/problem/content/5380/">https://www.acwing.com/problem/content/5380/</a></p>
 <blockquote>
 <p>题意：给定 <span class="arithmatex">\(n\)</span> 个运货订单，每个订单需要运送一定量的货物，同时给予一定量的报酬。现在有 <span class="arithmatex">\(k\)</span> 个卡车进行运送，每个卡车有运送容量。需要合理规划卡车的装配，使得最终获得的总报酬最大。有以下约束条件：</p>
 <ul>
@@ -6095,7 +6095,7 @@ $$
 </span><span id="__span-10-68"><a id="__codelineno-10-68" name="__codelineno-10-68"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="10-部分背包问题">10. 部分背包问题<a class="headerlink" href="#10-部分背包问题" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2240</p>
+<p><a href="https://www.luogu.com.cn/problem/P2240">https://www.luogu.com.cn/problem/P2240</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一组物品，每一个物品有一定的重量与价值，现在给定一个背包总承重，需要从中选择合适的物品进行装载，使得最终装载的物品的总价值最大。现在规定每一个物品可以进行随意分割，按照单位重量计算价值</li>
@@ -6196,7 +6196,7 @@ $$
 </span><span id="__span-11-46"><a id="__codelineno-11-46" name="__codelineno-11-46"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="11-排队接水">11. 排队接水<a class="headerlink" href="#11-排队接水" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1223</p>
+<p><a href="https://www.luogu.com.cn/problem/P1223">https://www.luogu.com.cn/problem/P1223</a></p>
 <blockquote>
 <ul>
 <li>
@@ -6300,7 +6300,7 @@ $$
 </span><span id="__span-12-44"><a id="__codelineno-12-44" name="__codelineno-12-44"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="12-线段覆盖">12. 线段覆盖<a class="headerlink" href="#12-线段覆盖" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1803</p>
+<p><a href="https://www.luogu.com.cn/problem/P1803">https://www.luogu.com.cn/problem/P1803</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个数轴和数轴上的 n 个线段，现在需要从中选出尽可能多的 k 个线段，使得线段之间两两不相交，问 k 最大是多少</li>
@@ -6391,7 +6391,7 @@ $$
 </span><span id="__span-13-41"><a id="__codelineno-13-41" name="__codelineno-13-41"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="13-小a的糖果">13. 小A的糖果<a class="headerlink" href="#13-小a的糖果" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P3817</p>
+<p><a href="https://www.luogu.com.cn/problem/P3817">https://www.luogu.com.cn/problem/P3817</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个序列，现在每次可以选择序列中的某个数进行减一操作，问最少需要减多少可以使得序列中相邻两个元素之和不超过规定的数值 x</li>
@@ -6468,7 +6468,7 @@ $$
 </span><span id="__span-14-34"><a id="__codelineno-14-34" name="__codelineno-14-34"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="15-陶陶摘苹果升级版">15. 陶陶摘苹果（升级版）<a class="headerlink" href="#15-陶陶摘苹果升级版" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1478</p>
+<p><a href="https://www.luogu.com.cn/problem/P1478">https://www.luogu.com.cn/problem/P1478</a></p>
 <blockquote>
 <ul>
 <li>题意：现在有 n 个苹果，含有高度和消耗体力值两个属性，现在你有一个最大高度以及总体力值，每次只能摘高度值不超过最大高度的苹果且会消耗相应的体力值。问最多可以摘多少个苹果</li>
@@ -6563,7 +6563,7 @@ $$
 </span><span id="__span-15-43"><a id="__codelineno-15-43" name="__codelineno-15-43"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="16-noip2018-提高组-铺设道路">16. [NOIP2018 提高组] 铺设道路<a class="headerlink" href="#16-noip2018-提高组-铺设道路" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P5019</p>
+<p><a href="https://www.luogu.com.cn/problem/P5019">https://www.luogu.com.cn/problem/P5019</a></p>
 <blockquote>
 <ul>
 <li>
@@ -6641,7 +6641,7 @@ $$
 </span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="17-usaco13-混合牛奶-mixing-milk">17. [USACO1.3] 混合牛奶 Mixing Milk<a class="headerlink" href="#17-usaco13-混合牛奶-mixing-milk" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1208</p>
+<p><a href="https://www.luogu.com.cn/problem/P1208">https://www.luogu.com.cn/problem/P1208</a></p>
 <blockquote>
 <ul>
 <li>题意：现在需要收集 need 容量的牛奶，同时有 n 个农户提供奶源，每一个商户的奶源有一定的数量与单价，问如何采购可以在满足需求 need 的情况下成本最低化</li>
@@ -6738,7 +6738,7 @@ $$
 </span><span id="__span-17-44"><a id="__codelineno-17-44" name="__codelineno-17-44"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="18-noip2007-普及组-纪念品分组">18. [NOIP2007 普及组] 纪念品分组<a class="headerlink" href="#18-noip2007-普及组-纪念品分组" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1094</p>
+<p><a href="https://www.luogu.com.cn/problem/P1094">https://www.luogu.com.cn/problem/P1094</a></p>
 <blockquote>
 <ul>
 <li>题意：给定 n 个数，问如何分组可以使得在每一组之和不超过定值 lim 且每一组最多两个数的情况下，分得的组数最少</li>
@@ -6821,7 +6821,7 @@ $$
 </span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="19-跳跳">19. 跳跳！<a class="headerlink" href="#19-跳跳" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P4995</p>
+<p><a href="https://www.luogu.com.cn/problem/P4995">https://www.luogu.com.cn/problem/P4995</a></p>
 <blockquote>
 <ul>
 <li>
@@ -6915,7 +6915,7 @@ $$
 </span><span id="__span-19-38"><a id="__codelineno-19-38" name="__codelineno-19-38"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="20-安排时间">20. 安排时间<a class="headerlink" href="#20-安排时间" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5466/</p>
+<p><a href="https://www.acwing.com/problem/content/5466/">https://www.acwing.com/problem/content/5466/</a></p>
 <blockquote>
 <ul>
 <li>题意：给定 n 个时间段处理餐厅事务，m 个用餐预定信息，含有三个信息分别为订单发起时间，订单需要准备的时间，客人来用餐时间。问如何安排每一个时间段，可以让所有的用户得到正常的服务。如果不能全部满足则输出 -1</li>
@@ -7030,7 +7030,7 @@ $$
 </span><span id="__span-20-53"><a id="__codelineno-20-53" name="__codelineno-20-53"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="21-noip2004-提高组-合并果子">21. [NOIP2004 提高组] 合并果子<a class="headerlink" href="#21-noip2004-提高组-合并果子" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1090</p>
+<p><a href="https://www.luogu.com.cn/problem/P1090">https://www.luogu.com.cn/problem/P1090</a></p>
 <blockquote>
 <ul>
 <li>题意：给定 n 个数，现在需要将其两两合并为最终的一个数，每次合并的代价是两个数之和，问如何对这些数进行合并可以使得总代价最小</li>
@@ -7115,7 +7115,7 @@ $$
 </span><span id="__span-21-38"><a id="__codelineno-21-38" name="__codelineno-21-38"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="22-删数问题">22. 删数问题<a class="headerlink" href="#22-删数问题" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1106</p>
+<p><a href="https://www.luogu.com.cn/problem/P1106">https://www.luogu.com.cn/problem/P1106</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个数字字符串长度为 n，现在需要选择其中的 m 位数，使得这 m 位组成的数最小是多少 (m=n-k)</li>
@@ -7224,7 +7224,7 @@ $$
 </span><span id="__span-22-50"><a id="__codelineno-22-50" name="__codelineno-22-50"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="23-截断数组">23. 截断数组<a class="headerlink" href="#23-截断数组" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5483/</p>
+<p><a href="https://www.acwing.com/problem/content/5483/">https://www.acwing.com/problem/content/5483/</a></p>
 <blockquote>
 <p>题意：定义平衡数组为奇偶数数量相同的数组，现在给定一个平衡数组，和一个总成本数，最多可以将原数组截成多少截子平衡数组，且截断代价总和不超过总成本，截断代价计算公式为 <span class="arithmatex">\(|a_i-a_{i+1}|\)</span></p>
 <p>思路：我们直接枚举所有的可以被截断的位置，统计所有的代价值，然后根据成本总数按降序枚举代价值即可</p>
@@ -7339,7 +7339,7 @@ $$
 </span><span id="__span-23-54"><a id="__codelineno-23-54" name="__codelineno-23-54"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="24-修改后的最大二进制字符串">24. 修改后的最大二进制字符串<a class="headerlink" href="#24-修改后的最大二进制字符串" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/maximum-binary-string-after-change/description/</p>
+<p><a href="https://leetcode.cn/problems/maximum-binary-string-after-change/description/">https://leetcode.cn/problems/maximum-binary-string-after-change/description/</a></p>
 <blockquote>
 <p>题意：给定一个仅由01组成的字符串，现在可以执行下面两种操作任意次，使得最终的字符串对应的十进制数值最大，给出最终的字符串</p>
 <ol>
@@ -7414,7 +7414,7 @@ $$
 </span><span id="__span-24-30"><a id="__codelineno-24-30" name="__codelineno-24-30"></a><span class="p">};</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="25-子序列最大优雅度">25. 子序列最大优雅度<a class="headerlink" href="#25-子序列最大优雅度" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/maximum-elegance-of-a-k-length-subsequence/</p>
+<p><a href="https://leetcode.cn/problems/maximum-elegance-of-a-k-length-subsequence/">https://leetcode.cn/problems/maximum-elegance-of-a-k-length-subsequence/</a></p>
 <blockquote>
 <p>标签：反悔贪心</p>
 <p>题意：给定长度为 n 的物品序列，现在需要从中寻找一个长度为 k 的子序列使得子序列的总价值最大，给出最终的最大价值。一个序列的价值定义为每个物品的 <strong>本身价值之和</strong> + <strong>物品种类数的平方</strong></p>
@@ -7545,7 +7545,7 @@ class Solution:
         return res
 ```</p>
 <h3 id="起床困难综合症">起床困难综合症<a class="headerlink" href="#起床困难综合症" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/1000/</p>
+<p><a href="https://www.acwing.com/problem/content/1000/">https://www.acwing.com/problem/content/1000/</a></p>
 <blockquote>
 <p>标签：按位贪心、分类讨论。</p>
 <p>题意：给定 <span class="arithmatex">\(n\)</span> 个运算数和对应的 <span class="arithmatex">\(n\)</span> 个操作，仅有 <code>&amp;, |, ^</code> 三种。现在需要选择一个数 <span class="arithmatex">\(num \in [0,m]\)</span> 使得 <span class="arithmatex">\(num\)</span> 经过这 <span class="arithmatex">\(n\)</span> 个二元运算后得到的结果 <span class="arithmatex">\(res\)</span> 最大。给出最终的 <span class="arithmatex">\(res\)</span>。</p>
@@ -7686,7 +7686,7 @@ class Solution:
 <h2 id="前缀和与差分">前缀和与差分<a class="headerlink" href="#前缀和与差分" title="页面定位">&para;</a></h2>
 <p>前缀和是正向思维，差分是前缀和的逆向思维。</p>
 <h3 id="差分排序充能计划">【差分/排序】充能计划<a class="headerlink" href="#差分排序充能计划" title="页面定位">&para;</a></h3>
-<p>https://www.lanqiao.cn/problems/8732/learning/?contest_id=147</p>
+<p><a href="https://www.lanqiao.cn/problems/8732/learning/?contest_id=147">https://www.lanqiao.cn/problems/8732/learning/?contest_id=147</a></p>
 <blockquote>
 <p>题意：给定 <span class="arithmatex">\(n\)</span> 个数初始化为 <span class="arithmatex">\(0\)</span>，现在给定 <span class="arithmatex">\(q\)</span> 个位置，每个位置给定两个参数 <span class="arithmatex">\(p,k\)</span>，表示从第 <span class="arithmatex">\(k\)</span> 个数开始连续 <span class="arithmatex">\(s[p]\)</span> 个数 <span class="arithmatex">\(+1\)</span>，返回最终每一个位置的数值。+1 操作有以下两种约束：</p>
 <ol>
@@ -7841,7 +7841,7 @@ class Solution:
 </span><span id="__span-27-70"><a id="__codelineno-27-70" name="__codelineno-27-70"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="前缀和二分答案或值至少为-k-的最短子数组-ii">【前缀和/二分答案】或值至少为 K 的最短子数组 II<a class="headerlink" href="#前缀和二分答案或值至少为-k-的最短子数组-ii" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/shortest-subarray-with-or-at-least-k-ii/description/</p>
+<p><a href="https://leetcode.cn/problems/shortest-subarray-with-or-at-least-k-ii/description/">https://leetcode.cn/problems/shortest-subarray-with-or-at-least-k-ii/description/</a></p>
 <blockquote>
 <p>题意：给定一个序列，问其中所有连续的序列中，所有元素或值的结果超过 k 的序列长度最短是多少</p>
 <ul>
@@ -7972,7 +7972,7 @@ class Solution:
 </span><span id="__span-28-56"><a id="__codelineno-28-56" name="__codelineno-28-56"></a><span class="p">};</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="差分贪心增减序列">【差分/贪心】增减序列<a class="headerlink" href="#差分贪心增减序列" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/description/102/</p>
+<p><a href="https://www.acwing.com/problem/content/description/102/">https://www.acwing.com/problem/content/description/102/</a></p>
 <blockquote>
 <p>标签：差分、贪心</p>
 <p>题意：给定一个序列，每次可以对序列中的<strong>子数组</strong>进行同时 <code>+1</code> 或 <code>-1</code> 的操作，问最少操作多少次可以使得最终的数组所有元素都相等。并给出在最少操作次数的情况下，有多少种操作方案。</p>
@@ -8102,7 +8102,7 @@ class Solution:
 <h2 id="二分">二分<a class="headerlink" href="#二分" title="页面定位">&para;</a></h2>
 <p>二分本质上是一个线性的算法思维，只是比线性思维更进一步的是，二分思维需要提炼出题面中两个线性相关的变量，即单调变化的两个变量，从而采用二分加速检索。</p>
 <h3 id="二分答案building-an-aquarium">【二分答案】Building an Aquarium<a class="headerlink" href="#二分答案building-an-aquarium" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1873/problem/E</p>
+<p><a href="https://codeforces.com/contest/1873/problem/E">https://codeforces.com/contest/1873/problem/E</a></p>
 <blockquote>
 <p>题意：想象有一个二维平面，现在有一个数列，每一个数表示平面对应列的高度，现在要给这个平面在两边加上护栏，问护栏最高可以设置为多高，可以使得在完全填满的情况下，使用的水量不会超过给定的用水量。已知最大用水量为k</p>
 <p>思路：对于一个护栏高度，水池高度低于护栏高度的地方都需要被水填满。为了便于分析，我们可以将水池高度进行排序。那么就会很显然的一个二分题目了，我们需要二分的就是护栏的高度（最小为1，最大需要考虑一下，就是只有一列的情况下，最大高度就是最高水池高度 <span class="arithmatex">\(\max(a_i)+max(k)\)</span>），check的条件就是当前h的护栏高度时，消耗的水量与最大用水量之间的大小关系，如果超过了，那么高度就要下降，反之可以上升。由于是求最大高度，因此要使用的是求右边界的二分板子</p>
@@ -8186,7 +8186,7 @@ class Solution:
 </span><span id="__span-31-39"><a id="__codelineno-31-39" name="__codelineno-31-39"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案分组">【二分答案】分组<a class="headerlink" href="#二分答案分组" title="页面定位">&para;</a></h3>
-<p>https://www.lanqiao.cn/problems/5129/learning/</p>
+<p><a href="https://www.lanqiao.cn/problems/5129/learning/">https://www.lanqiao.cn/problems/5129/learning/</a></p>
 <blockquote>
 <p>题意：给定一个序列，现在需要将这个数列分为k组，如何分组可以使得每一组的极差中，最大值最小</p>
 <p>最开始想到的思路：很容易联想到的一种方法其实就是高中组合数学中学到的“隔板法”，现在有n个数，需要分成k组，则方案数就是在n-1个空档中插入k-1个隔板，即 <span class="arithmatex">\(C_{n-1}^{k-1}\)</span> 种方案</p>
@@ -8308,7 +8308,7 @@ class Solution:
 </span><span id="__span-32-54"><a id="__codelineno-32-54" name="__codelineno-32-54"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案木材加工">【二分答案】木材加工<a class="headerlink" href="#二分答案木材加工" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2440</p>
+<p><a href="https://www.luogu.com.cn/problem/P2440">https://www.luogu.com.cn/problem/P2440</a></p>
 <blockquote>
 <p>题意：给定一个序列，现在需要将这个序列切分为等长的 k 段，长度必须为整数且尽可能的长，如果无法切分可以将多余的长度丢弃，问最长的长度是多少</p>
 <p>思路：可以发现切分长度与切分的段数具有单调性，即切分的长度越长，切出来的段数就越少，可以进行二分。二分的思路就是直接二分答案，根据长度判断可切得的段数，最终套右边界的模板找到最大的长度即可。需要注意的是，对于无法切割的情况，就是需要切出的段数 k 超过了序列之和</p>
@@ -8403,7 +8403,7 @@ class Solution:
 </span><span id="__span-33-44"><a id="__codelineno-33-44" name="__codelineno-33-44"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案跳石头">【二分答案】跳石头<a class="headerlink" href="#二分答案跳石头" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2678</p>
+<p><a href="https://www.luogu.com.cn/problem/P2678">https://www.luogu.com.cn/problem/P2678</a></p>
 <blockquote>
 <p>题意：给定 n 个递增的不重复数，现在可以从其中拿掉 k 个数，使得相邻数字之间的最小差值最大，问最大的最小差值是多少</p>
 <p>思路：<strong>二分答案。将答案看做 y 轴，拿掉的数的数量看做 x 轴，就是二分 y 值。</strong>可以发现拿的数字越多，最小差值就越大，具有单调性，可以二分。我们直接二分答案，即直接二分最小差值的具体数值，通过判断当前的最小差值至少需要拿掉多少个数才能满足，进行 check 操作。至于如何计算至少要拿掉的数字，我们采用<strong>右贪心</strong>准则，即检查当前点与上一个点之间的距离是否满足最小差值的要求，如果不满足就需要记数，为了便于后续的计算，直接将当前的下标用上一个点的下标覆盖掉即可</p>
@@ -8522,7 +8522,7 @@ class Solution:
 </span><span id="__span-34-56"><a id="__codelineno-34-56" name="__codelineno-34-56"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案路标设置">【二分答案】路标设置<a class="headerlink" href="#二分答案路标设置" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P3853</p>
+<p><a href="https://www.luogu.com.cn/problem/P3853">https://www.luogu.com.cn/problem/P3853</a></p>
 <blockquote>
 <p>题意：与第四题题面几乎一致，只是现在不是从序列中拿走 k 数个，而是往序列中插入 k 个数（插入数字后要保证序列仍然没有重复数且递增），问在插入一定数量数字的情况下，最小的最大差值是多少</p>
 <p>思路：<strong>二分答案。将答案看做 y 轴，拿掉的数的数量看做 x 轴，就是二分 y 值。</strong>同样可以发现，插入的数字越多，最大差值就越小，具有单调性，可以二分。我们依然直接二分答案，即直接二分最大差值的具体数值，通过判断当前的最大差值需要插入多少个数来检查当前状态是否合理。需要插入的数字的个数为：
@@ -8620,7 +8620,7 @@ $$
 </span><span id="__span-35-44"><a id="__codelineno-35-44" name="__codelineno-35-44"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案数列分段-section-ii">【二分答案】数列分段 Section II<a class="headerlink" href="#二分答案数列分段-section-ii" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1182</p>
+<p><a href="https://www.luogu.com.cn/problem/P1182">https://www.luogu.com.cn/problem/P1182</a></p>
 <blockquote>
 <p>题意：给定一个无序的序列，现在需要将这个序列进行分段（连续的），分成指定的段数。问应该如何分段可以使得所有段的分段和的最大值最小，输出这个最小的最大值</p>
 <p>思路：<strong>二分答案，将答案看做 y 轴，拿掉的数的数量看做 x 轴，就是二分 y 值。</strong>可以发现，分的段数越多，所有分段和的最大值就越小，具有单调性，可以二分。我们直接二分答案，即直接二分分段最大值，通过判断当前最大值的约束条件下可以分的组数进行判断。至于如何计算当前最大值条件下可分得的组数，直接线性扫描进行局部求和即可</p>
@@ -8727,7 +8727,7 @@ $$
 </span><span id="__span-36-50"><a id="__codelineno-36-50" name="__codelineno-36-50"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案kotori的设备">【二分答案】kotori的设备<a class="headerlink" href="#二分答案kotori的设备" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P3743</p>
+<p><a href="https://www.luogu.com.cn/problem/P3743">https://www.luogu.com.cn/problem/P3743</a></p>
 <blockquote>
 <p>题意：现在有一批电子设备，每一个电子设备有一个电量消耗速度与当前剩余电量，现在有一个充电器有一个确定的充电速度。问这批设备最久可以运作多久？当可以无限运作时输出 -1</p>
 <p>思路：可以发现，想要运行的越久，需要补充的电量就越多，具有单调性，可以直接二分答案。很显然我们可以根据期望运行的时间进行 check 操作，通过比对当前期望时间可以充的电量与需要补充的电量进行比对来修改边界值。<strong>需要注意的是</strong>边界的选择，最长可运行时间为 1e10，具体 <a href="https://www.luogu.com.cn/discuss/468555">推导</a> 待定</p>
@@ -8820,7 +8820,7 @@ $$
 </span><span id="__span-37-43"><a id="__codelineno-37-43" name="__codelineno-37-43"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案并查集关押罪犯">【二分答案/并查集】关押罪犯 <img alt="🔥" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f525.svg" title=":fire:" /><a class="headerlink" href="#二分答案并查集关押罪犯" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1525</p>
+<p><a href="https://www.luogu.com.cn/problem/P1525">https://www.luogu.com.cn/problem/P1525</a></p>
 <blockquote>
 <p>题意：给定一个无向图，没有重边和自环，边权为正。现在需要将图中所有的顶点分为两部分，使得两部分中最大的边权尽可能小，问该最小边权是多少</p>
 <p>思路一：二分答案。</p>
@@ -8846,7 +8846,7 @@ $$
 <div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案摆放棋子">【二分答案】摆放棋子<a class="headerlink" href="#二分答案摆放棋子" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5562/</p>
+<p><a href="https://www.acwing.com/problem/content/5562/">https://www.acwing.com/problem/content/5562/</a></p>
 <blockquote>
 <p>题意：给定一个 01 序列表示一个 <span class="arithmatex">\(1\times n\)</span> 的棋子序列，其中 1 表示有棋子，0 表示没有棋子。现在给定 k 个棋子，如何放置可以使得棋盘上连续的棋子长度尽可能长？给出一个合法的最长的序列</p>
 <p>思路：可以发现，想要序列尽可能的长，那么需要放置的棋子就要尽可能的多，具备单调性，可以二分。我们二分答案，即最长序列长度。对于已知的 k 个可放置棋子，我们需要找到最大的序列长度，于是我们套用<strong>寻找右边界</strong>模板。检查方法就是判断对于当前的长度，通过前缀和与滑动窗口的形式计算当前窗口内需要放置多少颗棋子才能连为一体：</p>
@@ -8976,7 +8976,7 @@ $$
 </span><span id="__span-40-59"><a id="__codelineno-40-59" name="__codelineno-40-59"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案盖楼">【二分答案】盖楼<a class="headerlink" href="#二分答案盖楼" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/description/5569/</p>
+<p><a href="https://www.acwing.com/problem/content/description/5569/">https://www.acwing.com/problem/content/description/5569/</a></p>
 <blockquote>
 <p>题意：给定 H 个正整数分别为 1 到 H。现在要将这 H 个正整数分给两个人，其中一个人希望获得可以不被 x 整除的数，另一个人希望可以获得不被 y 整除的数。其中 x 和 y 均为质数，问最小的 H 是多少？</p>
 <p>思路：</p>
@@ -9114,7 +9114,7 @@ $$
 </span></code></pre></div></td></tr></table></div>
 <p>小结：过多的分支语句不如一个 max 来的更加清晰，也可以避免一定的逻辑错误。</p>
 <h3 id="二分答案找出叠涂元素">【二分答案】找出叠涂元素<a class="headerlink" href="#二分答案找出叠涂元素" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/first-completely-painted-row-or-column/description/</p>
+<p><a href="https://leetcode.cn/problems/first-completely-painted-row-or-column/description/">https://leetcode.cn/problems/first-completely-painted-row-or-column/description/</a></p>
 <blockquote>
 <p>题意：给定一个 <span class="arithmatex">\(m\times n\)</span> 的矩阵，以及一个存储矩阵中所有元素值的数组，现在从左往右将数组中的元素在对应矩阵中涂色，问序列中最左边使得矩阵中某一行或列全部涂色的下标是什么</p>
 <p>思路：显然，下标越往右越有可能出现矩阵中某一行或列全部涂色，具备单调性，可以二分答案。我们直接二分序列下标，对于 chk 函数我们直接 <span class="arithmatex">\(O(n\times m)\)</span> 模拟即可</p>
@@ -9199,7 +9199,7 @@ $$
 </span><span id="__span-44-39"><a id="__codelineno-44-39" name="__codelineno-44-39"></a><span class="p">};</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="二分答案双指针找出唯一性数组的中位数">【二分答案/双指针】找出唯一性数组的中位数<a class="headerlink" href="#二分答案双指针找出唯一性数组的中位数" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/find-the-median-of-the-uniqueness-array/</p>
+<p><a href="https://leetcode.cn/problems/find-the-median-of-the-uniqueness-array/">https://leetcode.cn/problems/find-the-median-of-the-uniqueness-array/</a></p>
 <blockquote>
 <p>题意：给定一个数组，返回其「唯一性数组」的中位数。如果唯一性数组有奇数个元素，则返回中间元素，如果有偶数个元素，则返回两个中间元素中较小的那个，即左边那个中间元素。唯一性数组定义为：原数组的所有非空子数组中不同元素的个数组成的序列。</p>
 <p>思路：</p>
@@ -9310,7 +9310,7 @@ class Solution:
         return r
 ```</p>
 <h3 id="二分查找bomb">【二分查找】Bomb<a class="headerlink" href="#二分查找bomb" title="页面定位">&para;</a></h3>
-<p>https://codeforces.com/contest/1996/problem/F</p>
+<p><a href="https://codeforces.com/contest/1996/problem/F">https://codeforces.com/contest/1996/problem/F</a></p>
 <blockquote>
 <p>题意：给定两个序列 <span class="arithmatex">\(a\)</span> 和 <span class="arithmatex">\(b\)</span> 以及最大操作次数 <span class="arithmatex">\(k\)</span>，问在不超过最大操作次数的情况下，最多可以获得多少收益？收益的计算方法为：每次选择 <span class="arithmatex">\(a\)</span> 中一个数 <code>a[i]</code> 加入收益，并将该数减去 <code>b[i]</code> 直到为 <span class="arithmatex">\(0\)</span>。</p>
 <p>思路：</p>
@@ -9422,7 +9422,7 @@ class Solution:
 <h2 id="搜索">搜索<a class="headerlink" href="#搜索" title="页面定位">&para;</a></h2>
 <p>无论是深搜还是宽搜，都逃不掉图的思维。我们将搜索图建立起来之后，剩余的编码过程就会跃然纸上。</p>
 <h3 id="dfs机器人的运动范围">【dfs】机器人的运动范围<a class="headerlink" href="#dfs机器人的运动范围" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/22/</p>
+<p><a href="https://www.acwing.com/problem/content/22/">https://www.acwing.com/problem/content/22/</a></p>
 <div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-47-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-47-3"> 3</a></span>
@@ -9494,7 +9494,7 @@ class Solution:
 </span><span id="__span-47-35"><a id="__codelineno-47-35" name="__codelineno-47-35"></a><span class="p">};</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfsccc单词搜索">【dfs】CCC单词搜索<a class="headerlink" href="#dfsccc单词搜索" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5168/</p>
+<p><a href="https://www.acwing.com/problem/content/5168/">https://www.acwing.com/problem/content/5168/</a></p>
 <blockquote>
 <p>搜索逻辑：分为正十字与斜十字</p>
 <p>更新答案逻辑：需要进行两个条件的约数，一个是是否匹配到了最后一个字母，一个是转弯次数不超过一次</p>
@@ -9670,7 +9670,7 @@ class Solution:
 </span><span id="__span-48-83"><a id="__codelineno-48-83" name="__codelineno-48-83"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs二进制枚举数量">【dfs/二进制枚举】数量<a class="headerlink" href="#dfs二进制枚举数量" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5150/</p>
+<p><a href="https://www.acwing.com/problem/content/5150/">https://www.acwing.com/problem/content/5150/</a></p>
 <blockquote>
 <p>题意：给定一个数n，问[1, n]中有多少个数只含有4或7</p>
 <p>思路一：dfs</p>
@@ -9828,7 +9828,7 @@ class Solution:
 </span><span id="__span-50-48"><a id="__codelineno-50-48" name="__codelineno-50-48"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs组合总和">【dfs】组合总和<a class="headerlink" href="#dfs组合总和" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/combination-sum/</p>
+<p><a href="https://leetcode.cn/problems/combination-sum/">https://leetcode.cn/problems/combination-sum/</a></p>
 <blockquote>
 <p>题意：给定一个序列，其中的元素没有重复，问如何选取其中的元素，使得选出的数字总和为指定的数字target，选取的数字可以重复</p>
 <p>思路：思路比较简答，很容易想到用dfs搜索出所有的组合情况，即对于每一个“结点”，我们直接遍历序列中的元素即可。但是由于题目的限制，即不允许合法的序列经过排序后相等。那么为了解决这个约束，我们可以将最终搜索到的序列排序后进行去重，但是这样的时间复杂度会很高，于是我们从搜索的过程切入。观看这一篇题解 <a href="https://leetcode.cn/problems/combination-sum/solutions/2363929/39-zu-he-zong-he-hui-su-qing-xi-tu-jie-b-9zx7/">防止出现重复序列的启蒙题解</a>，我们提取其中最关键的一个图解</p>
@@ -9885,7 +9885,7 @@ class Solution:
 </span><span id="__span-51-24"><a id="__codelineno-51-24" name="__codelineno-51-24"></a><span class="p">};</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="递归扩展字符串">【递归】扩展字符串<a class="headerlink" href="#递归扩展字符串" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5284/</p>
+<p><a href="https://www.acwing.com/problem/content/5284/">https://www.acwing.com/problem/content/5284/</a></p>
 <blockquote>
 <p>题意：给定一种字符串的构造方式，问构造n次以后的字符串中的第k个字符是什么</p>
 <p>思路：由于构造的方法是基于上一种情况的，很容易可以想到一个递归搜索树来解决。只是这道题有好几个坑，故记录一下。</p>
@@ -10051,7 +10051,7 @@ class Solution:
 </span><span id="__span-52-74"><a id="__codelineno-52-74" name="__codelineno-52-74"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs让我们异或吧">【dfs】让我们异或吧<a class="headerlink" href="#dfs让我们异或吧" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2420</p>
+<p><a href="https://www.luogu.com.cn/problem/P2420">https://www.luogu.com.cn/problem/P2420</a></p>
 <blockquote>
 <p>题意：给定一棵树，树上每一条边都有一个权值，现在有Q次询问，对于每次询问会给出两个结点编号u，v，需要输出结点u到结点v所经过的路径的所有边权的异或之和</p>
 <p>思路：对于每次询问，我们当然可以遍历从根到两个结点的所有边权，然后全部异或计算结果，但是时间复杂度是 <span class="arithmatex">\(O(n)\)</span>，显然不行，那么有什么优化策略吗？答案是有的。我们可以发现，对于两个结点之间的所有边权，其实就是根到两个结点的边权相异或得到的结果（异或的性质），我们只需要预处理出根结点到所有结点的边权已异或值，后续询问的时候直接 <span class="arithmatex">\(O(1)\)</span> 计算即可</p>
@@ -10140,7 +10140,7 @@ class Solution:
 </span><span id="__span-53-41"><a id="__codelineno-53-41" name="__codelineno-53-41"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="记忆化搜索function">【记忆化搜索】Function<a class="headerlink" href="#记忆化搜索function" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1464</p>
+<p><a href="https://www.luogu.com.cn/problem/P1464">https://www.luogu.com.cn/problem/P1464</a></p>
 <blockquote>
 <p>题意：</p>
 <p>思路一：直接dfs</p>
@@ -10306,7 +10306,7 @@ class Solution:
 </span><span id="__span-55-41"><a id="__codelineno-55-41" name="__codelineno-55-41"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="递归外星密码">【递归】外星密码<a class="headerlink" href="#递归外星密码" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1928</p>
+<p><a href="https://www.luogu.com.cn/problem/P1928">https://www.luogu.com.cn/problem/P1928</a></p>
 <blockquote>
 <p>线性递归</p>
 <p>题意：给定一个压缩后的密码串，需要解压为原来的形式。压缩形式距离</p>
@@ -10487,7 +10487,7 @@ class Solution:
 </span><span id="__span-56-54"><a id="__codelineno-56-54" name="__codelineno-56-54"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs剪枝二进制枚举选数">【dfs+剪枝/二进制枚举】选数<a class="headerlink" href="#dfs剪枝二进制枚举选数" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1036</p>
+<p><a href="https://www.luogu.com.cn/problem/P1036">https://www.luogu.com.cn/problem/P1036</a></p>
 <blockquote>
 <p>题意：给定n个数，从中选出k个数，问一共有多少种方案可以使得选出来的k个数之和为质数</p>
 <p>思路一：dfs+剪枝</p>
@@ -10701,7 +10701,7 @@ class Solution:
 </span><span id="__span-58-44"><a id="__codelineno-58-44" name="__codelineno-58-44"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfsbfs01迷宫">【dfs/bfs】01迷宫<a class="headerlink" href="#dfsbfs01迷宫" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1141</p>
+<p><a href="https://www.luogu.com.cn/problem/P1141">https://www.luogu.com.cn/problem/P1141</a></p>
 <blockquote>
 <p>题意：给定一个01矩阵，行走规则为“可以走到相邻的数字不同的位置”，现在给定m次询问 <code>(u,v)</code>，输出从 <code>(u,v)</code> 开始最多可以走多少个位置？</p>
 <p>思路：我们可以将此问题转化为一个求解连通块的问题。对于矩阵中的一个连通块，我们定义为：在其中任意一个位置开始行走，都可以走过整个连通块每一个位置。那么在询问时，只需要输出所在连通块元素的个数即可。现在将问题转化为了</p>
@@ -10982,7 +10982,7 @@ class Solution:
 </span><span id="__span-60-61"><a id="__codelineno-60-61" name="__codelineno-60-61"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs二进制枚举kkksc03考前临时抱佛脚">【dfs/二进制枚举】kkksc03考前临时抱佛脚<a class="headerlink" href="#dfs二进制枚举kkksc03考前临时抱佛脚" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2392</p>
+<p><a href="https://www.luogu.com.cn/problem/P2392">https://www.luogu.com.cn/problem/P2392</a></p>
 <blockquote>
 <p>题意：给定四组数据，每组数据由 n 个数字组成，对于每一组数字需要分为两组使得两组之和相差尽可能小，问最终四组数据分组后，每一组之和的最大值之和是多少</p>
 <ul>
@@ -11187,7 +11187,7 @@ class Solution:
 </span><span id="__span-62-52"><a id="__codelineno-62-52" name="__codelineno-62-52"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs二进制枚举perket">【dfs/二进制枚举】PERKET<a class="headerlink" href="#dfs二进制枚举perket" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2036</p>
+<p><a href="https://www.luogu.com.cn/problem/P2036">https://www.luogu.com.cn/problem/P2036</a></p>
 <blockquote>
 <p>题意：给定一个二元组序列，每一个二元组中，一个表示酸度，一个表示苦度，现在在至少需要选择一个二元组的情况下，希望酸度之积与苦度之和的差值最小</p>
 <ul>
@@ -11394,7 +11394,7 @@ class Solution:
 </span><span id="__span-64-48"><a id="__codelineno-64-48" name="__codelineno-64-48"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs迷宫">【dfs】迷宫<a class="headerlink" href="#dfs迷宫" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1605</p>
+<p><a href="https://www.luogu.com.cn/problem/P1605">https://www.luogu.com.cn/problem/P1605</a></p>
 <blockquote>
 <p>题意：矩阵寻路，有障碍物，每一个点只能走一次，找到起点到终点可达路径数</p>
 <p>思路：其实就是一个四叉树的题目，只需要进行四个方向的遍历搜索即可找到路径，由于会进行：越界、障碍物、以及不可重复遍历的剪枝，故遍历的数量会很少</p>
@@ -11505,7 +11505,7 @@ class Solution:
 </span><span id="__span-65-52"><a id="__codelineno-65-52" name="__codelineno-65-52"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs单词方阵">【dfs】单词方阵<a class="headerlink" href="#dfs单词方阵" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1101</p>
+<p><a href="https://www.luogu.com.cn/problem/P1101">https://www.luogu.com.cn/problem/P1101</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个字符串方阵，问对于其中的 8 个方向，是否存在一个指定的字符串</li>
@@ -11632,7 +11632,7 @@ class Solution:
 </span><span id="__span-66-59"><a id="__codelineno-66-59" name="__codelineno-66-59"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs自然数的拆分问题">【dfs】自然数的拆分问题<a class="headerlink" href="#dfs自然数的拆分问题" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P2404</p>
+<p><a href="https://www.luogu.com.cn/problem/P2404">https://www.luogu.com.cn/problem/P2404</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个自然数 n，问有多少种拆分方法能将该数拆分为一定数量的升序自然数之和</li>
@@ -11725,7 +11725,7 @@ class Solution:
 </span><span id="__span-67-42"><a id="__codelineno-67-42" name="__codelineno-67-42"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfslake-counting-s">【dfs】Lake Counting S<a class="headerlink" href="#dfslake-counting-s" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1596</p>
+<p><a href="https://www.luogu.com.cn/problem/P1596">https://www.luogu.com.cn/problem/P1596</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个矩阵，计算其中连通块的数量</li>
@@ -11932,7 +11932,7 @@ class Solution:
 </span><span id="__span-69-54"><a id="__codelineno-69-54" name="__codelineno-69-54"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs填涂颜色">【dfs】填涂颜色<a class="headerlink" href="#dfs填涂颜色" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1162</p>
+<p><a href="https://www.luogu.com.cn/problem/P1162">https://www.luogu.com.cn/problem/P1162</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个方阵，其中只有 0 和 1，其中的 1 将部分的 0 围成了一个圈，现在需要将被围住的 0 转为 2 后，将转化后的方阵输出</li>
@@ -12037,7 +12037,7 @@ class Solution:
 </span><span id="__span-70-48"><a id="__codelineno-70-48" name="__codelineno-70-48"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="bfs马的遍历">【bfs】马的遍历<a class="headerlink" href="#bfs马的遍历" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1443</p>
+<p><a href="https://www.luogu.com.cn/problem/P1443">https://www.luogu.com.cn/problem/P1443</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个矩阵棋盘范围与一个马的位置坐标，现在问棋盘中每一个点的最小到达距离是多少</li>
@@ -12154,7 +12154,7 @@ class Solution:
 </span><span id="__span-71-54"><a id="__codelineno-71-54" name="__codelineno-71-54"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="bfs奇怪的电梯">【bfs】奇怪的电梯<a class="headerlink" href="#bfs奇怪的电梯" title="页面定位">&para;</a></h3>
-<p>https://www.luogu.com.cn/problem/P1135</p>
+<p><a href="https://www.luogu.com.cn/problem/P1135">https://www.luogu.com.cn/problem/P1135</a></p>
 <blockquote>
 <ul>
 <li>题意：给定一个电梯，第 <code>i</code> 层只能上升或者下降 <code>a[i]</code> 层，问从起点开始到终点最少需要乘坐几次电梯</li>
@@ -12406,7 +12406,7 @@ class Solution:
 <div class="language-cpp highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-74-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1"></a>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs递归实现指数型枚举">【dfs】递归实现指数型枚举<a class="headerlink" href="#dfs递归实现指数型枚举" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/94/</p>
+<p><a href="https://www.acwing.com/problem/content/94/">https://www.acwing.com/problem/content/94/</a></p>
 <blockquote>
 <ul>
 <li>题意：给定 n 个数，从其中选择 0-n 个数，将所有的选择方案打印出来，每一个方案中数字按照升序排列</li>
@@ -12553,7 +12553,7 @@ class Solution:
 </span><span id="__span-76-41"><a id="__codelineno-76-41" name="__codelineno-76-41"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs递归实现排列型枚举">【dfs】递归实现排列型枚举<a class="headerlink" href="#dfs递归实现排列型枚举" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/96/</p>
+<p><a href="https://www.acwing.com/problem/content/96/">https://www.acwing.com/problem/content/96/</a></p>
 <blockquote>
 <ul>
 <li>题意：按照字典序升序，打印 n 个数的所有全排列情况</li>
@@ -12651,9 +12651,9 @@ class Solution:
 </span></code></pre></div></td></tr></table></div>
 <h3 id="dfs树形dp树的直径">【dfs/树形dp】树的直径 <img alt="⭐" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/2b50.svg" title=":star:" /><a class="headerlink" href="#dfs树形dp树的直径" title="页面定位">&para;</a></h3>
 <p>树的路径问题，考虑回溯。如何更新值？如何返回值？</p>
-<p>参考：https://www.bilibili.com/video/BV17o4y187h1/</p>
+<p>参考：<a href="https://www.bilibili.com/video/BV17o4y187h1/">https://www.bilibili.com/video/BV17o4y187h1/</a></p>
 <h3 id="dfs在带权树网络中统计可连接服务器对数目">【dfs】在带权树网络中统计可连接服务器对数目<a class="headerlink" href="#dfs在带权树网络中统计可连接服务器对数目" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/count-pairs-of-connectable-servers-in-a-weighted-tree-network/description/</p>
+<p><a href="https://leetcode.cn/problems/count-pairs-of-connectable-servers-in-a-weighted-tree-network/description/">https://leetcode.cn/problems/count-pairs-of-connectable-servers-in-a-weighted-tree-network/description/</a></p>
 <blockquote>
 <p>题意：给定一棵带权无根树，定义「中转结点」为以当前结点为根，能够寻找到两个不同分支下的结点，使得这两个结点到当前结点的简单路径长度可以被给定值 k 整除，问树中每一个结点的「中转结点」的有效对数是多少</p>
 <p>思路：dfs+乘法原理。</p>
@@ -12770,7 +12770,7 @@ class Solution:
         return res
 ```</p>
 <h3 id="dfs将石头分散到网格图的最少移动次数">【dfs】将石头分散到网格图的最少移动次数<a class="headerlink" href="#dfs将石头分散到网格图的最少移动次数" title="页面定位">&para;</a></h3>
-<p>https://leetcode.cn/problems/minimum-moves-to-spread-stones-over-grid/</p>
+<p><a href="https://leetcode.cn/problems/minimum-moves-to-spread-stones-over-grid/">https://leetcode.cn/problems/minimum-moves-to-spread-stones-over-grid/</a></p>
 <blockquote>
 <p>标签：搜索、全排列、库函数</p>
 <p>题意：给定一个 <span class="arithmatex">\(3\times 3\)</span> 的矩阵 <span class="arithmatex">\(g\)</span>，其中数字总和为 9 且 <span class="arithmatex">\(g[i][j] \ge 0\)</span>，现在需要将其中 <span class="arithmatex">\(&gt;1\)</span> 的数字逐个移动到值为 0 的位置上使得最终矩阵全为 1，问最少移动长度是多少。</p>
@@ -12966,7 +12966,7 @@ class Solution:
 <h2 id="分治">分治<a class="headerlink" href="#分治" title="页面定位">&para;</a></h2>
 <p>将大问题转化为等价小问题进行求解。</p>
 <h3 id="分治随机排列">【分治】随机排列<a class="headerlink" href="#分治随机排列" title="页面定位">&para;</a></h3>
-<p>https://www.acwing.com/problem/content/5469/</p>
+<p><a href="https://www.acwing.com/problem/content/5469/">https://www.acwing.com/problem/content/5469/</a></p>
 <blockquote>
 <p>题意：给定一个 n 个数的全排列序列，并将其进行一定的对换，问是对换了 3n 次还是 7n+1 次</p>
 <p>思路：可以发现对于两种情况，就对应对换次数的奇偶性。当 n 为奇数：3n 为奇数，7n+1 为偶数；当 n 为偶数：3n 为偶数，7n+1 为奇数。故我们只需要判断序列的逆序数即可。为了求解逆序数，我们可以采用归并排序的 combine 过程进行统计即可</p>
@@ -13114,7 +13114,7 @@ class Solution:
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月25日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月31日</span>
   </span>
 
     

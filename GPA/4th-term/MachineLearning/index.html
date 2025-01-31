@@ -2196,7 +2196,7 @@
         
   
   <span class="md-ellipsis">
-    matplotlib 入门指南
+    matplotlib 基础
     
   </span>
   
@@ -2218,7 +2218,7 @@
         
   
   <span class="md-ellipsis">
-    numpy 入门指南
+    numpy 基础
     
   </span>
   
@@ -4235,7 +4235,7 @@
         
   
   <span class="md-ellipsis">
-    Git 指南大全
+    Git 基础
     
   </span>
   
@@ -5138,6 +5138,7 @@
 
   <h1>机器学习</h1>
 
+<p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/web-imgs/img-static/机器学习.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/web-imgs/img-static/机器学习.png" /></a></p>
 <h2 id="前言">前言<a class="headerlink" href="#前言" title="页面定位">&para;</a></h2>
 <p>本博客记录 Machine Learning 相关内容，初稿完成于大二下学期。由于初学时的一知半解，导致在后续的课程学习中屡屡碰壁，一问三不知，因此后续有时间就会对内容进行优化。笔记主要围绕 <strong>基础</strong>、<strong>模型</strong>、<strong>特征</strong>、<strong>拓展</strong> 四个方面展开。</p>
 <p>课程设计。我与团队成员一起，使用 XGBoost 和 MLP 实现了高糖预测：<a href="https://github.com/Mr-LUHAOYU/MachineLearningClassDesign">https://github.com/Mr-LUHAOYU/MachineLearningClassDesign</a>。</p>
@@ -5286,7 +5287,7 @@
 <h4 id="3-性能度量">3 性能度量<a class="headerlink" href="#3-性能度量" title="页面定位">&para;</a></h4>
 <h5 id="31-回归任务">3.1 回归任务<a class="headerlink" href="#31-回归任务" title="页面定位">&para;</a></h5>
 <p>对于回归任务，主要使用「均方误差」作为损失函数来度量回归模型的泛化性能，下面分别介绍：</p>
-<p>1）均方误差 (Mean Square Error，简称 MSE)。即模型预测值 <span class="arithmatex">\(f(\boldsymbol{x}_i)\)</span> 与标签值 <span class="arithmatex">\(y_i\)</span> 的平均平方误差，也就是所谓的方差。取值范围为 <span class="arithmatex">\([0,+\infty]\)</span>，越小越好。如下式：</p>
+<p>1）均方误差 (Mean Square Error, MSE)。即模型预测值 <span class="arithmatex">\(f(\boldsymbol{x}_i)\)</span> 与标签值 <span class="arithmatex">\(y_i\)</span> 的平均平方误差，也就是所谓的方差。取值范围为 <span class="arithmatex">\([0,+\infty]\)</span>，越小越好。如下式：</p>
 <div class="arithmatex">\[
 \text{MSE} =\frac{1}{N} \sum_{i = 1}^N (f(\boldsymbol{x}_i) - y_i)^2
 \]</div>
@@ -5350,14 +5351,14 @@ F_{\beta} = \frac{(1+\beta^2)\times P \times R}{(\beta^2\times P) + R}
 <p>不同曲线对应了不同阈值下学习器的预测能力。曲线与横纵坐标围成的面积衡量了样本预测排序的质量。因此上图中 A 曲线的预测质量比 C 曲线的预测质量高。但是我们往往会遇到比较 A 与 B 的预测质量的情况，由于曲线与坐标轴围成的面积难以计算，因此我们引入了 <strong>平衡点</strong> 的概念。平衡点就是查准率与查询率相等的曲线，即 <span class="arithmatex">\(P=R\)</span> 的曲线。平衡点越往右上，学习器的预测性能越好。因此 A 模型的性能优于 B 模型的性能。</p>
 </li>
 </ul>
-<p>对于 <strong>ROC 曲线</strong> (Receiver Operating Characteristic，即受试者工作特征，简称 ROC)，横坐标为假正例率 <span class="arithmatex">\(\displaystyle FPR = \frac{FP}{FP+TN}\)</span>，纵坐标为真正例率 <span class="arithmatex">\(\displaystyle TPR = \frac{TP}{TP+FN}\)</span>。</p>
+<p>对于 <strong>ROC 曲线</strong> (Receiver Operating Characteristic, ROC)，即受试者工作特征。横坐标为假正例率 <span class="arithmatex">\(\displaystyle FPR = \frac{FP}{FP+TN}\)</span>，纵坐标为真正例率 <span class="arithmatex">\(\displaystyle TPR = \frac{TP}{TP+FN}\)</span>。</p>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202403190851371.png" data-type="image" data-width="auto" data-height="auto" data-title="ROC 曲线图" data-desc-position="bottom"><img alt="ROC 曲线图" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202403190851371.png" /></a></p>
 <ul>
 <li>
 <p>趋势解读：随着截断点的值不断下降，真正例率与假正例率均会不断上升，因为分子都是从 0 开始逐渐增加的</p>
 </li>
 <li>
-<p>不同曲线同样对应了不同阈值下学习器的预测能力。曲线下方的面积 (Area Under ROC Curve，简称 AUC) 同样衡量了样本预测排序的质量。面积越大则对应模型的泛化性能更好。取值范围为 <span class="arithmatex">\([0.5,1]\)</span>。其中 <span class="arithmatex">\(0.5\)</span> 表示模型进行随机预测的性能。</p>
+<p>不同曲线同样对应了不同阈值下学习器的预测能力。曲线下方的面积 (Area Under ROC Curve, AUC) 同样衡量了样本预测排序的质量。面积越大则对应模型的泛化性能更好。取值范围为 <span class="arithmatex">\([0.5,1]\)</span>。其中 <span class="arithmatex">\(0.5\)</span> 表示模型进行随机预测的性能。</p>
 </li>
 </ul>
 <p><strong>2）多分类问题</strong></p>
@@ -5667,7 +5668,7 @@ w_i \leftarrow w_i + \Delta w_i \\
 <li>隐藏层和输出层进行函数处理</li>
 </ul>
 <h5 id="误差逆传播算法">误差逆传播算法<a class="headerlink" href="#误差逆传播算法" title="页面定位">&para;</a></h5>
-<p>多层网络的学习能力比感知机的学习能力强很多。想要训练一个多层网络模型，仅仅通过感知机的参数学习规则是不够的，我们需要一个全新的、更强大的学习规则。这其中最优秀的就是误差逆传播算法（errorBackPropagation，简称 BP），往往用它来训练多层前馈神经网络。下面我们来了解一下 BP 算法的内容、参数推导与算法流程。</p>
+<p>多层网络的学习能力比感知机的学习能力强很多。想要训练一个多层网络模型，仅仅通过感知机的参数学习规则是不够的，我们需要一个全新的、更强大的学习规则。这其中最优秀的就是误差逆传播算法 (errorBackPropagation, BP)，往往用它来训练多层前馈神经网络。下面我们来了解一下 BP 算法的内容、参数推导与算法流程。</p>
 <h6 id="模型参数">模型参数<a class="headerlink" href="#模型参数" title="页面定位">&para;</a></h6>
 <p>我们对着神经网络图，从输入到输出进行介绍与理解：</p>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404090923723.png" data-type="image" data-width="auto" data-height="auto" data-title="单隐层神经网络" data-desc-position="bottom"><img alt="单隐层神经网络" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404090923723.png" /></a></p>
@@ -5810,7 +5811,7 @@ y_if(x_i) \ge 1&amp;,\text{原始可行性} \\
 <h5 id="核函数">核函数<a class="headerlink" href="#核函数" title="页面定位">&para;</a></h5>
 <p>对原始样本进行升维，即 <span class="arithmatex">\(x_i \to \phi(x_i)\)</span>，新的问题出现了，计算内积 <span class="arithmatex">\(\phi(x_i)^T \phi(x_i)\)</span> 变得很困难，我们尝试解决这个内积的计算，即使用一个函数（核函数）来近似代替上述内积的计算结果，常用的核函数如下：</p>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404160949464.png" data-type="image" data-width="auto" data-height="auto" data-title="常用核函数" data-desc-position="bottom"><img alt="常用核函数" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404160949464.png" /></a></p>
-<p>表格中的高斯核也就是所谓的径向基函数核 <span class="arithmatex">\(\text{(Radial Basis Function Kernel, 简称 RBF 核)}\)</span>，其中的参数 <span class="arithmatex">\(\gamma=\frac{1}{2\sigma^2}\)</span>，因此 RBF 核的表达式也可以写成：</p>
+<p>表格中的高斯核也就是所谓的径向基函数核 (Radial Basis Function Kernel, RBF 核)，其中的参数 <span class="arithmatex">\(\gamma=\frac{1}{2\sigma^2}\)</span>，因此 RBF 核的表达式也可以写成：</p>
 <div class="arithmatex">\[
 \kappa(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)
 \]</div>
@@ -5831,7 +5832,7 @@ l_{\text{option}}
 \min_{w, b,\xi_i} \quad \frac{1}{2}||w||^2+C\sum_{i = 1}^m \xi_i
 \]</div>
 <h5 id="支持向量回归">支持向量回归<a class="headerlink" href="#支持向量回归" title="页面定位">&para;</a></h5>
-<p>支持向量回归（Support Vector Regression，简称 SVR）与传统的回归任务不同，传统的回归任务需要计算每一个样本的误差，而支持向量回归允许有一定的误差，即，仅仅计算落在隔离带外面的样本损失。</p>
+<p>支持向量回归 (Support Vector Regression, SVR) 与传统的回归任务不同，传统的回归任务需要计算每一个样本的误差，而支持向量回归允许有一定的误差，即，仅仅计算落在隔离带外面的样本损失。</p>
 <p>原始问题：</p>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404230832245.png" data-type="image" data-width="auto" data-height="auto" data-title="原始问题" data-desc-position="bottom"><img alt="原始问题" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404230832245.png" /></a></p>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404230833515.png" data-type="image" data-width="auto" data-height="auto" data-title="约束条件" data-desc-position="bottom"><img alt="约束条件" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404230833515.png" /></a></p>
@@ -5851,7 +5852,7 @@ h^*(x) = \sum_{i = 1}^m\alpha_i \kappa(x, x_i)
 <h5 id="一对一">一对一<a class="headerlink" href="#一对一" title="页面定位">&para;</a></h5>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404020850504.png" data-type="image" data-width="auto" data-height="auto" data-title="一对一" data-desc-position="bottom"><img alt="一对一" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404020850504.png" /></a></p>
 <ul>
-<li>名称：One vs. One，简称 OvO</li>
+<li>名称：One vs. One (OvO)</li>
 <li>训练：需要对 N 个类别进行 <span class="arithmatex">\(\frac{N(N-1)}{2}\)</span> 次训练，得到 <span class="arithmatex">\(\frac{N(N-1)}{2}\)</span> 个二分类学习器</li>
 <li>测试：对于一个样本进行分类预测时，需要用 <span class="arithmatex">\(\frac{N(N-1)}{2}\)</span> 个学习器分别进行分类，最终分得的结果种类最多的类别就是样本的预测类别</li>
 <li>特点：类别较少时，时间和内存开销往往更大；类别较多时，时间开销往往较小</li>
@@ -5859,14 +5860,14 @@ h^*(x) = \sum_{i = 1}^m\alpha_i \kappa(x, x_i)
 <h5 id="一对其余">一对其余<a class="headerlink" href="#一对其余" title="页面定位">&para;</a></h5>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404020852608.png" data-type="image" data-width="auto" data-height="auto" data-title="一对其余" data-desc-position="bottom"><img alt="一对其余" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404020852608.png" /></a></p>
 <ul>
-<li>名称：One vs. Rest，简称 OvR</li>
+<li>名称：One vs. Rest (OvR)</li>
 <li>训练：需要对 N 个类别进行 <span class="arithmatex">\(N\)</span> 次训练，得到 <span class="arithmatex">\(N\)</span> 个二分类学习器。每次将目标类别作为正例，其余所有类别均为反例</li>
 <li>测试：对于一个样本进行分类预测时，需要用 <span class="arithmatex">\(N\)</span> 个学习器分别进行分类，每一个学习器显然只会输出二值，假定为正负。正表示当前样例属于该学习器的正类，反之属于反类。若 <span class="arithmatex">\(N\)</span> 个学习器输出了多个正类标签，则还需通过执行度选择最终的类别。</li>
 </ul>
 <h5 id="多对多">多对多<a class="headerlink" href="#多对多" title="页面定位">&para;</a></h5>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404020853931.png" data-type="image" data-width="auto" data-height="auto" data-title="多对多" data-desc-position="bottom"><img alt="多对多" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202404020853931.png" /></a></p>
 <ul>
-<li>名称：Many vs. Many，简称 MvM</li>
+<li>名称：Many vs. Many (MvM)</li>
 <li>训练（编码）：对于 N 个类别数据，我们自定义 M 次划分。每次选择若干个类别作为正类，其余类作为反类。每一个样本在 M 个二分类学习器中都有一个分类结果，也就可以看做一个 M 维的向量。m 个样本也就构成了 m 个在 M 维空间的点阵。</li>
 <li>测试（解码）：对于测试样本，对于 M 个学习器同样也会有 M 个类别标记构成的向量，我们计算当前样本与训练集构造的 m 个样本的海明距离、欧氏距离，距离当前测试样本最近的点属于的类别，我们就认为是当前测试样本的类别。</li>
 </ul>
@@ -5987,7 +5988,7 @@ P(c\ |\ x) = \frac{P(c)}{P(x)} \prod_{i = 1}^d P(x_i\ |\ c)
 <li>对于类条件概率为 0 的情况。我们采用拉普拉斯修正。即让所有属性的样本个数 <span class="arithmatex">\(+1\)</span>，于是总样本数就需要 <span class="arithmatex">\(+d\)</span> 来确保总概率仍然为 <span class="arithmatex">\(1\)</span>。这是额外引入的 bias</li>
 </ul>
 <h4 id="半朴素贝叶斯分类器">半朴素贝叶斯分类器<a class="headerlink" href="#半朴素贝叶斯分类器" title="页面定位">&para;</a></h4>
-<p>朴素贝叶斯的问题是假设过于强，现实不可能所有的属性都相互独立。半朴素贝叶斯弱化了朴素贝叶斯的假设。现在假设每一个属性最多只依赖一个其他属性。即独依赖估计 <span class="arithmatex">\((\text{One-Dependent Estimator, 简称 ODE})\)</span>，于是就有了下面的贝叶斯判定准测：</p>
+<p>朴素贝叶斯的问题是假设过于强，现实不可能所有的属性都相互独立。半朴素贝叶斯弱化了朴素贝叶斯的假设。现在假设每一个属性最多只依赖一个其他属性。即独依赖估计 (One-Dependent Estimator, ODE)，于是就有了下面的贝叶斯判定准测：</p>
 <div class="arithmatex">\[
 P(c\ |\ x) \propto P(c) \prod _{i = 1}^d P(x_i\ |\ c, pa_i)
 \]</div>
@@ -6112,8 +6113,8 @@ H(x) = G(y_1, y_2, \cdots, y_n)
 <p>其中 <span class="arithmatex">\(G\)</span> 就是次级学习器。关于次级学习器的学习算法，大约有以下几种：</p>
 <ol>
 <li>Stacking</li>
-<li>多响应线性回归 <span class="arithmatex">\((Mutil-response linear regression, MLR)\)</span></li>
-<li>贝叶斯模型平均 <span class="arithmatex">\((Bayes Model Averaging, BMA)\)</span></li>
+<li>多响应线性回归 (Mutil-response linear regression, MLR)</li>
+<li>贝叶斯模型平均 (Bayes Model Averaging, BMA)</li>
 </ol>
 <p>经过验证，Stacking 的泛化能力往往比 BMA 更优。</p>
 <h4 id="小结">小结<a class="headerlink" href="#小结" title="页面定位">&para;</a></h4>
@@ -6268,10 +6269,15 @@ d_{\mathrm{cen}}(C_i,C_j)&amp;=\mathrm{dist}(\boldsymbol{\mu}_i,\boldsymbol{\mu}
 <p>基于密度的 DBDSAN 聚类算法可以适应更加复杂的数据分布场景，但是缺点在于对超参数 (<span class="arithmatex">\(\epsilon,\text{Minpts}\)</span>) 很敏感。并且由于超参数是二维联合的，因此如何调参 (<span class="arithmatex">\(\epsilon,\text{Minpts}\)</span>) 是一个很困难的事。在此基础之上，提出 DBSCAN 算法的团队又提出了其改良版本：OPTICS 算法。</p>
 <h5 id="optics">OPTICS<a class="headerlink" href="#optics" title="页面定位">&para;</a></h5>
 <p>用于确定聚类结构的排序点聚类（Ordering Points To Identify the Clustering Structure, OPTICS）</p>
-<p>基于密度的 OPTICS 算法延续了 DBSCAN 的策略，只需要提前设定邻域内最少数据对象数量 <span class="arithmatex">\(\text{Minpts}\)</span> 而不需要提前设置邻域大小 <span class="arithmatex">\(\epsilon\)</span>。有两个关键的概念：</p>
+<p>基于密度的 OPTICS 算法延续了 DBSCAN 的策略，只需要提前设定邻域内最少数据对象数量 Minpts 而不需要提前设置邻域大小 <span class="arithmatex">\(\epsilon\)</span>。有两个关键的概念定义：</p>
 <ul>
 <li>核心距离：数据对象成为核心对象的最小半径阈值；</li>
-<li>可达距离：对于两个数据对象 p 和 q，其中 q 是核心对象，可达距离定义为 <span class="arithmatex">\(\max{(q \text{ 的核心距离}, p \text{ 与 } q \text{ 的距离})}\)</span>。</li>
+<li>
+<p>可达距离：对于两个数据对象 p 和 q，其中 q 是核心对象，可达距离定义为：</p>
+<div class="arithmatex">\[
+\max{(q \text{ 的核心距离}, p \text{ 与 } q \text{ 的距离})}
+\]</div>
+</li>
 </ul>
 <p>最终可以得到一个按照某种规则排序的以及其可达距离。此时可以自行划分邻域的值进而按照预期进行聚类而不会像 DBSCAN 一样不受控制。OPTICS 的演示效果如下所示：</p>
 <p><a class="glightbox" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202501052101394.png" data-type="image" data-width="auto" data-height="auto" data-title="OPTICS 算法演示" data-desc-position="bottom"><img alt="OPTICS 算法演示" src="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/images/202501052101394.png" /></a></p>
@@ -6427,7 +6433,7 @@ w_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \quad w_2 = \begin{pmatrix} -1 \\ 1 
 <li>无向图模型，也称马尔可夫网</li>
 </ul>
 <h4 id="隐马尔可夫模型">隐马尔可夫模型<a class="headerlink" href="#隐马尔可夫模型" title="页面定位">&para;</a></h4>
-<p>隐马尔可夫模型 <span class="arithmatex">\(\text{(Hidden Markov Model, 简称 HMM)}\)</span> 是结构最简单的动态贝叶斯网。是为了研究变量之间的关系而存在的，因此是生成式方法。</p>
+<p>隐马尔可夫模型 (Hidden Markov Model, HMM) 是结构最简单的动态贝叶斯网。是为了研究变量之间的关系而存在的，因此是生成式方法。</p>
 <p>需要解决三个问题：</p>
 <ol>
 <li>如何评估建立的网络模型和实际观测数据的匹配程度？</li>
@@ -6435,7 +6441,7 @@ w_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \quad w_2 = \begin{pmatrix} -1 \\ 1 
 <li>如何根据实际的观测数据利用网络推断出有价值的隐藏状态？</li>
 </ol>
 <h4 id="马尔科夫随机场">马尔科夫随机场<a class="headerlink" href="#马尔科夫随机场" title="页面定位">&para;</a></h4>
-<p>马尔科夫随机场 <span class="arithmatex">\(\text{(Markov Random Field, 简称 MRF)}\)</span> 是典型的马尔科夫网。同样是为了研究变量之间的关系而存在的，因此也是生成式方法。</p>
+<p>马尔科夫随机场 (Markov Random Field, MRF) 是典型的马尔科夫网。同样是为了研究变量之间的关系而存在的，因此也是生成式方法。</p>
 <p>联合概率计算逻辑按照 <strong>势函数</strong> 和 <strong>团</strong> 展开。其中团可以理解为 <strong>完全子图</strong>；极大团就是结点最多的完全子图，即在当前的完全子图中继续添加子图之外的点就无法构成新的完全子图；势函数就是一个关于团的函数。</p>
 
 
@@ -6459,7 +6465,7 @@ w_1 = \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \quad w_2 = \begin{pmatrix} -1 \\ 1 
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月29日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月31日</span>
   </span>
 
     

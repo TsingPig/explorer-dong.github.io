@@ -1493,7 +1493,7 @@
         
   
   <span class="md-ellipsis">
-    matplotlib 入门指南
+    matplotlib 基础
     
   </span>
   
@@ -1515,7 +1515,7 @@
         
   
   <span class="md-ellipsis">
-    numpy 入门指南
+    numpy 基础
     
   </span>
   
@@ -1726,9 +1726,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sortedlist-" class="md-nav__link">
+  <a href="#sortedlist" class="md-nav__link">
     <span class="md-ellipsis">
-      SortedList *
+      SortedList
     </span>
   </a>
   
@@ -3777,7 +3777,7 @@
         
   
   <span class="md-ellipsis">
-    Git 指南大全
+    Git 基础
     
   </span>
   
@@ -4060,9 +4060,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sortedlist-" class="md-nav__link">
+  <a href="#sortedlist" class="md-nav__link">
     <span class="md-ellipsis">
-      SortedList *
+      SortedList
     </span>
   </a>
   
@@ -4605,10 +4605,10 @@
 </div>
 </div>
 </div>
-<h3 id="sortedlist-">SortedList *<a class="headerlink" href="#sortedlist-" title="页面定位">&para;</a></h3>
+<h3 id="sortedlist">SortedList<a class="headerlink" href="#sortedlist" title="页面定位">&para;</a></h3>
 <blockquote>
-<p>例程：https://www.acwing.com/activity/content/code/content/8475415/</p>
-<p>官方：https://github.com/grantjenks/python-sortedcontainers/blob/master/src/sortedcontainers/sortedlist.py</p>
+<p>例程：<a href="https://www.acwing.com/activity/content/code/content/8475415/">AcWing 5578. 切蛋糕</a></p>
+<p>官方：<a href="https://github.com/grantjenks/python-sortedcontainers/blob/master/src/sortedcontainers/sortedlist.py">grantjenks python-sortedcontainers</a></p>
 </blockquote>
 <p>有序列表类。导入方法 <code>from sortedcontainers import SortedList</code>。可以类比 C++ 中的 <code>map</code> 类。共有以下内容，全部都是 <span class="arithmatex">\(O(\log n)\)</span> 的时间复杂度：</p>
 <ol>
@@ -4826,34 +4826,35 @@
 </span></code></pre></div></td></tr></table></div>
 <p>{% endfold %}</p>
 <h3 id="乘法逆元">乘法逆元<a class="headerlink" href="#乘法逆元" title="页面定位">&para;</a></h3>
-<p _="%" _乘法逆元推导="@乘法逆元推导" fold="fold" light="light">假设当前需要在 <span class="arithmatex">\(\% \ p\)</span> 的情况下除以 <span class="arithmatex">\(a\)</span>，则可以转化为乘以 <span class="arithmatex">\(a\)</span> 的乘法逆元 <span class="arithmatex">\(a^{-1}\)</span>，即：
-$$
+<p>假设当前需要在 <span class="arithmatex">\(\% \ p\)</span> 的情况下除以 <span class="arithmatex">\(a\)</span>，则可以转化为乘以 <span class="arithmatex">\(a\)</span> 的乘法逆元 <span class="arithmatex">\(a^{-1}\)</span>，即：</p>
+<div class="arithmatex">\[
 \begin{aligned}
-&amp;\frac{\text{num}}{a} \equiv \text{num} \times a^{-1} (\text{mod } p)\
-&amp;\text{其中 } a^{-1} = a^{p-2} \text{ 当且仅当 <span class="arithmatex">\(a\)</span> 与 <span class="arithmatex">\(p\)</span> 互质}
+&amp;\frac{\text{num}}{a} \equiv \text{num} \times a^{-1} (\text{mod } p)\\
+&amp;\text{其中 } a^{-1} = a^{p-2} \text{ 当且仅当 $a$ 与 $p$ 互质}
 \end{aligned}
-$$</p>
-<p>对于任意 <span class="arithmatex">\(a\)</span> 的整数倍 <span class="arithmatex">\(t\)</span>，一定有下式成立：其中的 <span class="arithmatex">\(x\)</span> 就是整数 <span class="arithmatex">\(a\)</span> 的乘法逆元，记作 <span class="arithmatex">\(a^{-1}\)</span>
-$$
+\]</div>
+<p>{% fold light @乘法逆元推导 %}</p>
+<p>对于任意 <span class="arithmatex">\(a\)</span> 的整数倍 <span class="arithmatex">\(t\)</span>，一定有下式成立：其中的 <span class="arithmatex">\(x\)</span> 就是整数 <span class="arithmatex">\(a\)</span> 的乘法逆元，记作 <span class="arithmatex">\(a^{-1}\)</span></p>
+<div class="arithmatex">\[
 \begin{aligned}
-\frac{t}{a} \equiv t \times x\quad (\mod p) \
-\frac{1}{a} \equiv 1 \times x\quad (\mod p) \
-1 \equiv a \times x\quad (\mod p) \
+\frac{t}{a} \equiv t \times x\quad (\mod p) \\
+\frac{1}{a} \equiv 1 \times x\quad (\mod p) \\
+1 \equiv a \times x\quad (\mod p) \\
 \end{aligned}
-$$
-由 <a href="https://baike.baidu.com/item/费马小定理/4776158">费马小定理</a>：对于两个互质的整数 <span class="arithmatex">\(g,h\)</span> 而言，一定有下式成立：
-$$
+\]</div>
+<p>由 <a href="https://baike.baidu.com/item/费马小定理/4776158">费马小定理</a>：对于两个互质的整数 <span class="arithmatex">\(g,h\)</span> 而言，一定有下式成立：</p>
+<div class="arithmatex">\[
 g^{h-1} \equiv 1\quad (\mod h)
-$$
-于是本题的推导就可以得到，当 <span class="arithmatex">\(a\)</span> 与 <span class="arithmatex">\(p\)</span> 互质时，有：
-$$
+\]</div>
+<p>于是本题的推导就可以得到，当 <span class="arithmatex">\(a\)</span> 与 <span class="arithmatex">\(p\)</span> 互质时，有：</p>
+<div class="arithmatex">\[
 a^{p-1} \equiv 1 \quad (\mod p)
-$$
-于是 <span class="arithmatex">\(a\)</span> 的乘法逆元就是：
-$$
+\]</div>
+<p>于是 <span class="arithmatex">\(a\)</span> 的乘法逆元就是：</p>
+<div class="arithmatex">\[
 a^{-1} = a^{p-2}
-$$
-时间复杂度 <span class="arithmatex">\(O(\log p)\)</span></p>
+\]</div>
+<p>时间复杂度 <span class="arithmatex">\(O(\log p)\)</span></p>
 <p>{% endfold %}</p>
 <h3 id="组合数">组合数<a class="headerlink" href="#组合数" title="页面定位">&para;</a></h3>
 <div class="arithmatex">\[
@@ -5076,7 +5077,7 @@ C_n^k = C(n, k) = \binom{n}{k} = \frac{n!}{k!(n-k)!}
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月28日</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">2025年1月31日</span>
   </span>
 
     
