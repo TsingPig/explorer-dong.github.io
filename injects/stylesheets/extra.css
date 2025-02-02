@@ -7,3 +7,14 @@
     margin-left: 3px;
     margin-right: 3px;
 }
+
+/* 解决超长字符串无法换行的问题 */
+.md-typeset {
+    overflow-wrap: break-word;
+}
+
+/* 解决 KaTeX 表格在移动端的尾部有异常空白的问题 */
+.md-typeset__table {
+    /* position: sticky; */
+    position: relative;
+}
