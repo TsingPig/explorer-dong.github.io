@@ -1,5 +1,10 @@
 /* 自定义的 CSS 样式 */
 
+/* 调色板颜色 */
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #2e303e;
+}
+
 /* 外链加上小箭头 */
 .md-content a[target="_blank"]:not(.md-content__button):not(.md-author):not(:has(img)), .md-tabs__link[target="_blank"] {
     background: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDdCRkYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTggMTN2NmEyIDIgMCAwIDEtMiAySDUuMDAxYTIgMiAwIDAgMS0yLTJWOGEyIDIgMCAwIDEgMi0yaDZaIi8+PHBvbHlsaW5lIHBvaW50cz0iMTUgMyAyMSAzIDIxIDkiLz48bGluZSB4MT0iMTAiIHkxPSIxNCIgeDI9IjIxIiB5Mj0iMyIvPjwvc3ZnPg==') center right no-repeat;
