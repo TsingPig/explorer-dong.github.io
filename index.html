@@ -14,7 +14,7 @@
       
       
       
-        <link rel="next" href="site-nav/">
+        <link rel="next" href="GPA/">
       
       
       <link rel="icon" href="https://dwj-oss.oss-cn-nanjing.aliyuncs.com/web-imgs/img-static/wiki-16px.svg">
@@ -22,7 +22,7 @@
     
     
       
-        <title>站点简介 - Dwj's Wiki</title>
+        <title>首页 - Dwj's Wiki</title>
       
     
     
@@ -144,7 +144,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              站点简介
+              首页
             
           </span>
         </div>
@@ -275,7 +275,7 @@
         <a href="." class="md-tabs__link">
           
   
-  简介
+  首页
 
         </a>
       </li>
@@ -437,7 +437,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -501,7 +503,7 @@
             
   
   <span class="md-ellipsis">
-    简介
+    首页
     
   </span>
   
@@ -512,7 +514,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
-            简介
+            首页
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -534,35 +536,13 @@
         
   
   <span class="md-ellipsis">
-    站点简介
+    首页
     
   </span>
   
 
       </a>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="site-nav/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    站点导航
-    
-  </span>
-  
-
-      </a>
     </li>
   
 
@@ -3384,7 +3364,9 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -3407,6 +3389,8 @@
               <article class="md-content__inner md-typeset">
                 
                   
+  
+
 
 
   
@@ -3426,14 +3410,113 @@
   
 
 
-  <h1>站点简介</h1>
+  <h1>首页</h1>
+
+<h2 align="center">本站定位</h2>
 
 <p>欢迎访问我的知识（<abbr title="一种允许一群用户用简单的描述来创建和连接一组网页的社会计算系统。">Wiki</abbr>）网站！本网站托管了个人从本科开始记录的 <strong>课程笔记</strong> 与 <strong>技术文章</strong>。内容按照 Markdown 格式撰写，站点采用 MkDocs 框架编译，云端基于 GitHub Pages 与 Aliyun Server 双平台部署。</p>
+<h2 align="center">共建社区</h2>
+
 <p>若您有 <strong>意见或建议</strong>，欢迎参与贡献！贡献者名单将会出现在对应页面的底部，也会给您的 GitHub 账户累计贡献积分。详细的贡献方式如下：</p>
 <ul>
 <li>评论区留言：<code>下滑至页面的最低部 &gt;&gt; 点击登录 &gt;&gt; 输入您的宝贵意见或建议</code>；</li>
 <li>修改文章 / 新增内容：<code>点击网站右上角的小猫娘前往网站仓库 &gt;&gt; 点击右上角 Fork 按钮 &gt;&gt; 回到原来的网站页面点击右上角铅笔按钮 &gt;&gt; 编辑内容后向我发起 pull request</code>，当然您也可以将仓库克隆至本地，按照 <code>.github/workflows/bot.yml</code> 文件指引安装构建文档所需的依赖环境，完成修改 / 新增后推送至仓库并向我发起 pull request。</li>
 </ul>
+<h2 align="center">行文规范</h2>
+
+<p>本站点行文格式主要参考 <a href="https://oi-wiki.org/intro/format/">OI <abbr title="一种允许一群用户用简单的描述来创建和连接一组网页的社会计算系统。">Wiki</abbr> 格式手册</a>。其中，文章标题为 H2 至 H4，低于 H4 等级的标题不应再出现，可以用段首加粗的形式呈现。根据该格式，您可以对每一篇文章有一个整体的阅读把握。</p>
+<h2 align="center">站点地图</h2>
+
+<p>正如在一开始介绍的那样，本站的定位是「课程笔记」与「技术文章」，下面的两张拓扑图覆盖了本站的全部内容。</p>
+<div align="center">
+
+<pre class="mermaid"><code>flowchart LR
+    面向对象程序设计(面向对象程序设计)
+    数据结构与算法(数据结构与算法)
+    数字逻辑电路(数字逻辑电路)
+    算法设计与分析(算法设计与分析)
+    计算机系统基础(计算机系统基础)
+    数据库(数据库)
+    操作系统(操作系统)
+    计算机组成(计算机组成)
+    计算机网络(计算机网络)
+
+    面向对象程序设计 --&gt; 数据结构与算法 &amp; 算法设计与分析 --&gt; 计算机系统基础
+    数字逻辑电路 --&gt; 计算机系统基础 --&gt; 数据库 &amp; 操作系统 &amp; 计算机组成
+    计算机组成 &amp; 操作系统 --&gt; 计算机网络
+
+    Python高级应用(Python高级应用)
+    数字图像处理(数字图像处理)
+    机器学习(机器学习)
+    深度学习(深度学习)
+    数据挖掘(数据挖掘)
+    自然语言处理(自然语言处理)
+    计算机视觉(计算机视觉)
+    语音识别(语音识别)
+    智慧教育(智慧教育)
+
+    Python高级应用 --&gt; 数字图像处理 &amp; 机器学习
+    机器学习 --&gt; 数据挖掘 &amp; 深度学习
+    深度学习 --&gt; 自然语言处理 &amp; 计算机视觉 &amp; 语音识别 --&gt; 智慧教育
+    数字图像处理 --&gt; 计算机视觉
+
+    高等数学(高等数学)
+    线性代数(线性代数)
+    概率论(概率论)
+    最优化方法(最优化方法)
+    高等数学 &amp; 线性代数 &amp; 概率论 --&gt; 最优化方法 --&gt; 机器学习
+    面向对象程序设计 --&gt; Python高级应用
+
+    %% 跳转链接
+    click 高等数学 "./GPA/1st-term/AdvancedMath/"
+    click 线性代数 "./GPA/3rd-term/LinearAlgebra/"
+    click 概率论 "./GPA/4th-term/ProbAndStat/"
+    click 最优化方法 "./GPA/4th-term/OptMethod/"
+
+    click 面向对象程序设计 "./GPA/2nd-term/ObjectOrientedProgramming/"
+    click 数据结构与算法 "./GPA/3rd-term/DS&amp;Algo/"
+    click 数字逻辑电路 "./GPA/3rd-term/DigitalLogicCircuit/"
+    click 算法设计与分析 "./GPA/4th-term/PyAlgo/"
+    click 计算机系统基础 "./GPA/4th-term/SysBasic/"
+    click 数据库 "./GPA/5th-term/DataBase/"
+    click 操作系统 "./GPA/5th-term/OperatingSystem/"
+    click 计算机组成 "./GPA/5th-term/ComputerOrganization/"
+    click 计算机网络 "./GPA/6th-term/computer-network/"
+
+    click Python高级应用 "./GPA/4th-term/PyApply/"
+    click 数字图像处理 "./GPA/5th-term/DigitalImageProcessing/"
+    click 机器学习 "./GPA/4th-term/machine-learning/"
+    click 深度学习 "./GPA/5th-term/DeepLearning/"
+    click 数据挖掘 "./GPA/5th-term/data-mining/"
+    click 自然语言处理 "./GPA/6th-term/natural-language-processing/"
+    click 计算机视觉 "./GPA/6th-term/computer-vision/"
+    click 语音识别 "./GPA/6th-term/speech-recognition/"
+    click 智慧教育 "./GPA/6th-term/smart-education/"</code></pre>
+
+<figcaption>拓扑图1. 课程笔记</figcaption>
+
+<pre class="mermaid"><code>graph LR
+  %% 实体定义
+  algo(数据结构与算法专栏)
+  dev_tools(开发工具专栏)
+  fe(前端开发专栏)
+  be(后端开发专栏)
+  dev_ops(运维开发专栏)
+
+  %% 关系定义
+  algo --&gt; be
+  dev_tools --&gt; fe &amp; be &amp; dev_ops
+
+  %% 跳转链接
+  click algo "./ds-and-algo/"
+  click dev_tools "./dev-tools/"
+  click fe "./front-end/"
+  click be "./back-end/"
+  click dev_ops "./operation/"</code></pre>
+
+<figcaption>拓扑图2. 技术文章</figcaption
+
+</div>
 
 
 
@@ -3500,6 +3583,8 @@
 
   
 
+
+  
 
 
 <!-- 重载页面 -->
@@ -3578,17 +3663,19 @@
   
     
       
+        
+      
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
         
           
-          <a href="site-nav/" class="md-footer__link md-footer__link--next" aria-label="下一页: 站点导航">
+          <a href="GPA/" class="md-footer__link md-footer__link--next" aria-label="下一页: 基础专栏简介">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                站点导航
+                基础专栏简介
               </div>
             </div>
             <div class="md-footer__button md-icon">
