@@ -292,4 +292,40 @@
          <loc>https://wiki.dwj601.cn/front-end/javascript/javascript-basic/</loc>
          <lastmod>2025-02-25</lastmod>
     </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/nginx/nginx-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/nginx/nginx-command/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/nginx/solve-nginx-reload-error/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/nginx/whereis-nginx/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/safe/solve-server-invade/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/shell/shell-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/shell/solve-shell-problems/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/operation/shell/ubuntu-guide/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
 </urlset>
