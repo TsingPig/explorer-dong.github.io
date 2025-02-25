@@ -2,290 +2,294 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wiki.dwj601.cn/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/CPlusPlus/cpp-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/CPlusPlus/Crow/crow-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/DataBase/database-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/DataBase/MySQL/mysql-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/DataBase/MySQL/solve-mysql-problems/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/DataBase/openGauss/opengauss-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/DataBase/openGauss/opengauss-import-data/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/DataBase/openGauss/opengauss-remote-connect/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/Python/python-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/BackEnd/Python/Flask/deploy-flask/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/devcpp-lqb-config/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/idle-lqb-config/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/jetbrains-license/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/CLion/clion-config/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/CLion/solve-clion-problems/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/Git/git-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/Git/git-pull-request/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/Git/git-self-define-command/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/DevTools/Git/solve-git-problems/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/css-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/html-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/Hexo/build-your-own-website-with-hexo/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/Hexo/hexo-deployment/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/Hexo/hexo-enhancement/</loc>
-         <lastmod>2025-02-24</lastmod>
-    </url>
-    <url>
-         <loc>https://wiki.dwj601.cn/FrontEnd/JavaScript/javascript-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <loc>https://wiki.dwj601.cn/site-nav/</loc>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/1st-term/AdvancedMath/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/2nd-term/ObjectOrientedProgramming/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/3rd-term/CollegePhysics_2/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/3rd-term/DS%26Algo/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/3rd-term/DigitalLogicCircuit/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/3rd-term/LinearAlgebra/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/4th-term/OptMethod/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/4th-term/ProbAndStat/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/4th-term/PyAlgo/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/4th-term/PyApply/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/4th-term/SysBasic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/4th-term/machine-learning/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/5th-term/ComputerOrganization/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/5th-term/DataBase/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/5th-term/DeepLearning/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/5th-term/DigitalImageProcessing/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/5th-term/OperatingSystem/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/5th-term/data-mining/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/6th-term/computer-network/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/6th-term/computer-vision/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/6th-term/natural-language-processing/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/6th-term/smart-education/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/GPA/6th-term/speech-recognition/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Nginx/nginx-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Nginx/nginx-command/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Nginx/solve-nginx-reload-error/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Nginx/whereis-nginx/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Safe/solve-server-invade/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Shell/shell-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Shell/solve-shell-problems/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/Operation/Shell/ubuntu-guide/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/cplusplus/cpp-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/cplusplus/crow/crow-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/database/database-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/database/mysql/mysql-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/database/mysql/solve-mysql-problems/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/database/opengauss/opengauss-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/database/opengauss/opengauss-import-data/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/database/opengauss/opengauss-remote-connect/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/python/python-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/back-end/python/flask/deploy-flask/</loc>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/data-science/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/data-science/matplotlib-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/data-science/numpy-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/data-science/pandas-basic/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/devcpp-lqb-config/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/idle-lqb-config/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/jetbrains-license/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/clion/clion-config/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/clion/solve-clion-problems/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/git/git-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/git/git-pull-request/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/git/git-self-define-command/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/dev-tools/git/solve-git-problems/</loc>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/ds-and-algo/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/ds-and-algo/templates/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/ds-and-algo/examples/advanced-algo/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/ds-and-algo/examples/advanced-ds/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/ds-and-algo/examples/basic-algo/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
     </url>
     <url>
          <loc>https://wiki.dwj601.cn/ds-and-algo/examples/basic-ds/</loc>
-         <lastmod>2025-02-24</lastmod>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/css-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/html-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/hexo/build-your-own-website-with-hexo/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/hexo/hexo-deployment/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/hexo/hexo-enhancement/</loc>
+         <lastmod>2025-02-25</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.dwj601.cn/front-end/javascript/javascript-basic/</loc>
+         <lastmod>2025-02-25</lastmod>
     </url>
 </urlset>
