@@ -261,88 +261,54 @@ std::unordered_map<std::string, int, CustomHash<long long>> f3;
 
 ### 并查集
 
-=== "C++"
+```c++
+class DisjointSetUnion {
+    /* 并查集类
+    集合元素定义为从 0 开始的整数。
+    */
 
-    ```c++
-    class DisjointSetUnion {
-        /* 并查集类
-        集合元素定义为从 0 开始的整数。
-        */
-    
-        int sz;                // 集合个数
-        std::vector<int> p;    // p[i]表示第i个结点的祖宗编号
-        std::vector<int> cnt;  // cnt[i]表示第i个结点所在集合中的结点总数
-    
-    public:
-        DisjointSetUnion(int n) : p(n), cnt(n, 1) {
-            for (int i = 0; i < n; i++) {
-                p[i] = i;
-            }
-            sz = n;
-        }
-    
-        int find(int x) {
-            if (p[x] != x) {
-                p[x] = find(p[x]);
-            }
-            return p[x];
-        }
-    
-        void merge(int a, int b) {
-            int pa = find(a), pb = find(b);
-            if (pa != pb) {
-                p[pa] = pb;
-                cnt[pb] += cnt[pa];
-                sz--;
-            }
-        }
-    
-        bool same(int a, int b) {
-            return find(a) == find(b);
-        }
-    
-        int size() {
-            return sz;
-        }
-    
-        int size(int a) {
-            int pa = find(a);
-            return cnt[pa];
-        }
-    };
-    ```
+    int sz;                // 集合个数
+    std::vector<int> p;    // p[i]表示第i个结点的祖宗编号
+    std::vector<int> cnt;  // cnt[i]表示第i个结点所在集合中的结点总数
 
-=== "Python"
+public:
+    DisjointSetUnion(int n) : p(n), cnt(n, 1) {
+        for (int i = 0; i < n; i++) {
+            p[i] = i;
+        }
+        sz = n;
+    }
 
-    ```python
-    class DSU:
-        def __init__(self, n: int) -> None:
-            self.n = n
-            self.sz = n                       # 集合个数
-            self.p = [i for i in range(n)]    # p[i]表示第i个结点的祖宗编号
-            self.cnt = [1 for i in range(n)]  # cnt[i]表示第i个结点所在集合中的结点总数
-    
-        def find(self, a: int) -> int:
-            if self.p[a] != a:
-                self.p[a] = self.find(self.p[a])
-            return self.p[a]
-    
-        def merge(self, a: int, b: int) -> None:
-            pa, pb = self.find(a), self.find(b)
-            if pa != pb:
-                self.p[pa] = pb
-                self.cnt[pb] += self.cnt[pa]
-                self.sz -= 1
-    
-        def same(self, a: int, b: int) -> bool:
-            return self.find(a) == self.find(b)
-    
-        def size(self) -> int:
-            return self.sz
-    
-        def size(self, a: int) -> int:
-            return self.cnt[self.find(a)]
-    ```
+    int find(int x) {
+        if (p[x] != x) {
+            p[x] = find(p[x]);
+        }
+        return p[x];
+    }
+
+    void merge(int a, int b) {
+        int pa = find(a), pb = find(b);
+        if (pa != pb) {
+            p[pa] = pb;
+            cnt[pb] += cnt[pa];
+            sz--;
+        }
+    }
+
+    bool same(int a, int b) {
+        return find(a) == find(b);
+    }
+
+    int size() {
+        return sz;
+    }
+
+    int size(int a) {
+        int pa = find(a);
+        return cnt[pa];
+    }
+};
+```
 
 ### 树状数组
 

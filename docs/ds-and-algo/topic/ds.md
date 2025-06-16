@@ -11,12 +11,6 @@ title: 数据结构
 
 在面对一个实际问题时，我们往往需要考虑两个问题：需要存储什么信息？以及信息之间的组织方式是什么？一般而言，存储的都是数值数据或者数据之间的关系，组织方式有线性结构、树形结构、图结构共三种（有些教材会单独把集合拿出来，但由于集合的逻辑一般都通过树或图来实现，因此这里不单独罗列）。
 
-算法的五大特性。1）正确性；2）健壮性（鲁棒性）；3）可读性；4）可扩展性；5）高效率。其中高效率中又引出了复杂度的大 $O$ 表示法，具体地：
-
-- $O()$：即 `upper bound`，表示算法的「最坏」时间复杂度；
-- $\Omega()$：即 `lower bound`，表示算法的「最好」时间复杂度；
-- $\Theta()$：即 `average bound`，表示算法的「平均」时间复杂度。
-
 ## 链表
 
 相较于顺序表（数组）在内存上连续存在，链表因其独特的结构在内存上的分散存在的，这就使得链表有着一些独特的性质：
@@ -706,13 +700,7 @@ struct GListNode {
 
 上述方法都可以使用数组进行模拟。尤其是使用动态数组的多叉表示法，该方法也是算法竞赛中比较常见也比较方便的写法，后文默认使用该方法存储树。
 
-**二叉树**。即树中的每一个结点最多只有两个孩子结点。二叉树中有一些比较特殊的情况，即：
-
-1. 满二叉树：树的每一层都是满结点，假设根结点为第 $0$ 层，则满二叉树的第 $i$ 层就拥有 $2^i$ 个结点；
-2. 完全二叉树：对于一个 $k$ 层的二叉树（层数从 0 开始），其 $0\to k - 2$ 层都是满结点，第 $k-1$ 层的叶子结点从左到右依次排列；
-3. 线索二叉树：二叉树的扩展版，将二叉树中所有结点的空指针指向其前驱或后继结点。
-
-介绍两种二叉树的构造方法：
+**二叉树**。即树中的每一个结点最多只有两个孩子结点。介绍两种二叉树的构造方法：
 
 - 用一个含有空指针标记的遍历序列构造二叉树。有如下三种情况：
 
@@ -725,11 +713,19 @@ struct GListNode {
     1. 先序序列 + 中序序列：现在我们没有空指针标记了，那么如何确定递归终点呢？可以根据先序序列的首个元素在中序序列查询，查询结果的左半部分就是左子树，右半部分就是右子树，基于此进行构造即可；
     2. 后序序列 + 中序序列：与上述一致，不再赘述。
 
-**哈夫曼树**。一种利用贪心的算法思想设计出来的编码方式，可以达到最佳的编码压缩效果，从而提升数据在信道中的传输效率。我们定义一棵树的带权路径长度 (Weighted Path Length, WPL) 为所有叶子结点「路径长度 $\times$ 权重」之和。WPL 最小的树就叫做哈夫曼树。为了得到这样的一棵树，我们可以如下操作：每次选择权值最小的两个结点进行合并，得到一个分支结点，合并 $n-1$ 次之后得到的二叉树就是哈夫曼树。基于这棵哈夫曼树，我们就可以展开信息的编码与解码工作。
+假设树中结点从 $0$ 开始，那么 $i$ 号点父结点就是 $\lfloor (i-1)/2\rfloor$，左孩子就是 $2i+1$，右孩子就是 $2i+2$，利用这种性质，二叉树可以用线性表存储。
 
-**树的遍历**。可以使用 DFS 或者 BFS 的方式进行。以多叉有向树为例，假设树中每个结点都用一个数字 ID 来唯一表示，那么就有以下遍历伪代码：
+**满二叉树 & 完全二叉树**。满二叉树就是树的每一层都是满的，假设根结点为第 $0$ 层，则满二叉树的第 $i$ 层就拥有 $2^i$ 个结点。而完全二叉树就是满二叉树的最后一层从最右边开始缺少几个结点。
 
-=== "DFS"
+**线索二叉树**。二叉树的扩展版，将二叉树中所有结点的空指针指向其前驱或后继结点。
+
+**哈夫曼树**。一种利用贪心算法设计出来的字符 01 编码方式，可以达到最佳的编码压缩效果，从而提升数据在信道中的传输效率。我们定义一棵树的带权路径长度 (Weighted Path Length, WPL) 为所有叶子结点「路径长度 $\times$ 权重」之和。WPL 最小的树就叫做哈夫曼树。为了得到这样的一棵树，我们可以如下操作：每次选择权值最小的两个结点进行合并，得到一个分支结点，合并 $n-1$ 次之后得到的二叉树就是哈夫曼树。基于这棵哈夫曼树，我们就可以展开信息的编码与解码工作。
+
+### 树的遍历
+
+可以使用 DFS 或者 BFS 的方式进行。以多叉有向树为例，假设树中每个结点都用一个数字 ID 来唯一表示，那么就有以下遍历伪代码：
+
+=== "C++ DFS"
 
     ```c++
     vector<int> g[N];
@@ -744,7 +740,7 @@ struct GListNode {
     dfs(0)
     ```
 
-=== "BFS"
+=== "C++ BFS"
 
     ```c++
     vector<int> g[N];
@@ -770,10 +766,10 @@ struct GListNode {
     bfs(0)
     ```
 
-如果是无向树，那么遍历的时候要注意不能回过头又遍历到自己的父结点了。为了规避这个问题，有以下两种方法：
+值得注意的是，如果是无向树，那么遍历的时候要注意不能回过头又遍历到自己的父结点了。为了规避这个问题，有以下两种方法：
 
 - 新开一个元素值为 `bool` 的 vis 数组用来标记每一个结点是否被遍历过；
-- DFS 时多传一个父结点 ID 参数，用来标记子结点不要遍历父结点。
+- DFS 时多传一个父结点 ID 参数，BFS 时多保存一个父结点，让子结点知道其父结点是谁从而不要遍历父结点。
 
 ### 树的重心
 
@@ -1479,7 +1475,7 @@ class BookMyShow:
 
 ```
 
-### 例：营业额统计
+### 例：营业额统计🤨
 
 <https://www.luogu.com.cn/problem/P2234>
 
@@ -1600,7 +1596,7 @@ signed main() {
 }
 ```
 
-### 例：切蛋糕
+### 例：切蛋糕🤨
 
 <https://www.acwing.com/problem/content/description/5581/>
 
@@ -1668,7 +1664,7 @@ int main() {
 }
 ```
 
-### 例：将元素分配到两个数组 II
+### 例：元素分配问题 II🤨
 
 <https://leetcode.cn/problems/distribute-elements-into-two-arrays-ii/description/>
 
@@ -1858,112 +1854,537 @@ class Solution:
 
 ## 堆
 
-### 普通堆
+堆是一种利用完全二叉树实现的数据结构，树中的结点拥有权值（下列比大小均为结点的权值比较）。根据不同的性质，堆分为以下两种：
 
-堆是一种特殊的树，可以通过一个一维数组来实现该数据结构。具体地，我们利用一个一维数组来模拟一棵完全二叉树，如果这棵完全二叉树满足：
+- 若任意一个非叶子结点 $\le$ 它的子结点，则称该堆为「小根堆/小顶堆」，堆顶即为全局最小；
+- 若任意一个非叶子结点 $\ge$ 它的子结点，则称该堆为「大根堆/大顶堆」，堆顶即为全局最大。
 
-- 任意一个非叶子结点 $\le$ 它的子结点，则称该完全二叉树为「小顶堆」；
-- 任意一个非叶子结点 $\ge$ 它的子结点，则称该完全二叉树为「大顶堆」。
+记堆为 `h`，完全二叉树中最后一层的最后一个元素下标为 `last`。堆可以在满足上述性质的情况下高效完成以下三种操作：
 
-利用堆结构，我们可以 $O(1)$ 得到序列最值，因此如果我们能够在可接受的计算开销下动态维护序列的堆结构，那么就可以很方便的维护序列的最值。
+- 增，即向堆中插入一个元素：`heappush(h, x)`，时间复杂度 $O(\log n)$。具体实现上，可以从 `h[last + 1]` 赋成 `x` 并逐层往上与其父结点进行比较然后执行可能的交换操作，我们将该操作记作 `up()`；
+- 删，即删除堆顶元素：`heappop(h)`，时间复杂度 $O(\log n)$。具体实现上，可以从将 `h[last]` 替换 `h[0]`，然后将 `last -= 1` 表示堆中少了一个元素，最后将 `h[0]` 逐层往下与其子结点进行比较并执行可能的交换操作，我们将该操作记作 `down()`；
+- 查，即查询堆顶元素：`print(h[0])`，时间复杂度 $O(1)$。
 
-动态维护堆结构的逻辑并不复杂，以小顶堆为例。如果要改变堆中任意一个元素，无非就是将新元素递归地与子结点交换（这被称为 `down()` 操作），或者将新元素递归地与父结点交换（这被称为 `up()` 操作）。
+### 例：堆排序
 
-下面具体介绍堆支持的操作与算法逻辑。记堆中最后一层的最后一个元素在堆中的下标索引为 `last`：
-
-- 插入一个元素。从根结点开始 `down()`，或从 `last` 开始 `up()`；
-- 输出最值。返回根结点；
-- 删除最值（如果不唯一则只删除一个）。将 `heap[last]` 从根结点开始 `down()`；
-- 删除任意一个元素。将 `heap[last]` 从待删除元素的位置开始，如果比原来的数大就往下 `down()`，反之就往上 `up()`，如果相等就不用操作；
-- 修改任意一个元素。与删除元素逻辑类似。
-
-### 对顶堆
-
-TODO
-
-### 例：淘汰赛
-
-<https://www.luogu.com.cn/problem/P4715>
-
-> 题意：给定 $2^n$ 支球队的编号与能力值，进行淘汰赛，能力值者晋级下一轮直到赛出冠军。输出亚军编号
+> 借着这道题将堆的所有操作和写法全部梳理一遍。
 >
-> 思路：很显然的一个完全二叉树的题目。我们都不需要进行递归操作，直接利用完全二叉树的下标性质利用数组模拟循环计算即可。给出的信息就是完全二叉树的全部叶子结点的信息，分别为球队编号 id 与球队能力值 val，我们从第 n-1 个结点开始循环枚举到第 1 个结点计算每一轮的胜者信息，最终输出最后一场的能力值较小者球队编号即可
+> *注：这是一种不稳定的排序算法。
 >
-> 时间复杂度：$\Theta(2n)$
+> *注：本题数组下标从 $0$ 开始。
 
-```cpp
-#include <bits/stdc++.h>
-#define int long long
-using namespace std;
+题意：给定 $n$ 个数，输出前 $m$ 小的数。
 
-const int N = 1 << 8;
+思路：
 
-struct Node {
-    int id, val;
-} a[N];
+1. 维护堆结构。可以利用完全二叉树的性质，对于一个大小为 $n$ 的完全二叉树，其后 $n/2$ 个元素都一定满足堆的定义，因此只需要对前 $n/2$ 个元素执行 `down()` 操作即可，使用错位相减法容易计算出，该操作是 $O(n)$ 的。当然也可以从次顶层开始逐结点执行 `up()` 操作来维护，这种初始化方法显然就是 $O(n\log n)$ 的了；
+2. 输出堆顶并重新维护堆结构。输出是 $O(1)$ 的，重新维护堆结构其实就是删除完全二叉树的根结点。这里有一个技巧，就是将数组中的最后一个树中元素 `h[last]` 替换掉数组中的第一个元素 `h[0]`，然后 `down(h[0])` 即可重新维护出堆结构，该操作是 $O(\log n)$ 的。
 
-int n;
+时间复杂度：$O(n\log n)$
 
-void solve() {
-    cin >> n;
+=== "Python 迭代写法"
+
+    ```python hl_lines="5-27"
+    n, m = map(int, input().strip().split())
+    h = list(map(int, input().strip().split()))
+    last = n - 1
     
-    n = 1 << n;
+    def down(u: int) -> None:
+        t = u  # 最小值下标
+        l, r = 2 * u + 1, 2 * u + 2
+        while True:
+            # 找到最小值的下标
+            if l <= last and h[l] < h[t]:
+                t = l
+            if r <= last and h[r] < h[t]:
+                t = r
+            # 考虑交换
+            if t == u:
+                break
+            else:
+                h[t], h[u] = h[u], h[t]
+                u = t
+                l, r = 2 * u + 1, 2 * u + 2
     
-    for (int i = n; i <= 2 * n - 1; i++) {
-        a[i].id = i - n + 1;
-        cin >> a[i].val;
+    def up(u: int) -> None:
+        fa = (u - 1) // 2
+        while fa >= 0 and h[u] < h[fa]:
+            h[u], h[fa] = h[fa], h[u]
+            u = fa
+            fa = (u - 1) // 2
+    
+    if __name__ == "__main__":
+        # 初始化堆结构。写法一：从次底层开始往下 down，时间复杂度 O(n)
+        for i in range(n // 2, -1, -1):
+            down(i)
+    
+        # 初始化堆结构。写法二：从次顶层开始往上 up，时间复杂度 O(nlogn)
+        # for i in range(1, n):
+        #     up(i)
+    
+        # 输出堆顶 + 维护堆结构
+        OUTs = []
+        for _ in range(m):
+            # 输出堆顶
+            OUTs.append(h[0])
+    
+            # 维护堆结构
+            h[0] = h[last]
+            last -=1
+            down(0)
+        print(' '.join(map(str, OUTs)))
+    ```
+
+=== "Python 递归写法"
+
+    ```python hl_lines="5-22"
+    n, m = map(int, input().strip().split())
+    h = list(map(int, input().strip().split()))
+    last = n - 1
+    
+    def down(u: int) -> None:
+        t = u  # 最小值下标
+        l, r = 2 * u + 1, 2 * u + 2
+    
+        if l <= last and h[l] < h[t]:
+            t = l
+        if r <= last and h[r] < h[t]:
+            t = r
+    
+        if t != u:
+            h[t], h[u] = h[u], h[t]
+            down(t)
+    
+    def up(u: int) -> None:
+        fa = (u - 1) // 2
+        if fa >= 0 and h[u] < h[fa]:
+            h[u], h[fa] = h[fa], h[u]
+            up(fa)
+    
+    if __name__ == "__main__":
+        # 初始化堆结构。写法一：从次底层开始往下 down，时间复杂度 O(n)
+        # for i in range(n // 2, -1, -1):
+        #     down(i)
+    
+        # 初始化堆结构。写法二：从次顶层开始往上 up，时间复杂度 O(nlogn)
+        for i in range(1, n):
+            up(i)
+    
+        # 输出堆顶 + 维护堆结构
+        OUTs = []
+        for _ in range(m):
+            # 输出堆顶
+            OUTs.append(h[0])
+    
+            # 维护堆结构
+            h[0] = h[last]
+            last -=1
+            down(0)
+        print(' '.join(map(str, OUTs)))
+    ```
+
+=== "C++ 迭代写法"
+
+    ```c++ hl_lines="9-41"
+    #include <iostream>
+    
+    using namespace std;
+    
+    int n, m;
+    int heap[100010];
+    int last;
+    
+    void down(int u) {
+        int l = 2 * u + 1;
+        int r = 2 * u + 2;
+        int t = u;
+    
+        while (true) {
+            if (l <= last && heap[u] > heap[l]) {
+                t = l;
+            }
+            if (r <= last && heap[u] > heap[r] && heap[r] < heap[l]) {
+                t = r;
+            }
+    
+            if (t != u) {
+                swap(heap[t], heap[u]);
+                u = t;
+                l = 2 * u + 1;
+                r = 2 * u + 2;
+            } else {
+                break;
+            }
+        }
     }
     
-    for (int i = n - 1; i >= 1; i--)
-        if (a[i * 2].val > a[i * 2 + 1].val) a[i] = a[i * 2];
-        else a[i] = a[i * 2 + 1];
-            
-    if (a[2].val > a[3].val) cout << a[3].id;
-    else cout << a[2].id;
-}
+    void up(int u) {
+        int fa = (u - 1) / 2;
+    
+        while (fa >= 0 && heap[fa] > heap[u]) {
+            swap(heap[fa], heap[u]);
+            u = fa;
+            fa = (u - 1) / 2;
+        }
+    }
+    
+    int main() {
+        cin >> n >> m;
+        for (int i = 0; i < n; i++) {
+            cin >> heap[i];
+        }
+        last = n - 1;
+    
+        // 初始化堆结构（以从上往下为例）
+        for (int i = n / 2; i >= 0; i--) {
+            down(i);
+        }
+    
+        // 也可以从下往上初始化
+        // for (int i = 1; i < n; i++) {
+        //     up(i);
+        // }
+    
+        // 输出堆顶 + 重新维护堆结构
+        for (int i = 0; i < m; i++) {
+            cout << heap[0] << " ";
+            heap[0] = heap[last--];
+            down(0);
+        }
+    
+        return 0;
+    }
+    ```
 
-signed main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr), cout.tie(nullptr);
-    int T = 1;
-//    cin >> T;
-    while (T--) solve();
-    return 0;
-}
-```
+=== "C++ 递归写法"
+
+    ```c++ hl_lines="9-34"
+    #include <iostream>
+    
+    using namespace std;
+    
+    int n, m;
+    int heap[100010];
+    int last;
+    
+    void down(int u) {
+        int l = 2 * u + 1;
+        int r = 2 * u + 2;
+    
+        int t = u;
+        if (l <= last && heap[u] > heap[l]) {
+            t = l;
+        }
+        if (r <= last && heap[u] > heap[r] && heap[r] < heap[l]) {
+            t = r;
+        }
+    
+        if (t != u) {
+            swap(heap[t], heap[u]);
+            down(t);
+        }
+    }
+    
+    void up(int u) {
+        int fa = (u - 1) / 2;
+    
+        if (fa >= 0 && heap[fa] > heap[u]) {
+            swap(heap[fa], heap[u]);
+            up(fa);
+        }
+    }
+    
+    int main() {
+        cin >> n >> m;
+        for (int i = 0; i < n; i++) {
+            cin >> heap[i];
+        }
+        last = n - 1;
+    
+        // 初始化堆结构（以从上往下为例）
+        for (int i = n / 2; i >= 0; i--) {
+            down(i);
+        }
+        
+        // 也可以从下往上初始化
+        // for (int i = 1; i < n; i++) {
+        //     up(i);
+        // }
+    
+        // 输出堆顶 + 重新维护堆结构
+        for (int i = 0; i < m; i++) {
+            cout << heap[0] << " ";
+            heap[0] = heap[last--];
+            down(0);
+        }
+    
+        return 0;
+    }
+    ```
 
 ## 并查集
 
-### 基础并查集
+并查集 (Disjoint Set Union, DSU) 一般用来解决集合问题。代码实现上，并查集是一个由多棵有向根树组成的森林。如下图所示：
 
-并查集虽然一般用来解决集合问题，但数据结构实现上本质是一个由多棵有向根树组成的森林。在采用了路径压缩和按秩合并后，每一次查询与插入的时间复杂度都会均摊为一个常数。
+<img src="https://cdn.dwj601.cn/images/20250614194500971.svg" alt="并查集结构示意图" style="zoom:200%;" />
 
-### 带权并查集
+**初始化**。从上图可以看到，每个结点都存储了指向父结点的指针，每一棵树都表示一个集合。下面是一个并查集的初始化代码：
 
-例题：[洛谷](https://www.luogu.com.cn/problem/P1525)
+```python
+class DSU:
+    def __init__(self, n: int):
+        """初始化一个含有 n 个元素的并查集，元素下标范围为 [0, n-1]"""
+        self.p = [i for i in range(n)]  # p[i] 表示 i 号点的祖先结点编号
+        self.cnt = [1] * n  # cnt[i] 表示 i 号点所在集合的元素个数
+        self.set_cnt = n  # 集合的个数
+```
 
-民间博客：[Blog](https://www.luogu.com.cn/article/kx2if31n)
+**元素查询**。为了查询两个元素 a 和 b 是否属于同一个集合，最直观的方式就是查询 a 和 b 的祖先是否相同。显然我们可以循着 p 数组一路向上查。如下图红色路径所示：
 
-### 例：关押罪犯
+<img src="https://cdn.dwj601.cn/images/20250614202404928.svg" alt="朴素查询" style="zoom:200%;" />
 
-OJ：[洛谷](https://www.luogu.com.cn/problem/P1525)
+但如果树退化成了链，那么单次查询的时间复杂度就退化到了 $O(n)$。考虑「路径压缩」，即调整查询路径上所有结点的祖先结点为根结点：
+
+![路径压缩](https://cdn.dwj601.cn/images/20250614202541149.png)
+
+这样后续查询「之前查过路径上的结点」的祖先结点时，时间复杂度就是 $O(1)$ 的了。
+
+递归版代码示例：
+
+=== "Python 朴素查询"
+
+    ```python
+    def find(self, a: int) -> int:
+        """返回 a 号点的祖先结点"""
+        if self.p[a] == a:
+            return a
+        return self.find(self.p[a])
+    ```
+
+=== "Python 路径压缩"
+
+    ```python
+    def find(self, a: int) -> int:
+        """返回 a 号点的祖先结点"""
+        if self.p[a] != a:
+            self.p[a] = self.find(self.p[a])
+        return self.p[a]
+    ```
+
+迭代版代码示例：
+
+=== "Python 朴素查询"
+
+    ```python
+    def find(self, a: int) -> int:
+        """返回 a 号点的祖先结点"""
+        while self.p[a] != a:
+            a = self.p[a]
+        return a
+    ```
+
+=== "Python 路径压缩"
+
+    ```python
+    def find(self, a: int) -> int:
+        """返回 a 号点的祖先结点"""
+        root = a
+        # 先找到根结点
+        while self.p[root] != root:
+            root = self.p[root]
+        # 再走一遍进行路径压缩
+        while self.p[a] != a:
+            a = self.p[a]
+            self.p[a] = root
+        return root
+    ```
+
+**集合合并**。为了合并结点 a 和结点 b 所在的两个集合，代码实现上就是合并结点 a 和结点 b 所在的两棵树。显然维护某一棵树的根结点为另一颗树的根结点即可，如下图所示：
+
+<img src="https://cdn.dwj601.cn/images/20250614204835305.svg" alt="集合合并" style="zoom:200%;" />
+
+那么问题来了，到底谁“臣服”于谁？这里引出了并查集的另一个优化技巧，也就是所谓的「按秩合并」，也叫「启发式合并」。这里的“秩”可以是树的深度也可以是树的结点数量，即应当是树的深度更小的或者树的结点数更少的合并到另一棵树上，两种度量标准带来的时间开销是一致的 [^dsu]，就以树的大小为例（所以如果按照启发式合并的规则，上图应当是右边合并到左边）。代码实现上：
+
+=== "Python 朴素合并"
+
+    ```python
+    def merge(self, a: int, b: int) -> None:
+        """合并结点 a 和结点 b 所在的集合"""
+        pa, pb = self.find(a), self.find(b)
+        if pa == pb:
+            return
+        self.set_cnt -= 1
+        # 随意合并，以将 a 所在集合合并到 b 所在集合为例
+        self.p[pa] = pb
+        self.cnt[pb] += self.cnt[pa]
+    ```
+
+=== "Python 按秩合并"
+
+    ```python
+    def merge(self, a: int, b: int) -> None:
+        """合并结点 a 和结点 b 所在的集合"""
+        pa, pb = self.find(a), self.find(b)
+        if pa == pb:
+            return
+        self.set_cnt -= 1
+        if self.cnt[pa] < self.cnt[pb]:
+            self.p[pa] = pb
+            self.cnt[pb] += self.cnt[pa]
+        else:
+            self.p[pb] = pa
+            self.cnt[pa] += self.cnt[pb]
+    ```
+
+[^dsu]: Gabow, H. N., & Tarjan, R. E. (1985). A Linear-Time Algorithm for a Special Case of Disjoint Set Union. JOURNAL OF COMPUTER AND SYSTEM SCIENCES, 30, 209-221.
+
+### 例：Milk Visits S
+
+> 经典之处：树链 $\xrightarrow[]{切换视角}$ 集合
+>
+> 难度：洛谷 绿
+>
+> OJ：[洛谷](https://www.luogu.com.cn/problem/P5836)
+
+题意：给定一棵含有 $n\ (1\le n\le 10^5)$ 个结点的树，树上的结点被标记为 $H$ 和 $G$ 两种。现在进行 $m\ (1\le m\le 10^5)$ 次查询，每次查询树上两个结点 $u,v\ (1\le u,v\le n)$ 的简单路径上是否存在 $H$ 或 $G$ 标记，如果存在输出 $1$，反之输出 $0$。
+
+思路：如何快速判断树上任意两点的简单路径上是否存在某种标记？考虑使用并查集将「相同标记的相邻结点」进行合并。合并后，如果两个 $u,v$ 不在同一个集合，那么说明简单路径上一定存在 $H$ 和 $G$ 两种标记，一定可以满足要求；反之如果 $u,v$ 同属一个集合，那么判断当前集合对应的标记是否满足查询即可。
+
+时间复杂度：$O(n)$
+
+=== "Python"
+
+    ```python
+    class DSU:
+        def __init__(self, n: int):
+            """初始化一个含有 n 个元素的并查集，元素下标范围为 [0, n-1]"""
+            self.p = [i for i in range(n)]  # p[i] 表示 i 号点的祖先结点编号
+            self.cnt = [1] * n  # cnt[i] 表示 i 号点所在集合的元素个数
+            self.set_cnt = n  # 集合的个数
+    
+        def find(self, a: int) -> int:
+            """返回 a 号点的祖先结点"""
+            root = a
+            # 先找到根结点
+            while self.p[root] != root:
+                root = self.p[root]
+            # 再走一遍进行路径压缩
+            while self.p[a] != a:
+                a = self.p[a]
+                self.p[a] = root
+            return root
+    
+        def merge(self, a: int, b: int) -> None:
+            """合并结点 a 和结点 b 所在的集合"""
+            pa, pb = self.find(a), self.find(b)
+            if pa == pb:
+                return
+            self.set_cnt -= 1
+            if self.cnt[pa] < self.cnt[pb]:
+                self.p[pa] = pb
+                self.cnt[pb] += self.cnt[pa]
+            else:
+                self.p[pb] = pa
+                self.cnt[pa] += self.cnt[pb]
+    
+        def size(self, a: int) -> int:
+            """返回结点 a 所在集合的元素个数"""
+            return self.cnt[self.find(a)]
+    
+        def size(self) -> int:
+            """返回并查集中集合的个数"""
+            return self.set_cnt
+    
+        def same(self, a: int, b: int) -> bool:
+            """判断结点 a 和结点 b 是否在同一个集合中"""
+            return self.find(a) == self.find(b)
+
+
+    from collections import deque
+    
+    # 快读
+    import sys
+    input = lambda: sys.stdin.readline().strip()
+    
+    # 处理输入
+    n, m = map(int, input().strip().split())
+    label = ' ' + input().strip()
+    g = [[] for _ in range(n + 1)]
+    for _ in range(n - 1):
+        u, v = map(int, input().strip().split())
+        g[u].append(v)
+        g[v].append(u)
+    
+    # 合并树链
+    dsu = DSU(n + 1)
+    q = deque()
+    vis = [False] * (n + 1)
+    q.append(1)
+    vis[1] = True
+    while len(q):
+        now = q.popleft()
+        for ch in g[now]:
+            if vis[ch]:
+                continue
+            if label[now] == label[ch]:
+                dsu.merge(now, ch)
+            q.append(ch)
+            vis[ch] = True
+    
+    # 处理查询
+    ans = ""
+    for _ in range(m):
+        u, v, lab = map(str, input().strip().split())
+        u, v = int(u), int(v)
+    
+        if not dsu.same(u, v) or label[dsu.find(u)] == lab:
+            ans += '1'
+        else:
+            ans += '0'
+    print(ans)
+    ```
+
+### 例：减少恶意软件的传播 II🤨
+
+> 经典之处：
+>
+> 难度：CF 1400 *
+>
+> OJ：[力扣](https://leetcode.cn/problems/minimize-malware-spread-ii/description/)
+
+题意：给定一个由邻接矩阵存储的无向图，其中某些结点具备感染能力，可以感染相连的所有结点，问删除哪一个具有感染能力的结点可以使得最终不被感染的结点数量尽可能少，给出在图中的编号最小的结点编号。
+
+*注：弱化版仅为消除感染能力，过于简单，这里只介绍增强版。
+
+=== "Python"
+
+    ```python
+    
+    ```
+
+### 例：关押罪犯🤨
+
+> 经典之处：带权并查集
+>
+> 难度：洛谷 绿
+>
+> OJ：[洛谷](https://www.luogu.com.cn/problem/P1525)
 
 题意：给定一个含有 $n\ (n\le2\cdot 10^4)$ 个顶点 $m\ (m\le10^5)$ 条边的无向图，没有重边和自环，边权 $w\ (1\le w_i\le 10^9)$ 为正。现在需要将图中所有的顶点分为两部分，使得两部分中最大的边权尽可能小，输出该最小边权。
-
-思路一：拓展域并查集
-
-- TODO
 
 思路二：二分图 + 二分查找
 
 - 假设答案是 $m$ 条边中某一条的权重 $w_i$，那么所有权重小于 $w_i$ 的边对应的顶点如何分配无关紧要，我们只关注边权大于 $w_i$ 的边对应的顶点能不能被分到两部分。也就是说我们只关心边权大于 $w_i$ 的边对应的顶点组成的图是否可二分。采用染色法即可快速判定一个图是否可二分。注意这里的可二分的图其实不符合「二分图」的严格定义，因为两个部分的顶点之间可能有连边；
-- 由于 $w_i$ 越小需要判断的顶点数就越多，具备二分性。因此我们直接在 $m$ 条边中二分查找最小的符合条件的边即可。
+- 由于 $w_i$ 越小需要判断的顶点数就越多，具备二分性。因此我们直接在 $m$ 条边中二分查找最小的符合条件的边即可；
+- 时间复杂度：$O(m\log n)$
 
-时间复杂度：$O(m\log n)$
+思路二：带权并查集
+
+- TODO，参考 [Blog](https://www.luogu.com.cn/article/kx2if31n)。
 
 *[二分图]: 又称二部图 (Bipartite Graph)。定义为：节点由两个集合组成，且两个集合内部没有边的图。
 
-=== "Python 二分"
+=== "Python 二分图 + 二分查找"
 
     ```cpp
     from collections import deque
@@ -2017,7 +2438,7 @@ OJ：[洛谷](https://www.luogu.com.cn/problem/P1525)
     print(edges[r][2])
     ```
 
-=== "Python 并查集"
+=== "Python 带权并查集"
 
     ```python
     class DSU:
@@ -2071,266 +2492,3 @@ OJ：[洛谷](https://www.luogu.com.cn/problem/P1525)
 
 - [洛谷 绿 | The Door Problem | 洛谷 - (www.luogu.com.cn)](https://www.luogu.com.cn/problem/CF776D)
 - [洛谷 绿 | 食物链 | 洛谷 - (www.luogu.com.cn)](https://www.luogu.com.cn/problem/P2024)
-
-### 例：Milk Visits S
-
-<https://www.luogu.com.cn/problem/P5836>
-
-> 题意：给定一棵树，结点被标记成两种，一种是 H，一种是 G，在每一次查询中，需要知道指定的两个结点之间是否含有某一种标记
->
-> 思路：对于树上标记，我们可以将相同颜色的分支连成一个连通块
->
-> - 如果查询的两个结点在同一个连通块，则查询两个结点所在的颜色与所需的颜色是否匹配即可
-> - 如果查询的两个结点不在同一个连通块，两个结点之间的路径一定是覆盖了两种颜色的标记，则答案一定是 1
->
-> 时间复杂度：$\Theta(n+m)$
-
-```cpp
-const int N = 100010;
-
-int n, m, p[N];
-char col[N];
-
-int find(int x) {
-    if (p[x] != x) {
-        p[x] = find(p[x]);
-    }
-    return p[x];
-}
-
-void solve() {
-    cin >> n >> m;
-    cin >> (col + 1);
-
-    for (int i = 1; i <= n; i++) {
-        p[i] = i;
-    }
-
-    for (int i = 1; i <= n - 1; i++) {
-        int a, b;
-        cin >> a >> b;
-        if (col[a] == col[b]) {
-            p[find(a)] = find(b);
-        }
-    }
-
-    string res;
-
-    while (m--) {
-        int u, v;
-        cin >> u >> v;
-
-        char cow;
-        cin >> cow;
-
-        if (find(u) == find(v)) {
-            res += to_string(col[u] == cow);
-        } else {
-            res += '1';
-        }
-    }
-
-    cout << res << "\n";
-}
-```
-
-### 例：尽量减少恶意软件的传播
-
-<https://leetcode.cn/problems/minimize-malware-spread/description/>
-
->题意：给定一个由邻接矩阵存储的无向图，其中某些结点具备感染能力，可以感染相连的所有结点，问消除哪一个结点的感染能力可以使得最终不被感染的结点数量尽可能少，给出消除的有感染能力的最小结点编号
->
->思路：很显然我们可以将当前无向图的多个连通分量，共三种感染情况：
->
->1. 如果一个连通分量中含有 $\ge 2$ 个感染结点，则当前连通分量一定会被全部感染；
->
->2. 如果一个连通块中含有 $0$ 个感染结点，则无需任何操作；
->
->3. 如果一个连通块中含有 $1$ 个感染结点，则最佳实践就是移除该连通块中唯一的那个感染结点。
->
->当然了，由于只能移走一个感染结点，我们需要从所有只含有 $1$ 个感染结点的连通块中移走连通块结点最多的那个感染结点。因此我们需要统计每一个连通分量中感染结点的数量以及总结点数，采用并查集进行统计。需要注意的是题目中的“索引最小”指的是结点编号最小而非结点在序列 $initial$ 中的下标最小。算法流程见代码。
->
->时间复杂度：$O(n^2)$
-
-```cpp
-class Solution {
-public:
-    int p[310];
-
-    int Find(int x) {
-        if (x != p[x]) p[x] = Find(p[x]);
-        return p[x];
-    }
-
-    int minMalwareSpread(vector<vector<int>>& graph, vector<int>& initial) {
-        // 1. 维护并查集数组：p[]
-        int n = graph.size();
-        for (int i = 0; i < n; i++) p[i] = i;
-        for (int i = 0; i < n; i++)
-            for (int j = 0; j < n; j++)
-                if (graph[i][j])
-                    p[Find(i)] = Find(j);
-
-        // 2. 维护哈希表：每一个连通块中的感染结点数、总结点数
-        unordered_map<int, pair<int, int>> ha;
-        for (auto& x: initial) ha[Find(x)].first++;
-        for (int i = 0; i < n; i++) ha[Find(i)].second++;
-
-        // 3. 排序：按照感染结点数升序，总结点数降序
-        vector<pair<int, int>> v;
-        for (auto& it: ha) v.push_back(it.second);
-        sort(v.begin(), v.end(), [&](pair<int, int>& x, pair<int, int>& y){
-            if (x.first == y.first) return x.second > y.second;
-            return x.first < y.first;
-        });
-
-        // 4. 寻找符合条件的连通块属性：找到序列中第一个含有 1 个感染结点的连通块祖宗结点编号 idx
-        int idx = -1;
-        for (int i = 0; i < v.size(); i++) {
-            if (v[i].first == 1) {
-                idx = i;
-                break;
-            }
-        }
-
-        // 5. 返回答案：比对感染结点所在的连通块属性与目标连通块属性
-        if (idx == -1) {
-            // 特判没有连通块只含有 1 个感染结点的情况
-            return *min_element(initial.begin(), initial.end());
-        }
-        
-        int res = n + 10;
-        for (auto& x: initial) {
-            int px = Find(x);
-            if (ha[px].first == v[idx].first && ha[px].second == v[idx].second) {
-                res = min(res, x);
-            }
-        }
-
-        return res;
-    }
-};
-```
-
-### 例：账户合并
-
-<https://leetcode.cn/problems/accounts-merge/>
-
-> 题意：给定 n 个账户，每一个账户含有一个用户名和最多 m 个绑定的邮箱。由于一个用户可能注册多个账户，因此我们需要对所有的账户进行合并使得一个用户对应一个账户。合并的规则是将所有「含有相同邮箱的账户」视作同一个用户注册的账户。返回合并后的账户列表。
->
-> 思路：这道题的需求很显然，我们需要合并含有相同邮箱的账户。显然有一个暴力的做法，我们直接枚举每一个账户中所有的邮箱，接着枚举剩余账户中的邮箱进行匹配，匹配上就进行合并，但这样做显然会造成大量的冗余匹配和冗余合并，我们不妨将这两个过程进行拆分。我们需要解决两个问题：
->
-> - 哪些账户需要合并？很容易想到并查集这样的数据结构。我们使用哈希表存储每一个邮箱的账户编号，最后进行集合合并即可维护好每一个账号归属的集合编号。$O(nm)$
-> - 如何合并指定账户？对于上述维护好的集合编号，我们需要合并所有含有相同“祖先”的账户。排序去重或使用有序列表均可实现。$O(n\log n)$
->
-> 时间复杂度：$O(n\log n)$
-
-```cpp
-struct dsu {
-    int n;
-    std::vector<int> p;
-    dsu(int _n) { n = _n; p.resize(n + 1); for (int i = 1; i <= n; i++) p[i] = i; }
-    int find(int x) { return (p[x] == x ? p[x] : p[x] = find(p[x])); }
-    void merge(int a, int b) { p[find(a)] = find(b); }
-    bool query(int a, int b) { return find(a) == find(b); }
-    int block() { int ret = 0; for (int i = 1; i <= n; i++) ret += p[i] == i; return ret; }
-};
-
-class Solution {
-public:
-    vector<vector<string>> accountsMerge(vector<vector<string>>& accounts) {
-        // 维护每一个子账户归属的集合
-        int n = accounts.size();
-        unordered_map<string, vector<int>> hash;
-        for (int i = 1; i <= n; i++) {
-            for (int j = 1; j < accounts[i - 1].size(); j++) {
-                hash[accounts[i - 1][j]].push_back(i);
-            }
-        }        
-        dsu d(n);
-        for (auto& it: hash) {
-            vector<int> v = it.second;
-            for (int i = 1; i < v.size(); i++) {
-                d.merge(v[i - 1], v[i]);
-            }
-        }
-
-        // 按照子账户归属的集合合并出最终的账户
-        unordered_set<int> fa;
-        for (int i = 1; i <= n; i++) {
-            fa.insert(d.find(i));
-        }
-        vector<vector<string>> res;
-        for (auto p: fa) {
-            set<string> se;
-            vector<string> ans;
-            for (int i = 1; i <= n; i++) {
-                if (d.find(i) == p) {
-                    if (ans.empty()) {
-                        ans.push_back(accounts[i - 1][0]);
-                    }
-                    for (int j = 1; j < accounts[i - 1].size(); j++) {
-                        se.insert(accounts[i - 1][j]);
-                    }
-                }
-            }
-            for (auto mail: se) {
-                ans.push_back(mail);
-            }
-            res.push_back(ans);
-        }
-
-        return res;
-    }
-};
-```
-
-```python
-class dsu:
-    def __init__(self, n: int) -> None:
-        self.n = n
-        self.p = [i for i in range(n + 1)]
-    def find(self, x: int) -> int:
-        if self.p[x] != x: self.p[x] = self.find(self.p[x])
-        return self.p[x]
-    def merge(self, a: int, b: int) -> None:
-        self.p[self.find(a)] = self.find(b)
-    def query(self, a: int, b: int) -> bool:
-        return self.find(a) == self.find(b)
-    def block(self) -> int:
-        return sum([1 for i in range(1, self.n + 1) if self.p[i] == i])
-
-class Solution:
-    def accountsMerge(self, accounts: List[List[str]]) -> List[List[str]]:
-        from collections import defaultdict
-        
-        n = len(accounts)
-        hash = defaultdict(list)
-        for i in range(1, n + 1):
-            for j in range(1, len(accounts[i - 1])):
-                hash[accounts[i - 1][j]].append(i)
-        
-        d = dsu(n)
-        for _, ids in hash.items():
-            for i in range(1, len(ids)):
-                d.merge(ids[i - 1], ids[i])
-        
-        fa = set()
-        for i in range(1, n + 1):
-            fa.add(d.find(i))
-        
-        res = []
-        for p in fa:
-            ans = []
-            se = set()
-            for i in range(1, n + 1):
-                if d.find(i) == p:
-                    if len(ans) == 0:
-                        ans.append(accounts[i - 1][0])
-                    for j in range(1, len(accounts[i - 1])):
-                        se.add(accounts[i - 1][j])
-            ans += sorted(se)
-            res.append(ans)
-        
-        return res
-```
