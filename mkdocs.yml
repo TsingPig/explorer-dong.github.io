@@ -215,11 +215,8 @@ nav:
         - base/ai/computer-vision/index.md
         - base/ai/computer-vision/image-classification.md
         - base/ai/computer-vision/object-detection.md
-        - base/ai/computer-vision/image-segmentation.md
         - base/ai/computer-vision/image-super-resolution.md
-        - base/ai/computer-vision/video-classification.md
-        - base/ai/computer-vision/action-detection.md
-        - base/ai/computer-vision/video-segmentation.md
+        - base/ai/computer-vision/video-understanding.md
       - 知识图谱:
         - base/ai/knowledge-graph/index.md
         - base/ai/knowledge-graph/kg-acquisition.md

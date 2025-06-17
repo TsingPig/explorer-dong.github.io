@@ -4,7 +4,10 @@ title: 循环神经网络
 
 ![循环神经网络](https://cdn.dwj601.cn/images/20250530235002487.png)
 
-参考：[循环神经网络输入输出究竟是怎样的 | Peace - (www.zhihu.com)](https://www.zhihu.com/question/41949741/answer/318771336)
+参考：
+
+- [循环神经网络输入输出究竟是怎样的 | Peace - (www.zhihu.com)](https://www.zhihu.com/question/41949741/answer/318771336)
+- [LSTM 模型结构的可视化 | master苏 - (zhuanlan.zhihu.com)](https://zhuanlan.zhihu.com/p/139617364)
 
 循环神经网络 (Recurrent Neural Network, RNN)。需要和递归神经网络 (Recursive Neural Network, RNN) 区分开来。
 
@@ -18,3 +21,11 @@ title: 循环神经网络
 
 - 传统机器学习方法：自回归模型。具体的，模型 $y_i=\beta_0 + \beta_1 y_{i-1} + \beta_2 y_{i-2} + \cdots + \beta_p y_{i-p}$ 被称为 P 阶自回归模型。可以看出这种模型仅仅利用到了标签值并且定义当前标签值与曾经的标签值呈线性关系；
 - 前沿深度学习方法：RNN 模型、LSTM 模型、GRU 模型、Transformer。
+
+## 基本概念
+
+## 模型结构
+
+## 参数优化
+
+TODO

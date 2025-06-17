@@ -4,11 +4,13 @@ title: 序列生成
 
 序列生成常见的任务有：机器翻译、文本摘要、智能问答等。本文以「机器翻译」为引，展开 Seq2Seq 架构、Attention 机制和 Transformer 模型。
 
-## 机器翻译任务定义
+## 机器翻译基本概念
+
+### 任务定义
 
 机器翻译任务定义为：给定源语言，通过建立翻译模型，将其翻译为目标语言。
 
-## 机器翻译的数据集
+### 数据集
 
 常见的机器翻译的数据集有 WMT 系列数据集，其他用于机器翻译的数据集可以参考 paper with code [^nmt-dataset] 中的内容。
 
@@ -22,11 +24,11 @@ title: 序列生成
 { "de": "Wir haben dann abgestimmt.", "en": "We then put it to a vote." }
 ```
 
-## 机器翻译评价方法
+### 评价方法
 
-BLUE：
+BLEU：
 
-ROUGH：
+ROUGE：
 
 ## 传统方法
 
@@ -75,13 +77,13 @@ ROUGH：
 - 翻译效果更好：通过使用注意力机制，模型可以学习到全局关系，并且缓解了梯度消失问题，从而提升了翻译的效果；
 - 可解释性更好：相较于统计方法的硬对齐方法（只有对应与不对应），使用注意力机制其实就算一种软对齐（按照权重对应）。由于每一个时间步都可以计算每一个输入 token 与所有输入 token 之间的是注意力权重，那么就可以算出一个对齐矩阵，该矩阵完全是模型根据数据学习到的对齐结果。
 
-### Attention 进阶
+### 进阶 Attention
 
 上述思路都是针对单一句子进行的，如果涉及到更大规模的语料，就需要对注意力的计算方法进行一定的魔改。
 
 ## Transformer 模型
 
-2017 年，Google 团队发表在 NIPS 上的一篇《Attention is all you need》 [^atten-paper] 替换了上述 RNN 结构，解决了 RNN 不能并行计算的问题。
+2017 年，Google 团队发表在 NeurIPS 上的一篇 *Attention is all you need* [^atten-paper] 替换了上述 RNN 结构，解决了 RNN 不能并行计算的问题。
 
 [^atten-paper]: [Attention Is All You Need | Google - (arxiv.org)](https://arxiv.org/pdf/1706.03762)
 
@@ -104,7 +106,7 @@ ROUGH：
 2. 交叉多头自注意力使用的 K、V 数据源自编码器的表示结果。解码时每一次的结果可以采用最后一次编码的结果，也可以是相同迭代次数下的编码结果；
 3. 最后同样输入到前馈网络进行非线性映射。
 
-## 总结
+## 小结
 
 以 RNN 为基座的优缺点分析：
 

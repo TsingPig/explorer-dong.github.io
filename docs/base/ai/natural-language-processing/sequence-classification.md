@@ -22,7 +22,7 @@ title: 序列分类
 
 在有监督学习场景下，学习准则就是最小化交叉熵损失函数。传统与现代依存分析方法本质的不同在于特征的构造上。
 
-### 基于 FNN 的深度学习方法
+### 全连接神经网络
 
 Danqi Chen 在 2014 年的工作 *A Fast and Accurate Dependency Parser using Neural Networks* [^fnn-dp] 中，提出了基于 FNN 的深度神经网络模型进行端到端的依存分析，解决了传统方法中特征需要人工构造、特征稀疏（0 太多）和特征不紧凑（维度太大）的问题。
 
@@ -30,13 +30,13 @@ Danqi Chen 在 2014 年的工作 *A Fast and Accurate Dependency Parser using Ne
 
 ## 命名实体识别
 
-TODO
+序列标注任务的一种，即给定一个序列，标注序列中每一个 token 的某种性质。除了命名实体识别任务，常见的序列标注任务还有词性分析等。
 
 ### 语言规则说明
 
 ### 传统方法
 
-### 基于 RNN 的深度学习方法
+### 循环神经网络
 
 此处主要介绍 [RNN](../deep-learning/index.md) 的变种：长短时记忆 (Long Short-term Memory, LSTM) 模型。
 
@@ -48,6 +48,6 @@ TODO
 
 ### 传统方法
 
-### 基于 CNN 的深度学习方法
+### 卷积神经网络
 
-此处主要介绍 [CNN](../deep-learning/index.md) 的变种：图卷积神经网络 (Graphic Neural Network, GNN) 模型。
+此处主要介绍 [CNN](../deep-learning/convolutional-neural-network.md) 的变种：图卷积神经网络 (Graphic Neural Network, GNN) 模型。
