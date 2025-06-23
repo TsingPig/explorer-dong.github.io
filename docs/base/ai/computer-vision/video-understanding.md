@@ -41,7 +41,69 @@ title: 视频理解
 
 让模型捕捉不同帧之间的关系需要引入物体运动的信息，人们定义了光流 (Optical flow) 来量化物体的运动信息。
 
-**光流的定义**。==TODO==
+**光流的定义与 Lucas Kanade 算法**。光流可以简单地理解为视频帧中每一个像素点的二维速度，那么一个 $w\times h$ 的视频帧就需要存储 $w\times h\times 2$ 个光流信息。Lucas Kanade 在 1981 年提出了稠密光流的计算方法 [^lucas-kanade]，尝试计算光流信息。
+
+[^lucas-kanade]: Bruce D. Lucas and Takeo Kanade. 1981. An iterative image registration technique with an application to stereo vision. In Proceedings of the 7th international joint conference on Artificial intelligence - Volume 2 (IJCAI'81). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 674–679.
+
+记空间中任意一点 $(x,y,t)$ 的亮度 (luminance) 为 $I(\cdot)$，在 $\delta t$ 的时间间隔内，空间中的点的位移量为 $\delta x,\delta y$，并且假设在这段时间间隔中亮度保持不变，即：
+
+$$
+I(x,y,t) = I(x+\delta x,y+\delta y,t+\delta t)
+$$
+
+根据泰勒公式，我们将上式右边展开为微分近似的形式（忽略高阶无穷小），即：
+
+$$
+I(x+\delta x,y+\delta y,t+\delta t) = I(x,y,t) + I_x\delta x + I_y\delta y + I_t\delta t
+$$
+
+其中 $I_x,I_y,I_t$ 即像素点在三个维度上的变化量。联合上两式，有：
+
+$$
+I_x\delta x + I_y\delta y + I_t\delta t = 0
+$$
+
+我们记像素点在 $x$ 方向的速度为 $u$，在 $y$ 方向的速度为 $v$，那么将上式同除 $\delta t$ 就有：
+
+$$
+I_x u + I_y v + I_t = 0
+$$
+
+实际求解的过程中，$I_x,I_y,I_t$ 可以根据相邻两帧的亮度信息直接求解，因此上式只有 $u$ 和 $v$ 两个未知量，只需要构造两个或以上数量的等式约束即可求解。论文中继续做了一个假设，即认为邻域内像素点的光流变化是一致的。不妨假设邻域大小为 $n\times n$，则有：
+
+$$
+\begin{bmatrix}
+I_x(1,1)&I_y(1,1)\\
+I_x(1,2)&I_x(1,2)\\
+\vdots&\vdots\\
+I_x(n,n)&I_x(n,n)
+\end{bmatrix}
+\begin{bmatrix}
+u\\
+v
+\end{bmatrix}
+=
+\begin{bmatrix}
+-I_t(1,1)\\
+-I_t(1,2)\\
+\vdots\\
+-I_t(n,n)
+\end{bmatrix}
+$$
+
+我们将上式简记为：
+
+$$
+Aq=B
+$$
+
+由于 $n^2>2$，因此上式是一个超定方程。我们使用最小二乘法求解这个超定方程可以得到：
+
+$$
+q=(A^TA)^{-1}A^TB
+$$
+
+要求 $A^TA$ 是可逆的。
 
 **网络结构**。双流网络 (Two-stream convolutional network) [^two-stream] 结构如下图所示：
 

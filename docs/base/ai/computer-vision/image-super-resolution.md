@@ -125,13 +125,11 @@ ESPCN [^espcn] 网络采用了亚像素卷积策略，同样规避了 SRCNN 一�
 
 VDSR [^vdsr] 网络主要有以下几个特点：
 
-1. 结构上：采用了 VGG Net 的思想，以块为单位搭建网络，并采用「残差连接」策略防止梯度消失。残差连接非常适合超分任务；
+1. 结构上：采用了 VGG Net 的思想，以块为单位搭建网络，并采用「残差连接」策略防止梯度消失；
 2. 训练上：为了进一步提高训练速度，VDSR 采用了更大的学习率，同时使用「梯度裁剪」策略防止梯度爆炸。梯度裁剪约束了参数的梯度变化值，要么约束上下界为定值，要么进行范数放缩；
 3. 训练上：采用了多尺度训练策略。VDSR 没有采用反卷积或亚像素卷积，仍然采用 SRCNN 的插值策略，因此不同尺度对 VDSR 没影响，直接插值到一样的尺度就行。
 
 [^vdsr]: Kim J, Lee J K, Lee K M. Accurate image super-resolution using very deep convolutional networks[C]//Proceedings of the IEEE conference on computer vision and pattern recognition. 2016: 1646-1654.
-
-**为什么残差连接非常适合超分任务**？==TODO==
 
 SRGAN [^srgan] 网络首次将 GAN 应用于超分任务，并基于残差结构提出了 SRResNet。
 
@@ -143,4 +141,7 @@ EDSR [^edsr] 网络在 SRResNet 的基础上改进了残差结构，去除了其
 
 <img src="https://cdn.dwj601.cn/images/20250622191007009.png" alt="ResNet vs. SRResNet vs. EDSR" style="zoom:50%;" />
 
-**为什么超分任务不依赖 BN 操作**？==TODO==
+**为什么超分任务不依赖 BN 操作**？不妨先回看一下 [GoogLeNet 引入 BN](./image-classification.md#googlenet) 的意义是什么：
+
+- 对于图像分类任务而言。BN 层起到了正则化的作用，有助于提高网络的泛化能力；同时，由于特征空间和标签空间分布差异大，需要 BN 层解决 [Covariance Shift](./image-classification.md#批标准化) 问题；
+- 对于图像超分任务而言。图像超分辨率可以看作是像素的密集预测任务，图像中像素值的改变也会影响超分的结果（数据增强的方式一般只有水平翻转和旋转）；同时，超分任务的输入和输出的分布差异较小，不太需要调整特征的分布。
