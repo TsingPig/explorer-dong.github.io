@@ -7,6 +7,7 @@
 
 INHERIT: ./mkdocs.yml
 
+comments: false  # 本地禁用评论
 
 plugins:
   - meta
