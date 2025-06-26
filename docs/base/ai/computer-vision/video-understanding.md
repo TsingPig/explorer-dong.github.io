@@ -172,7 +172,7 @@ TimeSformer [^timesformer] 是第一个尝试将 ViT [^vit] 引入到动作识�
 用 Transformer 的好处：
 
 - Transformer 的全局建模能力使得相关模型能够更好地利用时序上下文信息，更易于应用到长时序的视频；
-- 相较于 CNN「局部性、平移不变性」的归纳偏执 (Inductive Bias)，以及 RNN「时序依赖性」的归纳偏置，Transformer「注意力机制」的归纳偏置更弱，更易于拓展成多模态模型。
+- 相较于 CNN「局部性、平移不变性」的归纳偏置 (Inductive Bias)，以及 RNN「时序依赖性」的归纳偏置，Transformer「注意力机制」的归纳偏置更弱，更易于拓展成多模态模型。
 
 ## 时序任务
 
