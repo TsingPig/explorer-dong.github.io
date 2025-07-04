@@ -2,208 +2,374 @@
 title: 图论
 ---
 
-图是一种由顶点和边组成的数据结构。如果边上带有权重，就称该图为网。对于无向图，如果每一个顶点之间都有路径可达，就称该图为「连通图」，极大连通子图被称为「连通分量」；而有向图就全部加一个 "强" 字，其他含义不变，即「强连通图」和「强连通分量」。对于无向图，直接可达的结点数被称为「度」数；对于有向图，指出去的直接可达结点数被称为「出度」数，指进来的的结点数被称为「入度」数。
+图是一种由顶点和边组成的数据结构。如果边上带有权重，就称该图为网。一些基本概念：
 
-与树类似，图也可以用链表来存储，图中一般将其称为邻接表（一般都是存储出边，如果存储入边就叫做逆邻接表），也可以用邻接矩阵来存储。
+- **可达**：对于无向图，如果每一个顶点之间都有路径可达，就称该图为「连通图」，极大连通子图被称为「连通分量」；而有向图就全部加一个“强”字，其他含义不变，即「强连通图」和「强连通分量」；
+- **度**：对于无向图，直接可达的结点数被称为「度」；对于有向图，指出去的直接可达结点数被称为「出度」，指进来的的结点数被称为「入度」。
+
+与树类似，图也可以用邻接表（存储出边，如果存储入边就叫做逆邻接表）或邻接矩阵来存储。本文默认使用邻接表来存储。
 
 ## 图的遍历
 
-由于图可能含有环，因此相较于树的遍历，图的遍历需要有一个访问标记数组。一般的遍历方法就是深度优先和广度优先，对于求解两点之间的简单路径问题，深度优先遍历可以很好的解决；对于染色法求二部图问题，广度有点遍历可以很好的解决。
+与 [树的遍历](./ds.md#树的遍历) 类似，图也拥有深度优先和广度优先两种遍历方式。由于图可能存在环路（无论是有向图还是无向图），因此不能像树的遍历那样通过记忆父结点来规避死循环，只能另外创建元素类型为 `bool` 的 `vis` 数组来标记已经遍历过的结点。
 
-## 拓扑序
+=== "C++ DFS"
 
-首先介绍一下用顶点表示活动的网 (activity on vertex network, AOV 网)。顾名思义，在这种图中，顶点就是活动，边就是时间上的约束关系，边的起点活动在时间上必须要优先于边的终点活动。这种网一般用来描述在时间上有先后约束的工程管理问题。
+    ```c++
+    vector<int> g[N];
+    bool vis[N];
+    
+    void dfs(int idx) {
+        // do something
+        
+        for (auto& ch: g[idx]) {
+            if (vis[ch]) {
+                continue;
+            }
+            vis[ch] = true;
+            dfs(ch);
+        }
+    }
+    
+    dfs(0);
+    ```
 
-而为了判定一个图是否满足 AOV 的结构，拓扑排序应运而生。当然 AOV 的结构由于不具备后效性，也可以确保在其之上进行动态规划的理论正确性。拓扑排序的一般思路是：从所有的入度为 $0$ 的点开始缩点删边，最后的图中如果所有的点和边都被删除了，就说明这个图是可拓扑的，反之就是不可拓扑的。可以采用深度优先，也可以采用广度优先。时间复杂度为 $O(n+e)$。
+=== "C++ BFS"
 
-### 例：有向图的拓扑序列
+    ```c++
+    vector<int> g[N];
+    
+    void bfs(int idx) {
+        bool vis[N];
+        queue<int> q;
+    
+        // do something
+    
+        vis[idx] = true;
+        q.push(idx)
+    
+        while (q.size()) {
+            auto now = q.front();
+            q.pop();
+    
+            for (auto& ch: g[now]) {
+                if (vis[ch]) {
+                    continue;
+                }
+    
+                // do something
+    
+                vis[ch] = true;
+                q.push(ch);
+            }
+        }
+    }
+    
+    bfs(0)
+    ```
 
-<https://www.acwing.com/problem/content/850/>
+假设图中结点数为 $n$，边数为 $e$，那么采用邻接表遍历一遍的时间复杂度为 $O(n+e)$，采用邻接矩阵遍历一遍的时间复杂度为 $O(n^2)$。
 
-> 题意：输出一个图的拓扑序，不存在则输出-1
->
-> 思路：
->
-> - 首先我们要知道拓扑图的概念，感官上就是一张图可以从一个方向拓展到全图，用数学语言就是：若一个由图中所有点构成的序列 A 满足：对于图中的每条边 (x, y)，x 在 A 中都出现在 y 之前，则称 A 是该图的一个拓扑序列
-> - 接着我们就想要寻找这样的序列 A 了，可以发现对于每一个可扩展的点，入度一定为 0，那么我们就从这些点开始宽搜，将搜到的点的入度-1，即删除这条边，直到最后。如果全图的点的入度都变为了 0，则此图可拓扑
->
-> 时间复杂度：$O(n+m)$
+## 拓扑问题
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+一张图是可拓扑的当且仅当其是有向无环图 (Directed Acyclic Graph, DAG)。
 
-const int N = 100010;
+### 拓扑图的判定
+
+假设图中顶点表示活动，$i$ 指向 $j$ 的边表示 $i$ 需要先于 $j$ 发生，那么这张图是可拓扑的就表明这个活动安排是可行的。这种图也被称为顶点表示活动 (Activity On Vertex, AOV) 网，常用来描述在时间上有先后约束的工程管理问题。
+
+为了判定一张有向图是否可拓扑，即是否无环，有两种方法，要么直接 DFS 判断每一个点是否存在指向其祖宗结点的边，要么利用拓扑排序算法维护出这张图的拓扑序列（线性），看看拓扑序列的元素个数是否和原数组的元素个数相等（若相等则表明该有向图可拓扑），从而间接判断该有向图是否存在环路，这可以通过 BFS 来实现。
+
+以 [课程表 | 力扣 - (leetcode.cn)](https://leetcode.cn/problems/course-schedule/) 这道题为例，给出上述两种方法的实现。题意为给定一个有向图，判断是否存在环，有环输出 `false`，无环输出 `true`，下标从 $0$ 开始。
+
+**直接 DFS 判断每一个点是否存在指向其祖宗结点的边**。开两个 `bool` 数组分别表示全局结点访问情况（记作 `vis`）和路径结点访问情况（记作 `path`），前者用来减少不必要的 DFS，后者用来判断路径上的点是否访问到了祖宗结点（也可以将这两个状态数组合并为一个）。时间复杂度为 $O(n+e)$。有几个注意点：
+
+- 在 DFS 时，如果某个点之前已经被 `vis` 数组标记过，那么环路一定不会经过这个点（反证法，如果环路经过这个点，那么曾经的某一轮 DFS 一定可以判断出来）；
+- 在 DFS 时，仍然需要维护 `vis` 数组，但是要等 DFS 结束再将这一轮 DFS 过的结点标记为 `true`，否则无法判断是否存在环路（因为提前标记为 `true` 后，环路上的结点就不会被 `path` 数组标记，也就无法判定环路）。
+
+=== "C++"
+
+    ```c++
+    class Solution {
+    public:
+        bool canFinish(int n, vector<vector<int>>& p) {
+            // 建图
+            vector<int> g[n];
+            for (auto& a: p) {
+                g[a[0]].push_back(a[1]);
+            }
+    
+            vector<bool> vis(n);   // 全局访问情况
+            vector<bool> path(n);  // 路径访问情况
+            bool ok = true;
+    
+            function<void(int)> dfs = [&](int u) -> void {
+                path[u] = true;
+                for (int v: g[u]) {
+                    if (vis[v]) {
+                        continue;
+                    }
+                    if (path[v]) {
+                        ok = false;
+                        return;
+                    }
+                    dfs(v);
+                }
+                path[u] = false;
+                vis[u] = true;  // 注意要在路径遍历完开始回溯时，再标记全局访问情况
+            };
+    
+            for (int i = 0; i < n; i++) {
+                if (!vis[i]) {
+                    dfs(i);
+                }
+            }
+    
+            return ok;
+        }
+    };
+    ```
+
+**通过拓扑排序维护出该有向图的拓扑序列，间接判断有向图是否存在环路**。拓扑序列定义为：对于图中任意一条有向边 $u\to v$，$u$ 在拓扑序列中的顺序都要比 $v$ 在拓扑序列中的顺序更靠前。实现上可以使用 BFS，顶点入队条件是入度为 $0$，顶点出队时需要将被指向点的入度减一。时间复杂度也是 $O(n+e)$。
+
+=== "C++"
+
+    ```c++
+    class Solution {
+    public:
+        bool canFinish(int n, vector<vector<int>>& p) {
+            vector<int> g[n];
+            vector<int> rd(n);  // 入度
+    
+            for (auto& a: p) {
+                g[a[0]].push_back(a[1]);
+                rd[a[1]]++;
+            }
+    
+            queue<int> q;
+            vector<int> topo;  // 拓扑序列
+            for (int i = 0; i < n; i++) {
+                if (!rd[i]) {
+                    q.push(i);
+                    topo.push_back(i);
+                }
+            }
+    
+            while (q.size()) {
+                int u = q.front();
+                q.pop();
+                for (int v: g[u]) {
+                    rd[v]--;
+                    if (!rd[v]) {
+                        q.push(v);
+                        topo.push_back(v);
+                    }
+                }
+            }
+    
+            return topo.size() == n;
+        }
+    };
+    ```
+
+### 拓扑图的最短/长路径
+
+如果 DAG 还有边权，那么该图可以在 $O(n+e)$ 的时间复杂度内，按照结点的拓扑顺序，使用 [动态规划](./dp.md) 算法求出所有可达点到源点的最短/长路径距离。这种性质使得在 DAG 上求最短/长路径时不会受边权正负影响，并且时间复杂度优于一般图的单源最短路算法。
+
+带权 DAG 也被称为边表示活动 (Activity On Edge, AOE) 网，即在 AOV 网的基础上还描述了工程的时间进度，在工程可以并行推进的情况下，AOE 网上的最长路径长度可以用来表示工程预计完成的时间。
+
+*注：最长路径只能出现在 DAG 中，因为无向图或有向有环图的最长路径只需在环上一直走就行。
+
+示例代码 [^oi-wiki-dag-application]：
+
+[^oi-wiki-dag-application]: [DP 求最长（短）路 | OI Wiki - (oi-wiki.org)](https://oi-wiki.org/graph/dag/#dp-求最长短路)
+
+```c++
+struct edge {
+  int v, w;
+};
 
 int n, m;
-vector<int> G[N];
+vector<edge> e[MAXN];
+vector<int> L;                               // 存储拓扑排序结果
+int max_dis[MAXN], min_dis[MAXN], in[MAXN];  // in 存储每个节点的入度
 
-void solve() {
-    // 建图 
-    cin >> n >> m;
-    vector<int> d(n + 1, 0);
-    for (int i = 1; i <= m; i++) {
-        int a, b;
-        cin >> a >> b;
-        d[b]++;
-        G[a].push_back(b);
+void toposort() {  // 拓扑排序
+  queue<int> S;
+  memset(in, 0, sizeof(in));
+  for (int i = 1; i <= n; i++) {
+    for (int j = 0; j < e[i].size(); j++) {
+      in[e[i][j].v]++;
     }
-    
-    // 预处理宽搜起始点集
-    queue<int> q;
-    for (int i = 1; i <= n; i++)
-        if (!d[i])
-            q.push(i);
-    
-    // 宽搜处理
-    vector<int> res;
-    while (q.size()) {
-        auto h = q.front();
-        q.pop();
-        res.push_back(h);
-        
-        for (auto& ch: G[h]) {
-            d[ch]--;
-            if (!d[ch]) q.push(ch);
-        }
+  }
+  for (int i = 1; i <= n; i++)
+    if (in[i] == 0) S.push(i);
+  while (!S.empty()) {
+    int u = S.front();
+    S.pop();
+    L.push_back(u);
+    for (int i = 0; i < e[u].size(); i++) {
+      if (--in[e[u][i].v] == 0) {
+        S.push(e[u][i].v);
+      }
     }
-    
-    // 输出合法拓扑序
-    if (res.size() == n) {
-        for (auto& x: res) {
-            cout << x << " ";
-        }
-    } else {
-        cout << -1 << "\n";
-    }
+  }
 }
 
-int main() {
-    solve();
-    return 0;
+void dp(int s) {  // 以 s 为起点求单源最长（短）路
+  toposort();     // 先进行拓扑排序
+  memset(min_dis, 0x3f, sizeof(min_dis));
+  memset(max_dis, 0, sizeof(max_dis));
+  min_dis[s] = 0;
+  for (int i = 0; i < L.size(); i++) {
+    int u = L[i];
+    for (int j = 0; j < e[u].size(); j++) {
+      min_dis[e[u][j].v] = min(min_dis[e[u][j].v], min_dis[u] + e[u][j].w);
+      max_dis[e[u][j].v] = max(max_dis[e[u][j].v], max_dis[u] + e[u][j].w);
+    }
+  }
 }
 ```
 
 ### 例：Mad City
 
-<https://codeforces.com/contest/1873/problem/H>
-
-> 标签：基环树、拓扑排序
+> 经典之处：基环树问题
 >
-> 题意：给定一个基环树，现在图上有两个点，分别叫做 A，B。现在 B 想要逃脱 A 的抓捕，问对于给定的局面，B 能否永远逃离 A 的抓捕
+> 难度：CF 1700 / 洛谷 黄
 >
-> 思路：思路很简单，我们只需要分 B 所在位置的两种情况讨论即可
->
-> 1. B 不在环上：此时我们记距离 B 最近的环上的那个点叫 $tag$，我们需要比较的是 A 到 tag 点的距离 $d_A$ 和 B 到 tag 的距离 $d_B$，如果 $d_B < d_A$，则一定可以逃脱，否则一定不可以逃脱
-> 2. B 在环上：此时我们只需要判断当前的 A 点是否与 B 的位置重合即可，如果重合那就无法逃脱，反之 B 一定可以逃脱。
->
-> 代码实现：
->
-> 1. 对于第一种情况，我们需要找到 tag 点以及计算 A 和 B 到 tag 点的距离，
->
-> 时间复杂度：
+> OJ：[CF](https://codeforces.com/contest/1873/problem/H)
 
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
+题意：给定一张含有 $n\ (3\le n\le 2\cdot 10^5)$ 个点和 $n$ 条边的无向连通图，不含重边。图上有 A、B 两个人分别在顶点 $a,b\ (1\le a,b\le n)$ 处，A 能够追上 B 当且仅当到达同一个顶点或在一条边上相向而行。两人一次均只能移动到相邻结点或不移动，都知道对方下一步的行为且足够聪明，问在给定的局面下 B 能否逃脱 A 的追赶，能逃掉输出 "YES"，反之输出 "NO"。
 
-const int N = 200010;
+思路：题目给的是一棵基环树（树多了一条边形成的图结构，具有唯一的环路）。显然，B 只有到达环才有逃脱的希望，否则肯定会被抓住。我们记 A 到环的距离为 $d_A$，首次抵达环上的结点为 tag，B 到 tag 的距离为 $d_B$。显然，B 能够逃掉当且仅当 $d_B<d_A$。求解 $d_A,d_B$ 的步骤如下：
 
-int n, a, b;
-vector<int> G[N];
-int rd[N], tag, d[N];
-bool del[N], vis[N];
+1. 首先肯定需要找环。尽管上面介绍的 [判环策略](#拓扑图的判定) 是针对 DAG 的，但对于基环树来说也是可行的。具体地，我们同样利用顶点的入度信息，从图中的边缘点开始拆点删边即可，入队条件为入度为 $1$（DAG 的入队条件为入度为 $0$）。拆掉的点标记为非环，剩余的顶点就都在环上了；
+2. 标记了环上的点后，只需要从 B 点遍历一遍即可得出 tag 以及 $d_B$；
+3. 求解 $d_A$ 只需要再从 A 点遍历一遍即可。
 
-void init() {
-    for (int i = 1; i <= n; i++) {
-        G[i].clear();        // 存无向图 
-        rd[i] = 0;            // 统计每一个结点的入度 
-        del[i] = false;        // 拓扑删点删边时使用 
-        d[i] = 0;            // 图上所有点到 tag 点的距离 
-        vis[i] = false;        // bfs计算距离时使用 
-    }
-}
+时间复杂度：$O(n)$
 
-void topu(int now) {
-    if (rd[now] == 1) {
-        rd[now]--;
-        del[now] = true;
-        for (auto& ch: G[now]) {
-            if (del[ch]) continue;
-            rd[ch]--;
-            if (now == tag) {
-                tag = ch;
-            }
-            topu(ch);
-        }
-    }
-}
+=== "C++"
 
-void bfs() {
-    queue<int> q;
-    q.push(tag);
-    d[tag] = 0;
+    ```c++
+    #include <iostream>
+    #include <queue>
+    #include <vector>
+    using namespace std;
     
-    while (q.size()) {
-        auto now = q.front();
-        vis[now] = true;
-        q.pop();
-        
-        for (auto& ch: G[now]) {
-            if (!vis[ch]) {
-                d[ch] = d[now] + 1;
-                q.push(ch);
-                vis[ch] = true;
+    void solve() {
+        int n, a, b;
+        cin >> n >> a >> b;
+    
+        // 建图并维护入度
+        vector<int> g[n + 1];
+        vector<int> rd(n + 1);
+        for (int i = 0; i < n; i++) {
+            int u, v;
+            cin >> u >> v;
+            rd[u]++, rd[v]++;
+            g[u].push_back(v);
+            g[v].push_back(u);
+        }
+    
+        // 标记环路（DFS、BFS 均可，这里以 BFS 为例）
+        vector<bool> loop(n + 1, true);
+        queue<int> q;
+        for (int i = 1; i <= n; i++) {
+            if (rd[i] == 1) {
+                loop[i] = false;
+                rd[i]--;  // 删边
+                q.push(i);
             }
         }
-    }
-}
-
-void solve() {
-    // 初始化
-    cin >> n >> a >> b; 
-    init();
+        while (q.size()) {
+            int u = q.front();
+            q.pop();  // 拆点
+            for (int v: g[u]) {
+                rd[v]--;  // 删边
+                if (rd[v] == 1) {
+                    loop[v] = false;
+                    rd[v]--;
+                    q.push(v);
+                }
+            }
+        }
     
-    // 建图 
-    for (int i = 1; i <= n; i++) {
-        int u, v;
-        cin >> u >> v;
-        G[u].push_back(v), rd[v]++;
-        G[v].push_back(u), rd[u]++;
+        // 从 B 点开始遍历一遍计算 dB 并找到 tag 点（DFS、BFS 均可，这里以 BFS 为例）
+        auto bfs = [&](int b) -> pair<int, int> {
+            vector<int> d(n + 1);
+            vector<bool> vis(n + 1);
+            queue<int> q;
+            d[b] = 0;
+            vis[b] = true;
+            q.push(b);
+            while (q.size()) {
+                int u = q.front();
+                q.pop();
+                for (int v: g[u]) {
+                    if (!vis[v]) {
+                        d[v] = d[u] + 1;
+                        vis[v] = true;
+                        q.push(v);
+                    }
+                }
+            }
+            int dB = n + 1, tag = -1;
+            for (int i = 1; i <= n; i++) {
+                if (loop[i] && dB > d[i]) {
+                    dB = d[i], tag = i;
+                }
+            }
+            return {dB, tag};
+        };
+        auto [dB, tag] = bfs(b);
+    
+        // 从 A 点开始遍历一遍计算 dA（DFS、BFS 均可，这里以 BFS 为例）
+        auto bfs2 = [&](int a) -> int {
+            vector<int> d(n + 1);
+            vector<bool> vis(n + 1);
+            queue<int> q;
+            vis[a] = true;
+            d[a] = 0;
+            q.push(a);
+            while (q.size()) {
+                int u = q.front();
+                q.pop();
+                for (int v: g[u]) {
+                    if (!vis[v]) {
+                        vis[v] = true;
+                        d[v] = d[u] + 1;
+                        q.push(v);
+                    }
+                }
+            }
+            return d[tag];
+        };
+        int dA = bfs2(a);
+    
+        // 最终结果
+        cout << (dB < dA ? "YES" : "NO") << "\n";
     }
     
-    // 拓扑删边 & 缩b点
-    tag = b;
-    for (int i = 1; i <= n; i++) {
-        topu(i);
+    int main() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    
+        int T;
+        cin >> T;
+        while (T--) {
+            solve();
+        }
+    
+        return 0;
     }
+    ```
 
-    // 判断结果 & 计算距离 
-    if (rd[b] == 2 && a != b) {
-        // b点在环上
-        cout << "Yes\n";
-    } else {
-        // b不在环上
-        bfs();
-        cout << (d[a] > d[b] ? "Yes\n" : "No\n");
-    }
-}
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
-    int T = 1;
-    cin >> T;
-    while (T--) solve();
-    return 0;
-}
-```
-
-## 最短路
+## 最短路问题
 
 最短路 (Shortest Path) 顾名思义就是求解图中顶点之间的最短路径。分为单源最短路和多源最短路两种策略。所有的最短路算法都是基于动态规划进行的。
 
-Dijkstra 算法。单源最短路算法（无法求解含负边权的单源最短路）。分为朴素版和堆优化版。具体地：
+**Dijkstra 算法**。单源最短路算法（无法求解含负边权的单源最短路）。分为朴素版和堆优化版。具体地：
 
 1. 朴素版。采用邻接矩阵存储图。时间复杂度 $O(n^2)$。算法流程如下：
 
@@ -213,14 +379,16 @@ Dijkstra 算法。单源最短路算法（无法求解含负边权的单源最�
 
 2. 堆优化版。采用邻接表存储图。时间复杂度 $O(e \log e)$。
 
-Bellman-Ford 算法。单源最短路算法（支持负边权）。
+**Bellman-Ford 算法**。单源最短路算法（支持负边权）。
 
-Spfa 算法。单源最短路算法（同样支持负边权的单元最短路，属于 Bellman-Ford 算法的优化版）。
+**SPFA 算法**。单源最短路算法（同样支持负边权的单元最短路，属于 Bellman-Ford 算法的优化版）。
 
-Floyd 算法。多源最短路算法（支持负边权）。多阶段决策共 $n$ 个阶段，`dp[i][j]` 表示每一个阶段 $k$，从 $i$ 到 $j$ 的选择前 $k$ 个顶点后的最短路径的长度。对于当前阶段 $k$，我们利用阶段 $k-1$ 的状态进行转移更新，其实就是对于新增加的顶点 $v_k$ 是否选择的过程：
+**Floyd 算法**。多源最短路算法（支持负边权）。多阶段决策共 $n$ 个阶段，`dp[i][j]` 表示每一个阶段 $k$，从 $i$ 到 $j$ 的选择前 $k$ 个顶点后的最短路径的长度。对于当前阶段 $k$，我们利用阶段 $k-1$ 的状态进行转移更新，其实就是对于新增加的顶点 $v_k$ 是否选择的过程：
 
 - 选择 $v_k$，则 `dp[i][j] = dp[i][k] + dp[k][j]`；
 - 不选 $v_k$，则 `dp[i][j]` 就是 $k-1$ 状态下的 `dp[i][j]`。
+
+当然，如果是 DAG，那么可以在  的时间复杂度内求出单源最短路。
 
 ### 例：Dijkstra 算法
 
@@ -378,7 +546,7 @@ if __name__ == '__main__':
 > - 状态表示：`f[k][i][j]` 表示在前 $k$ 个顶点中进行选择（中转），$i$ 号点到 $j$ 号点的最短路径长度
 > - 状态转移：对于第 $k$ 个顶点，我们可以选择中转，也可以不中转。
 >     - 对于不选择中转的情况：`f[k][i][j] = f[k-1][i][j]`
->    - 对于可选择中转的情况：`f[k][i][j] = f[k-1][i][k] + f[k-1][k][j]`
+>     - 对于可选择中转的情况：`f[k][i][j] = f[k-1][i][k] + f[k-1][k][j]`
 >     - 在其中取最小值即可，但是有一个注意点：对于第二种情况，选择是有一个约束的：即如果选择了 $k$ 号点进行转移的话，那么 $i$ 号点到 $k$ 号点以及 $k$ 号点到 $j$ 号点都是需要有路径可达的，从而可以选择最小距离
 > - 初始化：即选择 0 个站点进行中转时，即 `f[0][i][j]` 的情况中，
 >     - 如果 $i$ 号点与 $j$ 号点自环，则取 $0$
@@ -642,7 +810,7 @@ class Solution:
         return res
 ```
 
-## 最小生成树
+## 生成树问题
 
 最小生成树 (Minimum Spanning Tree, MST) 即对于一个给定的图结构，选择全部的点和部分的边，使得可以组成一棵树且该树的总权重最小，对应的树就是最小生成树。该算法在很多场景都有实际的应用价值，例如最小化城市之间的道路铺设等。
 
