@@ -4,10 +4,10 @@ title: 无约束优化方法
 
 本章介绍无约束函数的最优化算法。其中：
 
-- 最速下降法基于「一阶梯度」。最基本的方法
-- 牛顿法基于「二阶梯度」。最主要的方法
-- 共轭梯度法基于「一阶梯度」。解大型最优化问题的首选
-- 拟牛顿法基于「函数值和一阶梯度」。尤其是其中的 BFGS 是目前最成功的方法
+- 梯度下降法基于「一阶梯度」。最基本的方法；
+- 牛顿法基于「二阶梯度」。最主要的方法；
+- 共轭梯度法基于「一阶梯度」。解大型最优化问题的首选；
+- 拟牛顿法基于「函数值和一阶梯度」。其中的 BFGS 是目前最成功的方法。
 
 ??? note "Python 实战：极小化 Rosenbrock 函数"
 
@@ -39,7 +39,7 @@ title: 无约束优化方法
     
     已知最优点为 $x^*=(1, 1)^T$，最优解 $f(x^*)=0$，以书中例题初始点 $(-1.2,1)^T$ 为例开始迭代。
     
-    === "最速下降法"
+    === "梯度下降法"
     
         ```python
         def gradient_descent(initial_point, max_iter=5, eps=1e-6):
@@ -68,8 +68,7 @@ title: 无约束优化方法
                     break
     
             return points, gradients, alphas
-
-
+    
         points, gradients, alphas = gradient_descent(initial_point, max_iter=100, eps=1e-6)
     
         for i, (point, grad, alpha) in enumerate(zip(points, gradients, [1] + alphas)):
@@ -134,8 +133,7 @@ title: 无约束优化方法
                     break
     
             return points, gradients, Hessians
-
-
+    
         points, gradients, Hessians = newton_method(initial_point, max_iter=50, eps=1e-6)
     
         for i, (point, grad, Hessian) in enumerate(zip(points, gradients, Hessians)):
@@ -193,8 +191,7 @@ title: 无约束优化方法
     
                 # 步长因子：精确线搜索直接得到闭式解
                 alpha = -np.dot(grad, direction) / np.dot(direction, G(x) @ direction)
-
-
+    
                 x = x + alpha * direction
     
                 directions.append(direction)
@@ -206,8 +203,7 @@ title: 无约束优化方法
                     break
     
             return points, gradients, alphas
-
-
+    
         points, gradients, alphas = conjugate_gradient(initial_point, max_iter=1000, eps=1e-6)
     
         for i, (point, grad, alpha) in enumerate(zip(points, gradients, alphas)):
@@ -271,8 +267,7 @@ title: 无约束优化方法
                     break
     
             return points, gradients
-
-
+    
         points, gradients = bfgs(initial_point, max_iter=1000, eps=1e-6)
     
         for i, (point, grad) in enumerate(zip(points, gradients)):
@@ -301,35 +296,37 @@ title: 无约束优化方法
         Function Val= 6.510026595267928e-19
         ```
 
-### 4.1 最速下降法
+## 梯度下降法
 
-放一张生动的图：
+放一张生动的图 [^gd]：
 
-![最速下降法 - 迭代示意图](https://cdn.dwj601.cn/images/202406132016327.png)
+[^gd]: [The keys of Deep Learning in 100 lines of code | Javier Ideami - (medium.com)](https://medium.com/data-science/the-keys-of-deep-learning-in-100-lines-of-code-907398c76504)
 
-迭代公式：
+![梯度下降法 - 迭代示意图](https://cdn.dwj601.cn/images/20250706190221633.gif)
+
+迭代公式如下：
 
 $$
 x_{k+1} = x_k - \alpha_k \nabla f(x_k)
 $$
 
-每次迭代时，**下降方向** $d_k$ 采用当前解 $x_k$ 处的负梯度方向 $- \nabla f(x_k)$，**步长因子** $\alpha_k$ 采用精确线性搜索算法的计算结果。
+每次迭代时，下降方向 $d_k$ 采用当前解 $x_k$ 处的负梯度方向 $- \nabla f(x_k)$，步长因子 $\alpha_k$ 通过 [线性搜索](./linear-search.md) 计算得到。
 
-易证相邻迭代解 $x_k,x_{k+1}$ 的方向 $d_k,d_{k+1}$ 是正交的：由于 $\phi(\alpha) = f(x_k + \alpha d_k)$，在采用线搜索找最优步长时，步长的搜索结果 $\alpha_k$ 即为使得 $\phi'(\alpha)=0$ 的解，于是可得 $0=\phi'(\alpha) = \phi'(\alpha_k) = \nabla f(x_k+\alpha_k d_k)d_k = -d_{k+1}^T \cdot d_k$，即 $d_{k+1}^T \cdot d_k = 0$。如图：
+结论：相邻迭代解 $x_k$ 和 $x_{k+1}$ 的方向 $d_k$ 和 $d_{k+1}$ 是正交的。如下图所示：
 
 ![相邻迭代解的方向正交](https://cdn.dwj601.cn/images/202406132046068.png)
 
-也正因为搜索方向正交的特性导致最速下降法的收敛速度往往不尽如人意。优点在于程序设计简单并且计算和存储量都不大，以及对初始点的要求不高。
+证明：由于 $\phi(\alpha) = f(x_k + \alpha d_k)$，在采用线性搜索找最优步长时，步长的搜索结果 $\alpha_k$ 即为使得 $\phi'(\alpha)=0$ 的解，于是可得 $0=\phi'(\alpha) = \phi'(\alpha_k) = \nabla f(x_k+\alpha_k d_k)d_k = -d_{k+1}^T \cdot d_k$，即 $d_{k+1}^T \cdot d_k = 0$。
 
-### 4.2 牛顿法
+也正因为搜索方向正交的特性导致梯度下降法的收敛速度往往不尽如人意。优点在于程序设计简单并且计算和存储量都不大，以及对初始点的要求不高。
+
+## 牛顿法
 
 放一张生动的图：
 
 ![牛顿法 - 迭代示意图](https://cdn.dwj601.cn/images/202406140902324.gif)
 
-???+warning
-
-    注：本图演示的是求解一维函数零点的迭代过程，需要使得 $f(x)=0$，因此比值式为原函数除以导函数。后续介绍的是极小化函数的过程，需要使得 $f'(x)=0$，因此比值式为一阶导数除以二阶导数，高维就是二阶梯度的逆乘以一阶梯度。
+*注：本图演示的是求解一维函数零点的迭代过程，需要使得 $f(x)=0$，因此比值式为原函数除以导函数。后续介绍的是极小化函数的过程，需要使得 $f'(x)=0$，因此比值式为一阶导数除以二阶导数，高维就是二阶梯度的逆乘以一阶梯度。
 
 迭代公式：
 
@@ -337,93 +334,18 @@ $$
 x_{k+1} = x_k - \nabla^2f(x_k)^{-1}\nabla f(x_k)
 $$
 
-牛顿法相较于最速下降法有了更快的收敛速度，但是由于需要计算和存储海塞矩阵导致计算量增加并且有些目标函数可能根本求不出二阶梯度。同时牛顿法对于初始迭代点的选择比最速下降法要苛刻的多。
+牛顿法相较于梯度下降法有了更快的收敛速度，但是由于需要计算和存储海塞矩阵导致计算量增加并且有些目标函数可能根本求不出二阶梯度。同时牛顿法对于初始迭代点的选择比梯度下降法要苛刻的多。
 
-### 4.3 共轭梯度法
+## 共轭梯度法
 
-我们利用共轭梯度法解决「正定二次函数」的极小化问题。由于最速下降法中相邻迭代点的方向是正交的导致搜索效率下降，牛顿法又由于需要计算和存储海塞矩阵导致存储开销过大，共轭梯度法的核心思想是 **相邻两个迭代点的搜索方向是关于正定二次型的正定阵正交的**。这样既保证了迭代收敛的速度也避免了计算存储海塞矩阵的开销。美中不足的是当共轭梯度法解决其他问题是往往会出现对线搜索的过度依赖，一旦线搜索变差会导致整个迭代过程精度变差。
+我们利用共轭梯度法解决「正定二次函数」的极小化问题。由于梯度下降法中相邻迭代点的方向是正交的导致搜索效率下降，牛顿法又由于需要计算和存储海塞矩阵导致存储开销过大，共轭梯度法的核心思想是 **相邻两个迭代点的搜索方向是关于正定二次型的正定阵正交的**。这样既保证了迭代收敛的速度也避免了计算存储海塞矩阵的开销。美中不足的是当共轭梯度法解决其他问题是往往会出现对线搜索的过度依赖，一旦线搜索变差会导致整个迭代过程精度变差。
 
 概念补充：
 
-1. 共轭：$x$ 与 $y$ 共轭当且仅当 $x^TGy=0$，其中 G 为对称正定阵
-2. 正定二次：$f(x) =\frac{1}{2} x^TGx - b^Tx + c$
+- 共轭的定义：$x$ 与 $y$ 共轭当且仅当 $x^TGy=0$，其中 G 为对称正定阵；
+- 正定二次函数：形如 $f(x) =\frac{1}{2} x^TGx - b^Tx + c$ 的函数。
 
-公式推导：
-
-1. 首先给定初始迭代点 $x_0$，收敛阈值 $\epsilon$，迭代公式是不变的：$x_{k+1} = x_k + \alpha_k d_k$，关键在于计算每一次迭代过程中的步长因子 $\alpha_k$​ 和搜索方向 $d_k$​
-
-2. 确定步长因子 $\alpha_k$：
-
-    $$
-    \begin{aligned}
-    \alpha &= \min_{\alpha} \phi(\alpha) \\
-    &= \min_{\alpha} f(x_k+\alpha d_k) \\
-    &= \min_{\alpha} \frac{1}{2}(x_k+\alpha d_k)^TG(x_k+\alpha d_k) - b^T(x_k+\alpha d_k) + c \\
-    &= \min_{\alpha} \frac{1}{2} (x_k^TGx_k + 2\alpha x_k^T G d_k + \alpha^2d_K^Td_k) - b^Tx_k - b^T \alpha d_k + c\\
-    &= \min_{\alpha} \frac{1}{2} x_k^TGx_k + \alpha x_k^T G d_k + \frac{1}{2}\alpha^2d_k^T G d_k - b^T \alpha d_k + c
-    \end{aligned}
-    $$
-
-    由于目标函数是正定二次型，显然可以直接求出步长因子的闭式解：
-
-    $$
-    \begin{aligned}
-    \frac{d \phi(\alpha)}{d\alpha} &= x_k^T G d_k + \alpha d_k^T G d_k - b^Td_k \\
-    &= 0
-    \end{aligned}
-    $$
-
-    于是可以导出当前的步长因子 $\alpha_k$ 的闭式解为：
-
-    $$
-    \begin{aligned}
-    \alpha_k &= \frac{(b^T - x^TG)d_k}{d_k^TGd_k} \\
-    &= -\frac{g_k^T d_k}{d_k^TGd_k}
-    \end{aligned}
-    $$
-
-3. 确定搜索方向 $d_k$：
-
-    $$
-    d_k = -g_k + \beta d_{k-1}
-    $$
-
-    可见只需要确定组合系数 $\beta$。由于共轭梯度法遵循相邻迭代点的搜索方向共轭，即 $d_{k-1}^TGd_k=0$，因此对上式两侧同时左乘 $d_{k-1}^TG$，有：
-
-    $$
-    \begin{aligned}
-    d_{k-1}^TGd_k &= -d_{k-1}^TGg_k + \beta d_{k-1}^TGd_{k-1} \\
-    &= 0
-    \end{aligned}
-    $$
-
-    于是可得当前的组合系数 $\beta$ 为：
-
-    $$
-    \beta = \frac{d_{k-1}^TGg_k}{d_{k-1}^TGd_{k-1}}
-    $$
-    
-    上述组合系数 $\beta$ 的结果是共轭梯度最原始的表达式，后人又进行了变形，~~没证出来，难崩，直接背吧~~，给出 FR 的组合系数表达式：
-    
-    $$
-    \begin{aligned}
-    \beta = \frac{g_k^Tg_k}{g_{k-1}^T g_{k-1}}
-    \end{aligned}
-    $$
-    
-    当然了由于初始迭代时没有前一个搜索方向，因此直接用初始点的梯度作为搜索方向，即：
-    
-    $$
-    d_0 =-g_0
-    $$
-    
-    于是可以导出当前的搜索方向 $d_k$ 的闭式解为：
-    
-    $$
-    d_k = -g_k + \frac{g_k^Tg_k}{g_{k-1}^T g_{k-1}} d_{k-1}
-    $$
-
-迭代公式：
+给定初始迭代点 $x_0$，收敛阈值 $\epsilon$，迭代公式仍然是 $x_{k+1} = x_k + \alpha_k d_k$，即：
 
 $$
 \begin{aligned}
@@ -432,16 +354,89 @@ x_{k+1} =& x_k + \alpha_k d_k\\
 \end{aligned}
 $$
 
-### 4.4 拟牛顿法
+下面分别推导步长因子 $\alpha_k$​ 和搜索方向 $d_k$。
 
-4.1 和 4.2 介绍的基于一阶梯度和二阶梯度的下降法都可以统一成下面的表达式：
+1）**确定步长因子 $\alpha_k$**。推导公式如下：
+
+$$
+\begin{aligned}
+\alpha &= \min_{\alpha} \phi(\alpha) \\
+&= \min_{\alpha} f(x_k+\alpha d_k) \\
+&= \min_{\alpha} \frac{1}{2}(x_k+\alpha d_k)^TG(x_k+\alpha d_k) - b^T(x_k+\alpha d_k) + c \\
+&= \min_{\alpha} \frac{1}{2} (x_k^TGx_k + 2\alpha x_k^T G d_k + \alpha^2d_K^Td_k) - b^Tx_k - b^T \alpha d_k + c\\
+&= \min_{\alpha} \frac{1}{2} x_k^TGx_k + \alpha x_k^T G d_k + \frac{1}{2}\alpha^2d_k^T G d_k - b^T \alpha d_k + c
+\end{aligned}
+$$
+
+由于目标函数是正定二次型，显然可以直接求出步长因子的闭式解：
+
+$$
+\begin{aligned}
+\frac{d \phi(\alpha)}{d\alpha} &= x_k^T G d_k + \alpha d_k^T G d_k - b^Td_k \\
+&= 0
+\end{aligned}
+$$
+
+于是可以导出当前的步长因子 $\alpha_k$ 的闭式解为：
+
+$$
+\begin{aligned}
+\alpha_k &= \frac{(b^T - x^TG)d_k}{d_k^TGd_k} \\
+&= -\frac{g_k^T d_k}{d_k^TGd_k}
+\end{aligned}
+$$
+
+2）**确定搜索方向 $d_k$**。推导公式如下：
+
+$$
+d_k = -g_k + \beta d_{k-1}
+$$
+
+可见只需要确定组合系数 $\beta$。由于共轭梯度法遵循相邻迭代点的搜索方向共轭，即 $d_{k-1}^TGd_k=0$，因此对上式两侧同时左乘 $d_{k-1}^TG$，有：
+
+$$
+\begin{aligned}
+d_{k-1}^TGd_k &= -d_{k-1}^TGg_k + \beta d_{k-1}^TGd_{k-1} \\
+&= 0
+\end{aligned}
+$$
+
+于是可得当前的组合系数 $\beta$ 为：
+
+$$
+\beta = \frac{d_{k-1}^TGg_k}{d_{k-1}^TGd_{k-1}}
+$$
+
+上述组合系数 $\beta$ 的结果是共轭梯度最原始的表达式，后人又进行了变形，给出 FR 的组合系数表达式（这一步暂时没证出来）：
+
+$$
+\begin{aligned}
+\beta = \frac{g_k^Tg_k}{g_{k-1}^T g_{k-1}}
+\end{aligned}
+$$
+
+当然了由于初始迭代时没有前一个搜索方向，因此直接用初始点的梯度作为搜索方向，即：
+
+$$
+d_0 =-g_0
+$$
+
+于是可以导出当前的搜索方向 $d_k$ 的闭式解为：
+
+$$
+d_k = -g_k + \frac{g_k^Tg_k}{g_{k-1}^T g_{k-1}} d_{k-1}
+$$
+
+## 拟牛顿法
+
+梯度下降法和牛顿法都可以统一成下面的表达式：
 
 $$
 x_{k+1} = x_k - \alpha_k B_k \nabla f(x_k)
 $$
 
-- 4.1 的最速下降法的步长因子通过精确线搜索获得，海塞矩阵的逆 $B_k$ 不存在，可以看做为单位阵 $E$
-- 4.2 的牛顿法的步长因子同样可以通过精确线搜索获得，当然也可以设置为定值，海塞矩阵的逆 $B_k$ 对应二阶梯度的逆 $(\nabla^2 f(x_k))^{-1}$
+- 梯度下降法的步长因子通过精确线搜索获得，海塞矩阵的逆 $B_k$ 不存在，可以看做为单位阵 $E$
+- 牛顿法的步长因子同样可以通过精确线搜索获得，当然也可以设置为定值，海塞矩阵的逆 $B_k$ 对应二阶梯度的逆 $(\nabla^2 f(x_k))^{-1}$
 
 前者收敛速度差、后者计算量和存储量大，我们尝试构造一个对称正定阵 $B_k$ 来近似代替二阶梯度的逆，即 $B_k \approx (\nabla^2 f(x_k))^{-1}$，使得该法具备较快的收敛速度与较少的内存开销。
 
@@ -494,7 +489,7 @@ $$
 
 当 $r_i(x)$ 为线性函数时，当前问题为线性最小二乘问题；当 $r_i(x)$ 为非线性函数时，当前问题为非线性最小二乘问题。本章将分别讨论这两种最小二乘问题的优化求解策略。
 
-### 5.1 线性最小二乘
+### 线性最小二乘法
 
 此时可以直接将目标函数写成：
 
@@ -522,7 +517,7 @@ $$
 
 当然 $A^TA$ 并不都是可逆的，并且在数据量足够大时，即使可逆也会让求逆操作即为耗时。针对此问题，提出了线性最小二乘的 QR 正交分解算法。
 
-### 5.2 非线性最小二乘
+### 非线性最小二乘法
 
 同样可以采用第四章学到的各种下降迭代算法，这里引入高斯牛顿法，推导的解的迭代公式为：
 
@@ -541,7 +536,7 @@ A_k =
 \vdots \\
 \nabla r_m(x_k)
 \end{bmatrix},\quad
-r_k = 
+r_k =
 \begin{bmatrix}
 r_1(x_k)\\
 r_2(x_k)\\

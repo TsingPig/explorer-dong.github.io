@@ -12,15 +12,15 @@ status: new
 [^origin]: [微积分的本质](https://www.bilibili.com/video/BV1qW411N7FU)
 [^arch]: [梳理下什么是微积分，高等数学，数学分析](https://zhuanlan.zhihu.com/p/32349108)
 
-| **概念**   | **定义** | **数学表示** | **几何意义** | **计算方式** | **应用** |
-|-----------|---------|:-----------|------------|------------|------------|
-| 导数 (Derivative) | 表示函数在某点的斜率 | $f'(x) = \lim\limits_{h \to 0} \dfrac{f(x+h) - f(x)}{h}$ | 曲线在某点的切线斜率 | 直接对函数求导 | 速度、优化 |
-| 偏导数 (Partial Derivative) | 多元函数对某个变量的变化率 | $\dfrac{\partial f}{\partial x} = \lim\limits_{h \to 0} \dfrac{f(x+h, y) - f(x, y)}{h}$ | 某个变量方向上的切线斜率 | 对一个变量求导，其他变量视作常数 | 反向传播、物理建模 |
-| 微分 (Differential) | 用导数近似函数的微小变化 | $\mathrm d f = f'(x)\mathrm dx$ | 小范围内的线性近似 | 对变量偏导数并乘以变量的微小变化 | 误差估计 |
-| 全微分 (Total Differential) | 多元函数在所有变量方向上的微小变化 | $\mathrm d f = \dfrac{\partial f}{\partial x_1} \mathrm d x_1 + \dfrac{\partial f}{\partial x_2} \mathrm d x_2 + \dots + \dfrac{\partial f}{\partial x_n} \mathrm d x_n$ | 所有变量方向上的线性近似 | 对每个变量求偏导数并乘以对应变量的微小变化 | 多变量优化 |
-| 差分 (Finite Difference) | 离散化的导数近似 | 前向差分：$\dfrac{f(x+h) - f(x)}{h}$ | 离散点之间的变化率 | 计算有限步长 $h$ 的差值 | 数值求解微分方程 |
-| 积分 (Integral) | 求和运算 / 导数的逆运算 | $\displaystyle \int f(x) dx$ | 求面积或累积量 | 计算反导数或求和 | 位移、能量 |
-| 梯度 (Gradient) | 多元函数在各方向的变化率 | $\nabla f = \left( \dfrac{\partial f}{\partial x}, \dfrac{\partial f}{\partial y} \right)$ | 函数增长最快的方向 | 计算所有偏导数组成向量 | 梯度下降 |
+| 概念   | 定义 | 数学表示 | 几何意义 | 应用 |
+|-----------|---------|:-----------|------------|------------|
+| 差分 (Finite Difference) | 平均变化率 | $\dfrac{f(x+h) - f(x)}{h}$ | 离散点之间的变化率 | 数值求解微分方程 |
+| 导数 (Derivative) | 瞬时变化率 | $f'(x) = \lim\limits_{h \to 0} \dfrac{f(x+h) - f(x)}{h}$ | 曲线在某点的切线斜率 | 速度 |
+| 偏导数 (Partial Derivative) | 多元函数对某个变量的变化率 | $\dfrac{\partial f}{\partial x} = \lim\limits_{h \to 0} \dfrac{f(x+h, y) - f(x, y)}{h}$ | 某个变量方向上的切线斜率 | 反向传播 |
+| 微分 (Differential) | 用导数近似函数的微小变化 | $\mathrm d f = f'(x)\mathrm dx$ | 小范围内的线性近似 | 误差估计 |
+| 全微分 (Total Differential) | 多元函数在所有变量方向上的微小变化 | $\mathrm d f = \dfrac{\partial f}{\partial x_1} \mathrm d x_1 + \dfrac{\partial f}{\partial x_2} \mathrm d x_2 + \dots + \dfrac{\partial f}{\partial x_n} \mathrm d x_n$ | 所有变量方向上的线性近似 | 多变量优化 |
+| 梯度 (Gradient) | 多元函数在各方向的变化率 | $\nabla f = \left( \dfrac{\partial f}{\partial x}, \dfrac{\partial f}{\partial y} \right)$ | 函数增长最快的方向 | 梯度下降 |
+| 积分 (Integral) | 求和运算 / 导数的逆运算 | $\displaystyle \int f(x) dx$ | 求面积或累积量 | 位移 |
 
 
 根据上述概念对比表，我们有如下总结：
