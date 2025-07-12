@@ -68,7 +68,7 @@ title: 图论
     bfs(0)
     ```
 
-假设图中结点数为 $n$，边数为 $e$，那么采用邻接表遍历一遍的时间复杂度为 $O(n+e)$，采用邻接矩阵遍历一遍的时间复杂度为 $O(n^2)$。
+假设图中结点数为 $n$，边数为 $m$，那么采用邻接表遍历一遍的时间复杂度为 $O(n+m)$，采用邻接矩阵遍历一遍的时间复杂度为 $O(n^2)$。
 
 ## 拓扑问题
 
@@ -82,7 +82,7 @@ title: 图论
 
 以 [课程表 | 力扣 - (leetcode.cn)](https://leetcode.cn/problems/course-schedule/) 这道题为例，给出上述两种方法的实现。题意为给定一个有向图，判断是否存在环，有环输出 `false`，无环输出 `true`，下标从 $0$ 开始。
 
-**直接 DFS 判断每一个点是否存在指向其祖宗结点的边**。开两个 `bool` 数组分别表示全局结点访问情况（记作 `vis`）和路径结点访问情况（记作 `path`），前者用来减少不必要的 DFS，后者用来判断路径上的点是否访问到了祖宗结点（也可以将这两个状态数组合并为一个）。时间复杂度为 $O(n+e)$。有几个注意点：
+**直接 DFS 判断每一个点是否存在指向其祖宗结点的边**。开两个 `bool` 数组分别表示全局结点访问情况（记作 `vis`）和路径结点访问情况（记作 `path`），前者用来减少不必要的 DFS，后者用来判断路径上的点是否访问到了祖宗结点（也可以将这两个状态数组合并为一个）。时间复杂度为 $O(n+m)$。有几个注意点：
 
 - 在 DFS 时，如果某个点之前已经被 `vis` 数组标记过，那么环路一定不会经过这个点（反证法，如果环路经过这个点，那么曾经的某一轮 DFS 一定可以判断出来）；
 - 在 DFS 时，仍然需要维护 `vis` 数组，但是要等 DFS 结束再将这一轮 DFS 过的结点标记为 `true`，否则无法判断是否存在环路（因为提前标记为 `true` 后，环路上的结点就不会被 `path` 数组标记，也就无法判定环路）。
@@ -130,7 +130,7 @@ title: 图论
     };
     ```
 
-**通过拓扑排序维护出该有向图的拓扑序列，间接判断有向图是否存在环路**。拓扑序列定义为：对于图中任意一条有向边 $u\to v$，$u$ 在拓扑序列中的顺序都要比 $v$ 在拓扑序列中的顺序更靠前。实现上可以使用 BFS，顶点入队条件是入度为 $0$，顶点出队时需要将被指向点的入度减一。时间复杂度也是 $O(n+e)$。
+**通过拓扑排序维护出该有向图的拓扑序列，间接判断有向图是否存在环路**。拓扑序列定义为：对于图中任意一条有向边 $u\to v$，$u$ 在拓扑序列中的顺序都要比 $v$ 在拓扑序列中的顺序更靠前。实现上可以使用 BFS，顶点入队条件是入度为 $0$，顶点出队时需要将被指向点的入度减一。时间复杂度也是 $O(n+m)$。
 
 === "C++"
 
@@ -174,7 +174,7 @@ title: 图论
 
 ### 拓扑图的最短/长路径
 
-如果 DAG 还有边权，那么该图可以在 $O(n+e)$ 的时间复杂度内，按照结点的拓扑顺序，使用 [动态规划](./dp.md) 算法求出所有可达点到源点的最短/长路径距离。这种性质使得在 DAG 上求最短/长路径时不会受边权正负影响，并且时间复杂度优于一般图的单源最短路算法。
+如果 DAG 还有边权，那么该图可以在 $O(n+m)$ 的时间复杂度内，按照结点的拓扑顺序，使用 [动态规划](./dp.md) 算法求出所有可达点到源点的最短/长路径距离。这种性质使得在 DAG 上求最短/长路径时不会受边权正负影响，并且时间复杂度优于一般图的单源最短路算法。
 
 带权 DAG 也被称为边表示活动 (Activity On Edge, AOE) 网，即在 AOV 网的基础上还描述了工程的时间进度，在工程可以并行推进的情况下，AOE 网上的最长路径长度可以用来表示工程预计完成的时间。
 
@@ -367,177 +367,243 @@ void dp(int s) {  // 以 s 为起点求单源最长（短）路
 
 ## 最短路问题
 
-最短路 (Shortest Path) 顾名思义就是求解图中顶点之间的最短路径。分为单源最短路和多源最短路两种策略。所有的最短路算法都是基于动态规划进行的。
+最短路 (Shortest Path) 问题就是求解图中顶点之间的最短路径。分为单源最短路和多源最短路两种场景，前者只需要求解某点到任意一点的最短路径长度，后者需要求解任意两个结点之间的最短路径长度。记图中点数为 $n$，边数为 $e$，经典的最短路算法如下表所示：
 
-**Dijkstra 算法**。单源最短路算法（无法求解含负边权的单源最短路）。分为朴素版和堆优化版。具体地：
+|     算法     | 单源/多源 | 是否支持负边权 |        时间复杂度        |
+| :----------: | :-------: | :------------: | :----------------------: |
+|   Dijkstra   |   单源    |       否       | $O(n^2)$ 或 $O(m\log m)$ |
+| Bellman-Ford |   单源    |       是       |         $O(nm)$          |
+|    Floyd     |   多源    |       是       |         $O(n^3)$         |
 
-1. 朴素版。采用邻接矩阵存储图。时间复杂度 $O(n^2)$。算法流程如下：
+*注：如果是 [DAG](#拓扑图的最短长路径)，那么根据递推策略，可以在 $O(n+m)$ 的时间复杂度内求出单源最短路，但一般不会这么考。
 
-    - 定义 $d[i]$ 表示从起点到当前 $i$ 号点的最短路径的长度；
-    - 将顶点分为 $U$ 和 $V-U$ 两个集合，其中 $U$ 表示已经更新了最短路径长度的顶点集合；
-    - 枚举集合 $V-U$ 中的结点 $v_i\in V-U$，选择 $U$ 中到当前结点 $v_i$ 最近的顶点 $v_j$ 并更新 `d[i] = d[j] + edges[j][i]`。
+模板题：
 
-2. 堆优化版。采用邻接表存储图。时间复杂度 $O(e \log e)$。
+- [单源最短路弱化版 | 洛谷 - (www.luogu.com.cn)](https://www.luogu.com.cn/problem/P3371)
+- [单源最短路标准版 | 洛谷 - (www.luogu.com.cn)](https://www.luogu.com.cn/problem/P4779)
+- [多源最短路 | 洛谷 - (www.luogu.com.cn)](https://www.luogu.com.cn/problem/B3647)
+
+### Dijkstra 算法
+
+Dijkstra 算法是最经典的单源最短路算法，需要满足非负边权。该算法有朴素版和堆优化版两个版本。下面分别介绍。
+
+**朴素版 Dijkstra 算法**。记 $s$ 为起点，$d_i$ 表示 $i$ 号点到起点的最短路径长度，$vis_i$ 表示 $i$ 号点是否访问过。算法流程如下：
+
+1. 初始化 $d_s=0$；
+2. 找到未标记的顶点中距离起点最近的点 $u$ 并将 $u$ 标为已访问；
+3. 以 $u$ 为中转点主动更新其所有出边对应的顶点 $v\ (v\in V \land u\to v\in E\land vis_v=false)$ 到起点的距离，即 $d_v = \min(d_v,d_u+w_{u\to v})$；
+4. 重复步 2 和步 3 共 $n$ 次使得 $n$ 个顶点都被标记为已访问。
+
+复杂度分析：
+
+- 如果采用邻接矩阵存储，步 2 的时间复杂度为 $O(n)$，步 3 的时间复杂度也为 $O(n)$，那么总时间复杂度就是 $O(2\cdot n^2)=O(n^2)$，空间复杂度为 $O(n^2)$；
+- 如果采用邻接表存储，步 2 的时间复杂度为 $O(n)$，步 3 的时间复杂度为边数，那么总时间复杂度就是 $O(n^2+m)=O(n^2)$，空间复杂度为 $O(n+m)$。
+
+从复杂度分析可以看出，两种存储方式的时间复杂度一致，空间复杂度略有不同。邻接矩阵存储法更适合稠密图，邻接表存储法更适合稀疏图。
+
+=== "C++ 邻接矩阵写法"
+
+    ```c++
+    #include <algorithm>
+    #include <climits>
+    #include <iostream>
+    #include <vector>
+    using namespace std;
+    
+    const int inf = INT_MAX >> 1;
+    
+    int main() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    
+        int n, m, s;
+        cin >> n >> m >> s;
+    
+        // 建图
+        vector<vector<int>> g(n + 1, vector<int>(n + 1, inf));
+        for (int i = 1; i <= m; i++) {
+            int u, v, w;
+            cin >> u >> v >> w;
+            g[u][v] = min(g[u][v], w);
+        }
+    
+        // Dijkstra
+        vector<int> d(n + 1, inf), vis(n + 1, false);
+        d[s] = 0;
+        for (int i = 1; i <= n; i++) {
+            // 找到未访问过的距离起点最近的点 u
+            int u = -1;
+            for (int j = 1; j <= n; j++) {
+                if (!vis[j] && (u == -1 || d[j] < d[u])) {
+                    u = j;
+                }
+            }
+    
+            // 将 u 标为已访问
+            vis[u] = true;
+    
+            // 主动更新 u 的出边对应的点到起点的距离
+            for (int j = 1; j <= n; j++) {
+                if (g[u][j] != inf && !vis[j]) {
+                    d[j] = min(d[j], d[u] + g[u][j]);
+                }
+            }
+        }
+        
+        // 输出
+        for (int i = 1; i <= n; i++) {
+            cout << (d[i] == inf ? INT_MAX : d[i]) << " \n"[i == n];
+        }
+    
+        return 0;
+    }
+    ```
+
+=== "C++ 邻接表写法"
+
+    ```c++
+    #include <algorithm>
+    #include <climits>
+    #include <iostream>
+    #include <vector>
+    using namespace std;
+    
+    const int inf = INT_MAX >> 1;
+    
+    int main() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    
+        int n, m, s;
+        cin >> n >> m >> s;
+    
+        // 建图
+        vector<pair<int, int>> g[n + 1];
+        for (int i = 1; i <= m; i++) {
+            int u, v, w;
+            cin >> u >> v >> w;
+            g[u].push_back({v, w});
+        }
+    
+        // Dijkstra
+        vector<int> d(n + 1, inf), vis(n + 1, false);
+        d[s] = 0;
+        for (int i = 1; i <= n; i++) {
+            // 找到未访问过的距离起点最近的点 u
+            int u = -1;
+            for (int j = 1; j <= n; j++) {
+                if (!vis[j] && (u == -1 || d[j] < d[u])) {
+                    u = j;
+                }
+            }
+    
+            // 将 u 标为已访问
+            vis[u] = true;
+    
+            // 主动更新 u 的出边对应的点到起点的距离
+            for (auto& [v, w]: g[u]) {
+                if (!vis[v]) {
+                    d[v] = min(d[v], d[u] + w);
+                }
+            }
+        }
+    
+        // 输出
+        for (int i = 1; i <= n; i++) {
+            cout << (d[i] == inf ? INT_MAX : d[i]) << " \n"[i == n];
+        }
+    
+        return 0;
+    }
+    ```
+
+**堆优化版 Dijkstra 算法**。当图中顶点数较多时，朴素版算法效率较低，对于邻接表写法，朴素版的时间瓶颈在「寻找未标记的点中到起点距离最小的点」上，既然是找最值，我们就可以用堆来优化这一过程。
+
+仍然记 $s$ 为起点，$d_i$ 表示 $i$ 号点到起点的最短路径长度，$vis_i$ 表示 $i$ 号点是否访问过。算法流程如下：
+
+1. 初始化 $d_s=0$，初始化小根堆 $h$ 为 $(d_s,s)$；
+2. 取出 h 的堆顶 $(\_,u)$ 并将 $u$ 标为已访问；
+3. 以 $u$ 为中转点主动更新其所有出边对应的顶点 $v\ (v\in V \land u\to v\in E\land vis_v=false)$ 到起点的距离，即 $d_v = \min(d_v,d_u+w_{u\to v})$，并将这些边 $(w_{u\to v},v)$ 以边权为第一关键词存储到小根堆中；
+4. 重复步 2 和步 3 直到堆空。
+
+复杂度分析：极端情况就是所有的边都入一次堆，那么总时间复杂度就是 $O(m\log m)$，空间复杂度为 $O(n+m)$。
+
+=== "C++"
+
+    ```c++
+    #include <algorithm>
+    #include <climits>
+    #include <iostream>
+    #include <queue>
+    #include <vector>
+    using namespace std;
+    
+    const int inf = INT_MAX >> 1;
+    using pii = pair<int, int>;
+    
+    int main() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    
+        int n, m, s;
+        cin >> n >> m >> s;
+    
+        // 建图
+        vector<pii> g[n + 1];
+        for (int i = 1; i <= m; i++) {
+            int u, v, w;
+            cin >> u >> v >> w;
+            g[u].push_back({v, w});
+        }
+    
+        // Dijkstra
+        vector<int> d(n + 1, inf);
+        vector<int> vis(n + 1, false);
+        priority_queue<pii, vector<pii>, greater<pii>> h;  // 小根堆
+        d[s] = 0;
+        h.push({d[s], s});
+        while (h.size()) {
+            auto [_, u] = h.top();
+            h.pop();
+            if (vis[u]) {
+                continue;
+            }
+            vis[u] = true;
+            for (auto& [v, w]: g[u]) {
+                if (!vis[v] && d[v] > d[u] + w) {
+                    d[v] = d[u] + w;
+                    h.push({d[v], v});
+                }
+            }
+        }
+    
+        // 输出
+        for (int i = 1; i <= n; i++) {
+            cout << (d[i] == inf ? INT_MAX : d[i]) << " \n"[i == n];
+        }
+    
+        return 0;
+    }
+    ```
+
+*注：从上述介绍的 Dijkstra 算法容易发现，当以 $u$ 为中心结点主动更新其出边的点时，$d_u$ 已经固定了，如果存在负边，有可能出现下图的情况而导致 $u$ 过早被固定。
+
+![u 被过早固定](https://cdn.dwj601.cn/images/20250709120735309.png)
+
+建议做一下 [打怪升级](../raicom-caip/1st-undergraduate.md#t3-打怪升级-2525) 这道题来对 Dijkstra 有一个更好的理解。
+
+### Bellman-Ford 算法
 
 **Bellman-Ford 算法**。单源最短路算法（支持负边权）。
 
 **SPFA 算法**。单源最短路算法（同样支持负边权的单元最短路，属于 Bellman-Ford 算法的优化版）。
 
+### Floyd 算法
+
 **Floyd 算法**。多源最短路算法（支持负边权）。多阶段决策共 $n$ 个阶段，`dp[i][j]` 表示每一个阶段 $k$，从 $i$ 到 $j$ 的选择前 $k$ 个顶点后的最短路径的长度。对于当前阶段 $k$，我们利用阶段 $k-1$ 的状态进行转移更新，其实就是对于新增加的顶点 $v_k$ 是否选择的过程：
 
 - 选择 $v_k$，则 `dp[i][j] = dp[i][k] + dp[k][j]`；
 - 不选 $v_k$，则 `dp[i][j]` 就是 $k-1$ 状态下的 `dp[i][j]`。
-
-当然，如果是 DAG，那么可以在  的时间复杂度内求出单源最短路。
-
-### 例：Dijkstra 算法
-
-朴素版：<https://www.acwing.com/problem/content/851/>
-
-堆优化：<https://www.acwing.com/problem/content/852/>
-
-> 题意：给定一个正边权的有向图，可能存在重边与自环，问 $1$ 号点到 $n$ 号点的最短路径长度是多少，如果不可达就输出 $-1$。
->
-> 思路一：朴素版。点数 $1\le n \le 500$，边数 $1 \le m\le 10^5$
->
-> - 思路：根据数据量，我们采用邻接矩阵的方式存储「点少边多」的稠密图。我们定义 `d[i]` 数组表示起点到 `i` 号点的最短距离。先将起点放入 `SPT (Shortest Path Tree)` 集合，然后更新所有 `V-SPT` 中的点到 `SPT` 集合的最短路径长度。接着循环 `n-1` 次迭代更新剩余的 `n-1` 个点，每次迭代的过程中，首先选择距离起点最近的点 `vex`，然后将该点加入 `SPT` 集合，最后利用该点更新 `V-SPT` 集合中和该点有连边的点到起点的最短距离。最终的 `d[end]` 就是起点 `start` 到终点 `end` 的最短距离。
-> - 总结：算法整体采用贪心与动态规划的思路。与 $\text{Prim}$ 算法仔细比对可知，其中的贪心过程几乎一致，即每次选择加入 SPT 集合的点均为当前局面 `V-SPT` 集合中距离起点最近的点。而动态规划的过程体现在，在求解出集合 `V-SPT` 中到集合 `STP` 最短距离的点 `vex` 之后，利用该点对「在 `V-SPT` 集合且和 vex 点有连边的点 `i`」更新 `d[i]` 的过程。更新前的状态都是在之前的子结构下的最优解。
->
-> - 时间复杂度：$O(n^2)$
->
-> 思路二：堆优化。点数 $1\le n \le 1.5 \times 10^5$，边数 $1 \le m \le 1.5 \times 10^5$
->
-> - 思路：根据数据量，我们采用邻接表的方式存储「点多边少」的稀疏图。如果采用上述朴素 Dijkstra 算法进行求解必然会因为点数过多而超时，因此我们利用数据结构「堆」进行时间开销上的优化。不难发现朴素 Dijkstra 算法在迭代过程中主要有三部分：
->
->     1. 选择距离起点最近的点 `vex`。因为需要枚举所有的顶点，因此总的时间复杂度为 $O(n^2)$
->     2. 将该点加入 `SPT` 集合。因为只是简单的打个标记，因此总的时间复杂度为 $O(n)$
->     3. 利用该点更新 `V-SPT` 集合中和该点相连的点到起点的最短距离。因为此时枚举的是该点所有的连边，而邻接表的图存储方式无法进行重边的删除，因此最坏情况下会枚举所有的边，时间复杂度为 $O(m)$
-> - 时间复杂度：
->
-
-朴素版 C++：
-
-```cpp
-#include <bits/stdc++.h>
-
-using ll = long long;
-using namespace std;
-
-int dijkstra_ori(std::vector<std::vector<int>>& g, int start, int end) {
-    int n = g.size() - 1;
-    std::vector<int> d(n + 1, INT_MAX >> 1);
-    std::vector<bool> SPT(n + 1, false);
-    
-    // update start vex
-    d[start] = 0;
-    SPT[start] = true;
-    for (int i = 1; i <= n; i++) {
-        if (!SPT[i] && g[start][i] != INT_MAX >> 1) {
-            d[i] = std::min(d[i], d[start] + g[start][i]);
-        }
-    }
-    
-    // update remain n-1 vex
-    for (int k = 0; k < n - 1; k++) {
-        int vex = -1;
-        for (int i = 1; i <= n; i++) {
-            if (!SPT[i] && (vex == -1 || d[i] < d[vex])) {
-                vex = i;
-            }
-        }
-        SPT[vex] = true;
-        for (int i = 1; i <= n; i++) {
-            if (!SPT[i] && g[vex][i] != INT_MAX >> 1) {
-                d[i] = std::min(d[i], d[vex] + g[vex][i]);
-            }
-        }
-    }
-    
-    return d[end] == INT_MAX >> 1 ? -1 : d[end];
-}
-
-void solve() {
-    int n, m;
-    cin >> n >> m;
-    
-    vector<vector<int>> g(n + 1, vector<int>(n + 1, INT_MAX >> 1));
-    
-    while (m--) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        g[u][v] = min(g[u][v], w);
-    }
-    
-    cout << dijkstra_ori(g, 1, n) << "\n";
-}
-
-signed main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    int T = 1;
-//    std::cin >> T;
-    while (T--) solve();
-    return 0;
-}
-```
-
-朴素版 Python：
-
-```python
-import heapq
-from collections import defaultdict
-from typing import List, Tuple
-import math
-from itertools import combinations
-
-II = lambda: int(input())
-FI = lambda: float(input())
-MII = lambda: tuple(map(int, input().split()))
-LII = lambda: list(map(int, input().split()))
-
-
-def dijkstra_ori(g: List[List[int]], start: int, end: int) -> int:
-    n = len(g) - 1
-    d = [10 ** 5] * (n + 1)
-    SPT = [False] * (n + 1)
-    
-    d[start] = 0
-    SPT[start] = True
-    for i in range(1, n + 1):
-        if not SPT[i] and g[start][i] != 10 ** 5:
-            d[i] = min(d[i], d[start] + g[start][i])
-    
-    for _ in range(n - 1):
-        vex = -1
-        for i in range(1, n + 1):
-            if not SPT[i] and (vex == -1 or d[i] < d[vex]):
-                vex = i
-        SPT[vex] = True
-        for i in range(1, n + 1):
-            if not SPT[i] and g[vex][i] != 10 ** 5:
-                d[i] = min(d[i], d[vex] + g[vex][i])
-    
-    return -1 if d[end] == 10 ** 5 else d[end]
-
-
-def solve() -> None:
-    n, m = MII()
-    g = [[10 ** 5] * (n + 1) for _ in range(n + 1)]
-    for _ in range(m):
-        u, v, w = MII()
-        g[u][v] = min(g[u][v], w)
-    print(dijkstra_ori(g, 1, n))
-
-
-if __name__ == '__main__':
-    T = 1
-    # T = II()
-    while T: solve(); T -= 1
-```
-
-### 例：Floyd 算法
-
-<https://www.acwing.com/problem/content/856/>
 
 > 题意：给定一个稠密有向图，可能存在重边与自环，给出多个询问，需要给出每一个询问的两个点之前的最短路径长度
 >
@@ -580,7 +646,7 @@ if __name__ == '__main__':
 
 不优化空间
 
-```cpp
+```c++
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -636,7 +702,7 @@ int main() {
 
 优化空间
 
-```cpp
+```c++
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -682,134 +748,6 @@ int main() {
 }
 ```
 
-### 例：关闭分部的可行集合数目
-
-<https://leetcode.cn/problems/number-of-possible-sets-of-closing-branches/>
-
-> 标签：二进制枚举、最短路
->
-> 题意：给定一个含有 $n$ 个顶点的无向图，如何删点可以使得剩余的图中顶点两两可达且最大距离不超过 maxDistance？返回所有删点的方案数。
->
-> 思路：由于 $n$ 的数据范围只有 $1 \to 10$，我们可以直接枚举所有的删点方案。那么如何检查一个方案的合法性呢？直接使用最短路算法检查「所有顶点到每一个顶点」的最远距离即可。这里我们采用朴素 dijkstra 算法。
->
-> 时间复杂度：$O(2^n \times n^3)$ - 其中枚举需要 $O(2^n)$、计算所有顶点到某个顶点的最远距离需要 $O(n^2)$、检查所有顶点需要 $O(n)$
-
-```cpp
-class Solution {
-public:
-    int numberOfSets(int n, int maxDistance, vector<vector<int>>& roads) {
-        vector<vector<int>> g(n, vector<int>(n, INT_MAX >> 1));
-        for (auto& r: roads) {
-            int u = r[0], v = r[1], w = r[2];
-            g[u][v] = g[v][u] = min(g[u][v], w);
-        }
-
-        auto get_max_dist = [&](int mask, int v) {
-            vector<bool> SPT(n);
-            vector<int> d(n, INT_MAX);
-            
-            d[v] = 0;
-            SPT[v] = true;
-            
-            int cnt = 0;
-            for (int i = 0; i < n; i++) {
-                if (mask & (1 << i) && !SPT[i]) {
-                    cnt++;
-                    d[i] = min(d[i], d[v] + g[v][i]);
-                }
-            }
-
-            for (int k = 1; k <= cnt - 1; k++) {
-                int vex = -1;
-                for (int i = 0; i < n; i++) {
-                    if (mask & (1 << i) && !SPT[i] && (vex == -1 || d[i] < d[vex])) {
-                        vex = i;
-                    }
-                }
-                SPT[vex] = true;
-                for (int i = 0; i < n; i++) {
-                    if (mask & (1 << i) && !SPT[i]) {
-                        d[i] = min(d[i], d[vex] + g[vex][i]);
-                    }
-                }
-            }
-            
-            int max_dist = -1;
-            for (int i = 0; i < n; i++) {
-                if (mask & (1 << i)) {
-                    max_dist = max(max_dist, d[i]);
-                }
-            }
-            
-            return max_dist;
-        };
-
-        int res = 0;
-        for (int mask = 0; mask < 1 << n; mask++) {
-            bool ok = true;
-            for (int i = 0; i < n; i++) {
-                if (mask & (1 << i) && get_max_dist(mask, i) > maxDistance) {
-                    ok = false;
-                    break;
-                }
-            }
-            res += ok;
-        }
-
-        return res;
-    }
-};
-```
-
-```python
-class Solution:
-    def numberOfSets(self, n: int, maxDistance: int, roads: List[List[int]]) -> int:
-        g = [[10 ** 6 for _ in range(n)] for _ in range(n)]
-        for u, v, w in roads:
-            g[u][v] = g[v][u] = min(g[u][v], w)
-        
-        def get_max_dist(mask: int, v: int):
-            SPT = [False for _ in range(n)]
-            d = [10 ** 6 for _ in range(n)]
-
-            SPT[v] = True
-            d[v] = 0
-
-            cnt = 0
-            for i in range(n):
-                if mask & (1 << i) and not SPT[i]:
-                    cnt += 1
-                    d[i] = min(d[i], d[v] + g[v][i])
-            
-            for _ in range(cnt - 1):
-                vex = -1
-                for i in range(n):
-                    if mask & (1 << i) and not SPT[i] and (vex == -1 or d[i] < d[vex]):
-                        vex = i
-                SPT[vex] = True
-                for i in range(n):
-                    if mask & (1 << i) and not SPT[i]:
-                        d[i] = min(d[i], d[vex] + g[vex][i])
-                
-            max_dist = -1
-            for i in range(n):
-                if mask & (1 << i):
-                    max_dist = max(max_dist, d[i])
-            
-            return max_dist
-
-        res = 0
-        for mask in range(1 << n):
-            ok = True
-            for i in range(n):
-                if mask & (1 << i) and get_max_dist(mask, i) > maxDistance:
-                    ok = False
-                    break
-            res += ok
-
-        return res
-```
-
 ## 生成树问题
 
 最小生成树 (Minimum Spanning Tree, MST) 即对于一个给定的图结构，选择全部的点和部分的边，使得可以组成一棵树且该树的总权重最小，对应的树就是最小生成树。该算法在很多场景都有实际的应用价值，例如最小化城市之间的道路铺设等。
@@ -838,7 +776,7 @@ Kruskal 算法。这也是一种贪心算法，并使用了并查集数据结构
 
 C++
 
-```cpp
+```c++
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -1039,7 +977,7 @@ function kurskal(n, m, edges) {
 >     - 根据 $v$ 号点，更新 $d$ 数组，即更新在集合 $U-MST$ 中的点到 $MST$ 集合中的点的交叉边的最短长度
 > - 时间复杂度：$O(n^2)$
 
-```cpp
+```c++
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
@@ -1137,7 +1075,7 @@ signed main() {
 >
 > 时间复杂度：$O(n+e)$
 
-```cpp
+```c++
 const int N = 100010;
 
 int n, m;
