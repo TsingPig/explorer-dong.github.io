@@ -2228,6 +2228,7 @@ class DSU:
         if pa == pb:
             return
         self.set_cnt -= 1
+        # 按秩合并，小秩树合并到大秩树
         if self.cnt[pa] < self.cnt[pb]:
             self.p[pa] = pb
             self.cnt[pb] += self.cnt[pa]

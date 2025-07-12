@@ -3722,7 +3722,7 @@ print(res)
 ### 并查集
 
 ```python
-class DSU:
+class DisjointSetUnion:
     def __init__(self, n: int):
         """初始化一个含有 n 个元素的并查集，元素下标范围为 [0, n-1]"""
         self.p = [i for i in range(n)]  # p[i] 表示 i 号点的祖先结点编号
@@ -3732,6 +3732,7 @@ class DSU:
     def find(self, a: int) -> int:
         """返回 a 号点的祖先结点"""
         if self.p[a] != a:
+            # 路径压缩
             self.p[a] = self.find(self.p[a])
         return self.p[a]
     
@@ -3740,6 +3741,7 @@ class DSU:
         pa, pb = self.find(a), self.find(b)
         if pa == pb:
             return
+        # 按秩合并
         self.set_cnt -= 1
         if self.cnt[pa] < self.cnt[pb]:
             self.p[pa] = pb
@@ -3748,12 +3750,16 @@ class DSU:
             self.p[pb] = pa
             self.cnt[pa] += self.cnt[pb]
     
-    def size(self, a: int) -> int:
+    def same(self, a: int, b: int) -> bool:
+        """判断结点 a 和 结点 b 是否在同一个集合"""
+        return self.find(a) == self.find(b)
+
+    def tree_size(self, a: int) -> int:
         """返回结点 a 所在集合的元素个数"""
         return self.cnt[self.find(a)]
     
-    def size(self) -> int:
-        """返回并查集中集合的个数"""
+    def forest_size(self) -> int:
+        """返回集合的个数"""
         return self.set_cnt
 ```
 

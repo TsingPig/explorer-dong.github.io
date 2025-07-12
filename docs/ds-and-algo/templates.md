@@ -262,52 +262,61 @@ std::unordered_map<std::string, int, CustomHash<long long>> f3;
 ### 并查集
 
 ```c++
-class DisjointSetUnion {
-    /* 并查集类
-    集合元素定义为从 0 开始的整数。
-    */
-
-    int sz;                // 集合个数
-    std::vector<int> p;    // p[i]表示第i个结点的祖宗编号
-    std::vector<int> cnt;  // cnt[i]表示第i个结点所在集合中的结点总数
-
-public:
-    DisjointSetUnion(int n) : p(n), cnt(n, 1) {
+struct DisjointSetUnion {
+    std::vector<int> p;  // p[i] 表示 i 号点的祖先结点编号
+    std::vector<int> cnt;  // cnt[i] 表示 i 号点所在集合的元素个数
+    int set_cnt;  // 集合的个数
+    
+    DisjointSetUnion(int n) : p(n), cnt(n) {
+        /* 初始化一个含有 n 个元素的并查集，元素下标范围为 [0, n-1] */
         for (int i = 0; i < n; i++) {
-            p[i] = i;
+            p[i] = i, cnt[i] = 1;
         }
-        sz = n;
+        set_cnt = n;
     }
-
-    int find(int x) {
-        if (p[x] != x) {
-            p[x] = find(p[x]);
+    
+    int find(int a) {
+        /* 返回 a 号点的祖先结点 */
+        if (p[a] != a) {
+            // 路径压缩
+            p[a] = find(p[a]);
         }
-        return p[x];
+        return p[a];
     }
-
+    
     void merge(int a, int b) {
+        /* 合并结点 a 和结点 b 所在的集合 */
         int pa = find(a), pb = find(b);
-        if (pa != pb) {
+        if (pa == pb) {
+            return;
+        }
+        set_cnt--;
+        // 按秩合并
+        if (cnt[pa] < cnt[pb]) {
             p[pa] = pb;
             cnt[pb] += cnt[pa];
-            sz--;
+        } else {
+            p[pb] = pa;
+            cnt[pa] += cnt[pb];
         }
     }
 
     bool same(int a, int b) {
+        /* 判断结点 a 和 结点 b 是否在同一个集合 */
         return find(a) == find(b);
     }
-
-    int size() {
-        return sz;
+    
+    int tree_size(int a) {
+        /* 返回结点 a 所在集合的元素个数 */
+        return cnt[find(a)];
     }
-
-    int size(int a) {
-        int pa = find(a);
-        return cnt[pa];
+    
+    int forest_size() {
+        /* 返回集合的个数 */
+        return set_cnt;
     }
 };
+
 ```
 
 ### 树状数组
