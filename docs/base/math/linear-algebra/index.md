@@ -3,377 +3,371 @@ title: 线性代数
 status: new
 ---
 
-## 前言
+本文初稿完成于 2024-01-06，即大二上学期期末。参考《工程数学 线性代数》同济第七版。配套讲义、历年真题、框框老师讲义见百度网盘 [^resource]。
 
-本篇博客初稿完成于 2024.01.06，即大二上学期期末。参考《工程数学 线性代数》同济第七版。配套讲义、历年真题、框框老师讲义见：<https://pan.baidu.com/s/1IbW-R4a44JcMr1JFAP76sw?pwd=cwjf>。
-
-由于初稿写作时博主的水平有限并且偏向于应试，写作水平多有不足并且内容有所缺失。现在在学习 ML 和 DL 甚至数字图像处理时，几乎满屏都是矩阵。汗颜的是，由于初学时几乎都是死记硬背以及应试，我一度怀疑自己没学过线代🤡，因此这篇博客会持续更新。
-
-后续的更新会对内容进行整合与补充，包括二次型、线性空间和线性变换。同时偏向实际的应用，包括 AI 相关的矩阵计算和矩阵微积分、数字图像处理相关的变换策略。打星 $(*)$ 的内容表示个人认为比较重要的部分。
+由于初稿写作时笔者的水平有限并且偏向于应试，导致在初窥机器学习的奥秘时，被满屏的矩阵吓软了腿，我一度怀疑自己没学过线代🤡，因此本文会持续更新。后续的更新会对内容进行整合与补充，同时偏向实际的应用，包括 AI 相关的矩阵计算和矩阵微积分。
 
 为什么要学习线性代数？为什么会有线性代数？
 
-> 线性代数是为了解决多元线性方程组而诞生的。（2024.01.06）
->
-> 真的是这样吗？看到一篇博客是从程序语言角度进行理解的，还挺有意思：[8分钟带你彻底弄懂《线性代数》](https://blog.csdn.net/Neutionwei/article/details/109698699)。（2024.10.21）
+- 线性代数是为了解决多元线性方程组而诞生的。（2024-01-06）；
+- 真的是这样吗？看到一篇文章 [^blog] 是从程序语言角度进行理解的，还挺有意思。（2024.10.21）
 
-## 1 行列式
+[^resource]: [配套讲义、历年真题、框框老师讲义 | 百度网盘 - (pan.baidu.com)](https://pan.baidu.com/s/1IbW-R4a44JcMr1JFAP76sw?pwd=cwjf)
+[^blog]: [8 分钟带你彻底弄懂线性代数 | 嵌入式逍遥 - (blog.csdn.net)](https://blog.csdn.net/Neutionwei/article/details/109698699)
 
-### 1.1 基本概念
+*注：使用小写字母表示的为标量，例如 5 可以用 $x$ 来表示；加粗小写字母表示的为向量，例如 $(3,2,4)^T$ 可以用 $\mathbf a$ 来表示；加粗大写字母表示的为矩阵，例如 $\begin{bmatrix}b_{11} & \cdots & b_{1m} \\ \vdots & \ddots & \vdots \\b_{n1} & \cdots & b_{nm}\end{bmatrix}$ 可以用 $\mathbf A_{n\times m}$ 来表示。
 
-全排列。当一个序列含有 $n$ 个数并且序列中每一个位置只出现 $[1,n]$ 一次，则称该序列为全排列。
+## 行列式
 
-逆序数。一个排列中每一个元素之前比其大的元素数量之和。
+国内的教材喜欢在一开始讲行列式 (Determinant)，虽然笔者认为这其实和线代没什么关系，直接跳到 [矩阵](#矩阵) 开始学也行。
 
-对换。顾名思义就是指排列中两个元素进行交换的操作。有以下两个结论：
+所谓行列式，其实就是一种运算，与 $+$、$-$、$\times$、$\div$ 是一个东西，符号表示为 $\vert \mathbf A\vert$。其中 $\mathbf A$ 为 $n\times n$ 的数表，最终的运算结果是一个实数，即 $\vert \mathbf A\vert$ 其实是一个实数。
 
-1. 一个排列中两个元素对换，排列逆序数的奇偶性改变。
-2. 奇排列对换成标准排列的对换次数为奇数，偶排列对换成标准排列的对换次数为偶数。（标准排列就是 $n$ 个数从小到大升序排列）
+### 基本概念
 
-### 1.2 定义 *
+**排列**。若一个序列含有 $n$ 个数并且序列中每一个位置只出现 $[1,n]$ 一次，则称该序列为全排列，简称排列；$[1,n]$ 的升序排列称为标准排列。
 
-我们以 n 阶行列式为例。$n$ 阶行列式的值为 $n!$ 个项之和，每一项的组成方式为：每行选一个元素，每列选一个元素，这些元素之积，符号为
+**逆序数**。一个排列中每一个元素之前比其大的元素数量之和。听起来有些拗口，可以用下面的代码来表示：
 
-$$
-(-1)^{N(row)+N(col)}
-$$
+```python
+cnt = 0
+for i in range(n):
+    for j in range(i):
+        cnt += a[j] > a[i]
+print(cnt)
+```
 
-### 1.3 性质
+**对换**。即交换排列中的两个元素。有以下两个结论：
 
-行列式的性质可以用来简化求值，下面简单介绍一下 5 个常见的行列式性质及其推论，相关的证明都可以用定义证出来，故省略。
+1. 一个排列中两个元素对换，排列逆序数的奇偶性改变；
+2. 奇排列对换成标准排列的对换次数为奇数，偶排列对换成标准排列的对换次数为偶数。
 
-1. 行列式与其转置行列式相等。
+### 行列式的定义与性质
 
-2. 对换行列式的两个行或者列，行列式的符号改变。
-    - 推论。若行列式有两行或两列完全相同，则行列式的值为 0。
+**行列式的定义**。以 $n$ 阶行列式为例，其值为 $n!$ 个项之和。每一项的数值与符号定义为：
 
-3. 若行列式的某一行/列 $\times k$，则行列式的值也 $\times k$。
-    - 推论一。行列式的某一行/列中的公因子可以提到行列式之外。
-    - 推论二。若行列式有两行/列成比例，则行列式的值为零。
+- 数值：每行选一个元素，每列选一个元素，行列各不相同；
+- 符号：记 $t(p_1p_2\cdots p_n)$ 为排列 $p_1p_2\cdots p_n$ 的逆序数，那么符号为 $(-1)^{t(\text{行号})+N(\text{列号})}$。
 
-4. 若行列式的某一行/列都是两数之和，则可以拆分成两个行列式之和。
+**行列式的性质**。行列式的性质可以用来简化求值，下面简单介绍一下 5 个常见的行列式性质及其推论（都可以用定义证出来，此处省略）：
+
+1. 行列式与其转置行列式相等；
+
+2. 对换行列式的两个行或者列，行列式的符号改变；
+    - 推论：若行列式有两行或两列完全相同，则行列式的值为 $0$。
+
+3. 若行列式的某一行/列 $\times k$，则行列式的值也 $\times k$；
+    - 推论一：行列式的某一行/列中的公因子可以提到行列式之外；
+    - 推论二：若行列式有两行/列成比例，则行列式的值为零。
+
+4. 若行列式的某一行/列都是两数之和，则可以拆分成两个行列式之和；
 
 5. 把行列式的某一行/列乘一个常数累加到另一行/列上，行列式的值不变。
 
-关于行列式求值的技巧。在一开始对换行或者列的时候，尽可能保证左上角是数字 1，从而配凑出上三角进而直接用对角线之积求值。
+合理利用上述五个性质对行列式进行变换，就可以快速求解一个行列式。一般地，我们都会尽可能保证变换后的行列式左上角是数字 $1$，从而配凑出「上三角行列式」，进而直接用主对角线之积求解。
 
-### 1.4 按行/列展开
+### 行列式的按行/列展开
 
-本目简单介绍一下行列式求值的另一个策略：按行/列展开。我们用 D 表示行列式 (Determinant)。用 $M_{ij}$ 表示余子式，即行列式去掉 $D_{ij}$ 元素所在的行和列后剩余元素拼接起来的行列式。用 $A_{ij}$ 表示代数余子式，其中 $A_{ij}=(-1)^{i+j}M_{ij}$。
+这里简单介绍一下行列式求值的另一个策略：按行/列展开。我们用 $\mathbf{D}$ 表示行列式。用 $\mathbf{M}_{ij}$ 表示余子式，即行列式去掉 $\mathbf{D}_{ij}$ 元素所在的行和列后剩余元素拼接起来的行列式。用 $\mathbf{A}_{ij}$ 表示代数余子式，其中 $\mathbf{A}_{ij}=(-1)^{i+j}\mathbf{M}_{ij}$。
 
-若行列式的某一行/列只有一个元素不为零，则有：
+**若行列式的某一行/列只有一个元素不为零**。则有：
 
 $$
-D=a_{ij}A_{ij}
+\mathbf{D}=a_{ij}\mathbf{A}_{ij}
 $$
 
-??? note "证明"
+证明：将某行/列唯一不为零的元素 $a_{ij}$ 经过 $i+j-2$ 次对换后整到 $a_{11}$ 的位置后，剩余的 $\mathbf{M}_{ij}$ 变换为下三角即可，即：
 
-    对于特殊情况。即不为零的元素在左上角，则根据上述分块矩阵，可知
-    
-    $$
-    D =(-1)^{1+1}a_{ij}M_{ij}= a_{ij}A_{ij}
-    $$
-    
-    对于一般情况。即某行/列唯一不为零的元素在任意位置，则经过 $i+j-2$ 次对换后，就是上述特殊情况，可知：
-    
-    $$
-    D =(-1)^{i+j-2}a_{ij}M_{ij}=(-1)^{i+j}a_{ij}M_{ij}= a_{ij}A_{ij}
-    $$
+$$
+\mathbf{D} =(-1)^{i+j-2}a_{ij}\mathbf{M}_{ij}=(-1)^{i+j}a_{ij}\mathbf{M}_{ij}= a_{ij}\mathbf{A}_{ij}
+$$
 
-
-若行列式的某一行/列有多个元素不为零，则有：
+**若行列式的某一行/列有多个元素不为零**。则有：
 
 $$
 D =\sum_{i = 1}^n a_{xi}A_{xi}
 $$
 
-??? note "证明"
+证明：将展开的那一行/列通过加法原理进行拆分，然后利用上述只有一个元素不为零时的一般情况进行证明即可。
 
-    将展开的那一行/列通过加法原理进行拆分，然后利用上述只有一个元素不为零时的一般情况进行证明即可。
+**补充一个性质及其例题**。已知 $n$ 阶行列式 $\mathbf{D}$，按第 $x$ 行展开后有 $\mathbf{D}=\sum_{i=1}^n a_{xi}\mathbf{A}_{xi}$，现在将 $a_{xi}$ 替换为 $a_{yi}$ 且 $x\ne y$，则 $\sum_{i=1}^n a_{yi}\mathbf{A}_{xi}=0$。道理很简单，现在求解的值其实也是一个行列式，并且这个行列式有两行/列的元素完全相等，那么显然的行列式的值就是 $0$。
 
-??? note "例题"
+例如下面这道题：
 
-    已知 n 阶行列式 D，按第 $x$ 行展开后有 $D=\sum_{i=1}^n a_{xi}A_{xi}$，现在将 $a_{xi}$ 替换为 $a_{yi}$ 且 $x\ne y$，则 $\sum_{i=1}^n a_{yi}A_{xi}=0$。道理很简单，现在求解的值其实也是一个行列式，并且这个行列式有两行/列的元素完全相等，那么显然的行列式的值就是 0。例如下面这道题：显然 (1) 的结果为 0，(2) 只需要配凑一下即可。
-    
-    ![例题](https://cdn.dwj601.cn/images/202406140938343.png)
+<img src="https://cdn.dwj601.cn/images/202406140938343.png" alt="例题" style="zoom:50%;" />
+
+显然 (1) 的结果为 $0$；(2) 转化为 $3\mathbf{A}_{31}-5\mathbf{A}_{32}+2\mathbf{A}_{33}-\mathbf{A}_{34}$ 后，与第一行做差然后通过余子式求解即可，结果为 $-40$。
 
 ### 特殊的行列式
 
-下面补充几个特殊的行列式及其求值方法。
+下面补充几个特殊的行列式及其计算方法。
 
-#### 分块行列式
+**分块行列式**。如下图所示：
 
-![分块行列式](https://cdn.dwj601.cn/images/202406140938721.png)
+<img src="https://cdn.dwj601.cn/images/202406140938721.png" alt="分块行列式" style="zoom:50%;" />
 
-0 在左下或右上就是左上角与右下角行列式之积（$D=D_1D_2$），0 在左上或右下就是左下角与右上角行列式之积加上符号判定。
+计算方法：$\mathbf{0}$ 在左下或右上就是左上角与右下角行列式之积 ($\mathbf{D}=\mathbf{D}_1\mathbf{D}_2$)，$\mathbf{0}$ 在左上或右下就是左下角与右上角行列式之积加上符号判定。
 
-证明。分区域转换为上三角即可。
+证明：将两个框选出来的区域转换为上三角即可。
 
-#### 2n 阶行列式
+**$2n$ 阶行列式**。如下图所示：
 
-![2n 阶行列式](https://cdn.dwj601.cn/images/202406140939983.png)
+<img src="https://cdn.dwj601.cn/images/202406140939983.png" alt="2n 阶行列式" style="zoom:67%;" />
 
 先行对换再列对换，通过分块行列式和数学归纳法，可得行列式的值是一个等比数列。
 
-#### 范德蒙德行列式 *
+**范德蒙德行列式**。如下图所示：
 
-![范德蒙德行列式](https://cdn.dwj601.cn/images/202406140939979.png)
+<img src="https://cdn.dwj601.cn/images/202406140939979.png" alt="范德蒙德行列式" style="zoom:50%;" />
 
 证明。首先从最后一行开始，依次减去前一行的 $x_1$ 倍，凑出第一列一个元素不为零的情况，最后通过数学归纳法即可求解。项数为 $C_n^2$。
-## 2 矩阵
 
-### 2.1 定义
+## 矩阵
 
-相较于行列式是一个数，矩阵就是一个数表。下面补充几个常见的名词：
+行列式是一种运算，运算结果是一个数，而矩阵是一种表示，表示一个数表。
 
-- 方阵。若行列数相等均为 n，则可以称为方阵或 n 阶矩阵或 n 阶方阵。
-- 对角阵。即方阵的非主对角线元素均为 0。符号表示为 $\Lambda=diag(\lambda_1,\lambda_2,\cdots,\lambda_n)$
-- 单位阵。即方阵的主对角线全 1，其余全 0。符号表示为 $E=diag(1,1,\cdots,1)$
-- 纯量矩阵。主对角线上元素全为 $\lambda$ ，其余全 0。符号表示为 $S=diag(\lambda,\lambda,\cdots,\lambda)$
+### 基本概念
 
-### 2.2 运算
+下面补充几个常见的名词：
 
-#### 2.2.1 元素级运算
+- 方阵。若矩阵的行列数相等（假设为 $n$），则可以称该矩阵为：方阵、$n$ 阶矩阵、$n$ 阶方阵；
+- 对角阵。即方阵的非主对角线元素均为 $0$，主对角线元素不限。符号表示为 $\mathbf{\Lambda}=diag(\lambda_1,\lambda_2,\cdots,\lambda_n)$；
+- 单位阵。即方阵的非主对角线元素均为 $0$，主对角线元素均为 $1$。符号表示为 $\mathbf{E}=diag(1,1,\cdots,1)$；
+- 纯量阵。即方阵的非主对角线元素均为 $0$，主对角线元素均为 $\lambda$。符号表示为 $\mathbf{S}=diag(\lambda,\lambda,\cdots,\lambda)$。
 
-两个形状相同的矩阵按元素一个一个加、减、乘、除。
+### 矩阵运算
 
-#### 2.2.2 向量级运算
+**元素级运算**。两个形状相同的矩阵按元素逐个进行加、减、乘、除等运算。
 
-向量有内积和外积，也被称为点积和叉积。前者计算出一个标量，后者计算出一个方阵。以 $x,y,z$ 三个 $n$ 维向量，实数 $\lambda$ 为例，介绍以下三个知识点。
+**向量级运算**。向量有内积（点积）和外积（叉积）两种运算。前者计算出一个标量，后者计算出一个矩阵。以 $\mathbf{x},\mathbf{y},\mathbf{z}$ 三个 $n$ 维向量和实数 $\lambda$ 为例：
 
-**向量的内积**
+- 向量的内积，记 $[\cdot,\cdot]$ 为两个长度相等的向量作内积，有以下性质：
 
-1. $[x, y] = [y, x]$
-2. $[\lambda x, y] = \lambda [x, y]$
-3. $[x + y, z] = [x, z] + [y, z]$
-4. $[x, x] \geq 0$，且当 $x \ne 0$ 时有 $[x, x] > 0$
+    1. $[\mathbf x, \mathbf y] = [\mathbf y,\mathbf x]$；
+    2. $[\lambda \mathbf x,\mathbf y] = \lambda [\mathbf x,\mathbf y]$；
+    3. $[\mathbf x + \mathbf y,\mathbf z] = [\mathbf x,\mathbf z] + [\mathbf y,\mathbf z]$；
+    4. $[\mathbf x, \mathbf x] \geq 0$，且当 $x \ne 0$ 时有 $[\mathbf x,\mathbf x] > 0$。
 
-**向量的长度**
+- 向量的长度，有以下性质：
 
-1. 非负性：当 $x \ne 0$ 时，$\|x\| > 0$；当 $x = 0$ 时，$\|x\| = 0$
-2. 齐次性：$\|\lambda x\| = \|\lambda\|\|x\|$
-3. 三角不等式：$\|x + y\| \le \|x\| + \|y\|$
+    1. 非负性：当 $\mathbf x \ne \mathbf 0$ 时，$\|\mathbf x\| > 0$；当 $\mathbf x =\mathbf 0$ 时，$\|\mathbf x\| = 0$；
+    2. 齐次性：$\|\lambda\mathbf x\| = \lambda\|\mathbf x\|$；
+    3. 三角不等式：$\|\mathbf x +\mathbf y\| \le \|\mathbf x\| + \|\mathbf y\|$。
 
-**向量的夹角**
+- 向量的夹角：
 
-1. 当 $\|x\| = 1$ 时，称 $x$ 为单位向量
-2. 当 $\|x\| \ne 0, \|y\| \ne 0$ 时，$\theta = \arccos \frac{[x, y]}{\|x\|\|y\|}$
+    1. 当 $\|\mathbf x\| = 1$ 时，称 $x$ 为单位向量；
+    2. 当 $\|\mathbf x\| \ne \mathbf 0\land \|\mathbf y\| \ne \mathbf 0$ 时，$\theta = \arccos \frac{[\mathbf x,\mathbf y]}{\|\mathbf x\|\|\mathbf y\|}$。
 
-#### 2.2.3 矩阵级运算
+**矩阵级运算**。矩阵算律如下：
 
-矩阵乘法算律：
+1. 结合律：$(\mathbf A\mathbf B)\mathbf C=\mathbf A(\mathbf B \mathbf C)$；
+2. 分配率：$\mathbf A(\mathbf B+\mathbf C)=\mathbf A\mathbf B+\mathbf A\mathbf C,(\mathbf B+\mathbf C)\mathbf A=\mathbf B\mathbf A+\mathbf C\mathbf A$；
+3. 常数因子可以随意交换顺序：$\lambda(\mathbf A\mathbf B)=(\lambda\mathbf A)\mathbf B=\mathbf A(\lambda\mathbf B)$；
+4. 单位阵可以随意交换顺序或直接省略：$\mathbf A\mathbf E=\mathbf E\mathbf A=\mathbf A$；
+5. 幂运算：若 $\mathbf A$ 是 $n$ 阶矩阵，则 $\mathbf A$ 的 $k$ 次幂为 $\mathbf A^k=\underbrace{\mathbf A\mathbf A\cdots \mathbf A}_{k\text{个}}$，且 $\mathbf  A^m \mathbf A^k=\mathbf A^{m+k},(\mathbf A^m)^k=\mathbf A^{mk}$，其中 $m,k$ 为正整数。
 
-![矩阵乘法算律](https://cdn.dwj601.cn/images/202406140939006.png)
+*注：矩阵乘法没有交换律。$\mathbf{AB}$ 称为 $\mathbf{A}$ 左乘 $\mathbf{B}$。交换成立的前提是 $\mathbf{A}$ 和 $\mathbf{B}$ 左乘和右乘合法相等才可以。
 
-我们分别解释上面的「矩阵乘法」算律：
+**矩阵转置**。矩阵转置算律有以下四点：
 
-(1) 结合律。
+1. $(\mathbf{A}^T)^T=\mathbf{A}$；
+2. $(\mathbf{A}+\mathbf{B})^T=\mathbf{A}^T+\mathbf{B}^T$；
+3. $(\lambda \mathbf{A})^T=\lambda \mathbf{A}^T$；
+4. $(\mathbf{AB})^T=\mathbf{B}^T\mathbf{A}^T$。
 
-(2) 分配率。
+证明 4：左边的 $c_{ij}$ 其实应该是 $AB$ 的 $c_{ji}$ ，对应 $A$ 的第 $j$ 行与 $B$ 的第 $i$ 列，那么反过来对于 $ij$ 就是 $B$ 转置的第 $i$ 行与 $A$ 转置的第 $j$ 列。
 
-(3) 常数因子可以随意交换顺序。
+**对称矩阵**。对于一个方阵 $\mathbf{A}$，若有 $\mathbf{A} = \mathbf{A}^T$ 则称 $\mathbf{A}$ 为对称矩阵，简称对称阵。给一个对阵矩阵的例题：
 
-(4) 单位阵可以随意交换顺序或直接省略。
+<img src="https://cdn.dwj601.cn/images/202406140940661.png" alt="对称矩阵例题" style="zoom:50%;" />
 
-(5) 幂运算。由于有结合律存在，因此当 A、B 两个方阵可交换时，有幂运算规律。
+**方阵的行列式**。行列式算律有以下三点：
 
-??? tip
+1. $\vert \mathbf{A}^T\vert=\vert \mathbf{A}\vert$；
+2. $\vert \lambda \mathbf{A}\vert=\lambda^n\vert \mathbf{A}\vert$；
+3. $\vert \mathbf{AB}\vert=\vert \mathbf{A}\vert\vert \mathbf{B}\vert$。
 
-    - 矩阵乘法的基本规则。$AB=C$ 中 $c_{ij}$ 是 $A$ 的第 $i$ 行与 $B$ 的第 $j$ 列元素依次相乘并求和的结果。
-    
-    - 矩阵乘法没有交换律。$AB$ 称为 $A$ 左乘 $B$。交换成立的前提是 $A$ 和 $B$ 左乘和右乘合法相等才可以。
+对于上述第 3 点，显然有：$\vert \mathbf{AB}\vert=\vert \mathbf{A}\vert\vert \mathbf{B}\vert=\vert \mathbf{B}\vert\vert \mathbf{A}\vert=\vert \mathbf{BA}\vert$，即 $\vert \mathbf{AB}\vert=\vert \mathbf{BA}\vert$。
 
-
-#### 2.2.4 矩阵的转置
-
-矩阵转置算律：
-
-![矩阵转置算律](https://cdn.dwj601.cn/images/202406140940894.png)
-
-证明 (4)。左边的 $c_{ij}$ 其实应该是 $AB$ 的 $c_{ji}$ ，对应 $A$ 的第 $j$ 行与 $B$ 的第 $i$ 列，那么反过来对于 $ij$ 就是 $B$ 转置的第 $i$ 行与 $A$ 转置的第 $j$ 列。
-
-对称矩阵。对于一个方阵 $A$，若有 $A = A^T$ 则称 $A$ 为对称阵。给一个对阵矩阵的例题：
-
-![对称矩阵 - 例题](https://cdn.dwj601.cn/images/202406140940661.png)
-
-#### 2.2.5 方阵的行列式
-
-行列式算律：
-
-![行列式算律](https://cdn.dwj601.cn/images/202406140940619.png)
-
-伴随矩阵：
+**伴随矩阵**。用 $\mathbf{A}^*$ 表示 $\mathbf{A}$ 的伴随矩阵，则有：
 
 $$
-AA^* = A^* A = \left | A \right |E
+\mathbf{AA}^* = \mathbf{A}^* \mathbf{A} = \vert \mathbf{A} \vert \mathbf{E}
 $$
 
-![伴随矩阵](https://cdn.dwj601.cn/images/202406140940481.png)
+其中 $\mathbf{A}^*$ 表示为：
 
-### 2.3 逆矩阵
+$$
+\mathbf{A}^*=
+\begin{pmatrix}
+\mathbf{A}_{11} & \mathbf{A}_{21} & \cdots & \mathbf{A}_{n1}\\
+\mathbf{A}_{12} & \mathbf{A}_{22} & \cdots & \mathbf{A}_{n2}\\
+\cdots & \cdots & \cdots & \cdots\\
+\mathbf{A}_{1n} & \mathbf{A}_{2n} & \cdots & \mathbf{A}_{nn}\\
+\end{pmatrix}
+$$
+
+其中 $\mathbf A_{ij}$ 即代数余子式。
+
+### 逆矩阵的定义与性质
 
 定义：
 
-- 逆矩阵。对于矩阵 $A$，若有 $AB = BA = E$ ，则称 $B$ 为 $A$ 的逆矩阵。
-- 奇异矩阵。对于方阵 $A$，若 $|A| = 0$，则 $A$ 为奇异矩阵。
-- 非奇异矩阵。对于方阵 $A$，若 $|A| \ne 0$，则 $A$ 为非奇异矩阵。
+- 逆矩阵。对于矩阵 $\mathbf A$，若有 $\mathbf A\mathbf B = \mathbf B\mathbf A = \mathbf E$ ，则称 $\mathbf B$ 为 $\mathbf A$ 的逆矩阵，记作 $\mathbf B=\mathbf A^{-1}$；
+- 奇异矩阵。对于方阵 $\mathbf A$，若 $\vert\mathbf A\vert = 0$，则 $\mathbf A$ 为奇异矩阵；
+- 非奇异矩阵。对于方阵 $\mathbf A$，若 $\vert\mathbf A\vert \ne 0$，则 $\mathbf A$ 为非奇异矩阵。
 
 性质：
 
-- 唯一性。如果矩阵 $A$ 可逆，则 $A$ 的逆矩阵是唯一的。
-- 行列式。如果矩阵 $A$ 可逆，则 $|A| \ne 0$。
-- 矩阵可逆的必要条件。若 $AB=E$ （或 $BA = E$），则 $A$ 可逆且 $B = A^{-1}$
+- 唯一性。如果矩阵 $\mathbf A$ 可逆，则 $\mathbf A$ 的逆矩阵是唯一的；
+- 行列式。如果矩阵 $\mathbf A$ 可逆，则 $\vert\mathbf A \vert \ne 0$；
+- 矩阵可逆的必要条件。若 $\mathbf A\mathbf B=\mathbf E$（或 $\mathbf B\mathbf A = \mathbf E$），则 $\mathbf A$ 可逆且 $\mathbf B = \mathbf A^{-1}$。
 
 求法：
 
-- 若 $|A| \ne 0$ ，则矩阵 A 可逆，且 $A^{-1} = \frac{1}{|A|}A^*$
+- 若 $\vert\mathbf A\vert \ne 0$ ，则矩阵 $\mathbf A$ 可逆，且 $\mathbf A^{-1} = \frac{1}{\vert\mathbf A\vert}\mathbf A^*$。
 
 逆矩阵算律：
 
+1. ${(\mathbf A^{-1})}^{-1} = \mathbf A$；
+2. $({\lambda \mathbf A})^{-1} = \frac{1}{\lambda} \mathbf A^{-1}$；
+3. $({\mathbf A\mathbf B})^{-1} = \mathbf B^{-1}\mathbf A^{-1}$；
+4. $(\mathbf A^T)^{-1} = (\mathbf A^{-1})^{T}$；
+5. $\vert \mathbf A^{-1}\vert = {\vert \mathbf A\vert}^{-1}$；
+6. $\vert \mathbf A^*\vert = {\vert \mathbf A\vert}^{n - 1}$。
+
+### 克拉默法则
+
+克拉默法则是求解一般线性方程组的一个特殊场景，适用于求解「未知数数量和方程个数相等，且系数行列式不为零」的线性方程组。
+
+**克拉默法则的定义**。如下：
+
+如果线性方程组：
+
+
 $$
-\begin{aligned}
-{(A^{-1})}^{-1} &= A \\
-({\lambda A})^{-1} &= \frac{1}{\lambda} A^{-1}\\
-({AB})^{-1} &= B^{-1}A^{-1} \\
-(A^T)^{-1} &= (A^{-1})^{T} \\
-|A^{-1}| &= {|A|}^{-1} \\
-|A^*| &= {|A|}^{n - 1}
-\end{aligned}
+\begin{cases}
+a_{11}x_{1}+a_{12}x_{2}+&\cdots&+a_{1n}x_{n}=b_{1}\\
+a_{21}x_{1}+a_{22}x_{2}+&\cdots&+a_{2n}x_{n}=b_{2}\\
+&\vdots&\\
+a_{n1}x_{1}+a_{n2}x_{2}+&\cdots&+a_{nn}x_{n}=b_{n}
+\end{cases}
 $$
 
-### 2.4 克拉默法则
+的系数矩阵 $\mathbf A$ 的行列式不为零：
 
-应用：
+$$
+\vert\mathbf A\vert=\begin{vmatrix}a_{11}&\cdots&a_{1n}\\\vdots&&\vdots\\a_{n1}&\cdots&a_{nn}\end{vmatrix}\neq0
+$$
 
-- 求解未知数数量和方程个数相等，且系数行列式不为零的线性方程组
+则方程组有唯一解：
 
-- 是求解一般线性方程组的一个特殊场景
+$$
+x_1=\frac{\vert \mathbf A_1\vert}{\vert\mathbf A\vert},x_2=\frac{\vert \mathbf A_2\vert}{\vert\mathbf A\vert},\cdots,x_n=\frac{\vert\mathbf A_n\vert}{\mid \mathbf A\vert}
+$$
 
-结论：
+其中 $\mathbf A_j\ (j=1,2,...,n)$ 是把系数矩阵 $\mathbf A$ 中第 $j$ 列的元素用常数向量 $\mathbf b$ 代替后的 $n$ 阶矩阵：
 
-如果线性方程组
+$$
+\mathbf A_j=
+\begin{pmatrix}
+a_{11}&\cdots&a_{1,j-1}&b_1&a_{1,j+1}&\cdots&a_{1n}\\
+\vdots&&\vdots&\vdots&\vdots&&\vdots\\
+a_{n1}&\cdots&a_{n,j-1}&b_n&a_{n,j+1}&\cdots&a_{nn}
+\end{pmatrix}
+$$
 
-![线性方程组](https://cdn.dwj601.cn/images/202406140937686.png)
+**克拉默法则的证明**。如下：
 
-的系数矩阵 A 的行列式不为零，即
 
-![系数矩阵 A 的行列式不为零](https://cdn.dwj601.cn/images/202406140937651.png)
+首先将方程组转化为矩阵方程：
 
-则方程组有唯一解
+$$
+\mathbf A \mathbf x=\mathbf b,\vert \mathbf A\vert\ne 0
+$$
 
-![方程组有唯一解](https://cdn.dwj601.cn/images/202406140937081.png)
+然后应用逆矩阵消元：
 
-其中 $A_j(j=1,2,...,n)$ 是把系数矩阵 A 中第 $j$ 列的元素用方程组右端的常数项代替后所得到的 n 阶矩阵，即
+$$
+\mathbf x=
+\begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=
+\mathbf A^{-1}\mathbf b=
+\frac{\mathbf A^*}{\vert\mathbf A\vert}\mathbf b=
+\frac{1}{\vert \mathbf A\vert}
+\begin{pmatrix}
+\mathbf A_{11}&\mathbf A_{21}&\cdots&\mathbf A_{n1}\\
+\mathbf A_{12}&\mathbf A_{22}&\cdots&\mathbf A_{n2}\\
+\vdots&\vdots&&\vdots\\
+\mathbf A_{1n}&\mathbf A_{2n}&\cdots&\mathbf A_{nn}
+\end{pmatrix}
+\begin{pmatrix}
+b_1\\b_2\\
+\vdots\\b_n
+\end{pmatrix}
+$$
 
-![任意一列](https://cdn.dwj601.cn/images/202406140937003.png)
+最后应用 [行列式的按行/列展开](#行列式的按行列展开) 中补充的性质即可得到最终的结果：
 
-证明：
+$$
+\mathbf x = \cdots =
+\frac{1}{\mathbf \vert \mathbf A\vert}
+\begin{pmatrix}
+\mathbf A_{11}b_1+\mathbf A_{21}b_2+\cdots+\mathbf A_{n1}b_n\\
+\mathbf A_{12}b_1+\mathbf A_{22}b_2+\cdots+\mathbf A_{n2}b_n\\
+\vdots\\
+\mathbf A_{1n}b_1+\mathbf A_{2n}b_2+\cdots+\mathbf A_{nn}b_n
+\end{pmatrix}=
+\frac{1}{\mathbf \vert \mathbf A\vert}
+\begin{pmatrix}
+{\mathbf \vert \mathbf A_1\vert}\\
+{\mathbf \vert \mathbf A_2\vert}\\
+\vdots\\
+{\mathbf \vert \mathbf A_n\vert}\\
+\end{pmatrix}
+$$
 
-第一步：方程组转化为矩阵方程
+### 矩阵分块法
 
-![方程组转化为矩阵方程](https://cdn.dwj601.cn/images/202406140937364.png)
+矩阵分块法本质就是将子矩阵看作一个整体进行运算，类似于 [分治](../../../ds-and-algo/topic/base.md#分治) 算法。注意，在对矩阵进行分块计算的时候，有两个注意点，一是两个矩阵一开始的规格要相同，二是两个矩阵分块之后的子矩阵规格也要相同。我们重点关注对角分块矩阵。
 
-第二步：应用逆矩阵消元
+**对角分块矩阵的定义**。主对角线为子矩阵：
 
-![应用逆矩阵消元](https://cdn.dwj601.cn/images/202406140937245.png)
+$$
+\mathbf A =
+\begin{pmatrix}
+\mathbf A_1 & & &\\
+& \mathbf A_2 & &\\
+& & \ddots &\\
+& & & \mathbf A_s
+\end{pmatrix}
+$$
 
-第三步：应用行列式的性质计算
+其中 $\mathbf A_1,\mathbf A_2,...,\mathbf A_s$ 都是方阵。
 
-![应用行列式的性质计算](https://cdn.dwj601.cn/images/202406140937432.png)
+**对角分块矩阵的运算**。分别介绍幂运算、行列式运算、逆矩阵运算。
 
-### 2.5 矩阵分块法
+幂运算就是主对角线相应子矩阵的幂运算。如下图所示：
 
-个人感觉就是一种向量化的更高级的思维，对于一个向量，进行全新向量的拆解，从而实现拆分计算。以下是 5 个拆分规则，重点关注第 5 点，即分块对角矩阵以及最后的按行按列分块的两个应用。
+<img src="https://cdn.dwj601.cn/images/202406140946437.png" alt="幂运算就是主对角线相应元素的幂运算" style="zoom:50%;" />
 
-#### 2.5.1 拆分规则
+行列式运算使用了上三角的性质。如下式：
 
-首先需要知道的是，在对矩阵进行分块计算的时候，前提有两个：**一个是两个矩阵一开始的规格要相同，另一个是两个矩阵分块之后的规格也要相同**。
+$$
+\vert \mathbf A\vert = \vert \mathbf A_1\vert \vert \mathbf A_2\vert \cdots \vert \mathbf A_s\vert
+$$
 
-=== "按位加"
+逆矩阵就是主对角线的子矩阵按位取逆。若 $\vert \mathbf A_i\vert\ne 0\ (i=1,2,\cdots,s)$，则 $\vert \mathbf A\vert\ne 0$，且有：
 
-    若
-    
-    ![若](https://cdn.dwj601.cn/images/202406140946427.png)
-    
-    则
-    
-    ![则](https://cdn.dwj601.cn/images/202406140946428.png)
-
-=== "按位数乘"
-
-    若
-    
-    ![若](https://cdn.dwj601.cn/images/202406140946429.png)
-    
-    则
-    
-    ![则](https://cdn.dwj601.cn/images/202406140946430.png)
-
-=== "矩阵乘法"
-
-    若
-    
-    ![若](https://cdn.dwj601.cn/images/202406140946431.png)
-    
-    则
-    
-    ![则](https://cdn.dwj601.cn/images/202406140946432.png)
-    
-    其中
-    
-    ![其中](https://cdn.dwj601.cn/images/202406140946433.png)
-
-=== "按位转置"
-
-    若
-    
-    ![若](https://cdn.dwj601.cn/images/202406140946434.png)
-    
-    则
-    
-    ![则](https://cdn.dwj601.cn/images/202406140946435.png)
-
-=== "对角分块矩阵"
-
-    ![对角分块矩阵](https://cdn.dwj601.cn/images/202406140946436.png)
-    
-    其中 $A_1,A_2,...,A_s$ 都是方阵，则称 $A$ 为对角分块矩阵
-
-#### 2.5.2 运算性质
-
-幂运算就是主对角线相应元素的幂运算
-
-![幂运算就是主对角线相应元素的幂运算](https://cdn.dwj601.cn/images/202406140946437.png)
-
-矩阵行列式运算性质
-
-![矩阵行列式运算性质](https://cdn.dwj601.cn/images/202406140946438.png)
-
-矩阵的逆就是主对角线的块按位取逆
-
-![矩阵的逆就是主对角线的块按位取逆](https://cdn.dwj601.cn/images/202406140946439.png)
-
-按行按列分块的应用
-
-- $A^T A=O$ 的充要条件是 $A=O$
-- 线性方程组的三种表示方式：
-    1. 就是类似于一开始的矩阵数表的表示方式
-    2. 将系数表示为一个矩阵，将未知数表示成一个矩阵，将常数项也表示成一个矩阵
-    3. 同上，只是未知数保持不变，即 $x_1 {a_1} + x_2 {a_2} + \cdots + x_n {a_3} = {b}$
-- 线性方程组的解的两种表示方式：
-    1. 一一表示
-    2. 列向量表示
-
-#### 2.5.3 好题举例
-
-分块的整体运算思想 + 矩阵提取公因子
-
-![分块的整体运算思想 + 矩阵提取公因子](https://cdn.dwj601.cn/images/202406140946440.png)
-
-逆矩阵的按定义的求法，即配凑求出逆矩阵（常规计算法是利用了伴随矩阵的计算思想）
-
-![配凑求出逆矩阵](https://cdn.dwj601.cn/images/202406140946441.png)
+$$
+\mathbf A^{-1} =
+\begin{pmatrix}
+\mathbf A_1^{-1} & & &\\
+& \mathbf A_2^{-1} & &\\
+& & \ddots &\\
+& & & \mathbf A_s^{-1}
+\end{pmatrix}
+$$
 
 ## 3 矩阵的初等变换
 
@@ -412,11 +406,11 @@ $$
 1. 行阶梯形矩阵。可划出一条阶梯线，线下方全为零；每个台阶高度只有一行，台阶数即是非零行的行数，阶梯线的竖线后面的第一个元素为非零元。例如：
 
     $$
-    \begin{pmatrix} 
+    \begin{pmatrix}
     \underline{2} & 4 & -1 & 0 & 4 \\
     0 & \underline{5} & -1 & -7 & 3 \\
     0 & 0 & 0 & \underline{1} & -3 \\
-    0 & 0 & 0 & 0 & 0 
+    0 & 0 & 0 & 0 & 0
     \end{pmatrix}
     $$
 
@@ -498,7 +492,7 @@ $$
     ![加法性质](https://cdn.dwj601.cn/images/202406140946453.png)
 
 6. 压缩性：若 $A_{m\times n}$ 的秩为 $r$，则 $A$ 一定可以转化为
-   
+
     $$
     \begin{bmatrix}
     E_r & O \\
@@ -547,11 +541,11 @@ $$
 - 判定 **向量组** $B$ 能否被 **向量组** $A$ 线性表示：
   
     ![向量组被向量组线性表示](https://cdn.dwj601.cn/images/202406140946458.png)
-    
+
     该判定定理有以下推论：
-    
+
     ![放缩性质](https://cdn.dwj601.cn/images/202406140946459.png)
-    
+
 - 判定 **向量组** $B$ 与 **向量组** $A$ 等价：
 
     ![向量组与向量组等价](https://cdn.dwj601.cn/images/202406140946460.png)
@@ -575,9 +569,9 @@ $$
 - 定理二：
 
     ![定理二](https://cdn.dwj601.cn/images/202406140946464.png)
-    
+
     证明：按照定义，转化为齐次线性方程组解的问题
-    
+
     - 有非零解 $\Leftrightarrow$ 无数组解（将解方程取倍数即可），$R(A)=R(A,0)<m$
     - 仅有零解 $\Leftrightarrow$ 唯一解，$R(A)=R(A,0)=m$
 
@@ -604,9 +598,9 @@ $$
 - 结论四：
 
     ![结论四](https://cdn.dwj601.cn/images/202406140946468.png)
-    
+
     证明：$R(A)=m,R(A,b)<m+1 \to Ax=b\text{有唯一解}$
-    
+
     - $\max \{ R(A),R(b) \} \le R(A,b) \le m+1 \to m \le R(A,b) \le m+1$
     - 又 $R(A,b)<m+1$
     - 故 $R(A,b)=m$
@@ -643,15 +637,11 @@ $$
 
 ### 4.4 向量空间
 
-#### 4.4.1 向量空间的概念
+**向量空间的概念**。可以从高中学到的平面向量以及空间向量入手进行理解，即平面向量就是一个二维向量空间，同理空间向量就是一个三维向量空间，那么次数就是拓展到 n 维向量空间，道理是一样的，只不过超过三维之后就没有直观的效果展示罢了。
 
-可以从高中学到的平面向量以及空间向量入手进行理解，即平面向量就是一个二维向量空间，同理空间向量就是一个三维向量空间，那么次数就是拓展到 n 维向量空间，道理是一样的，只不过超过三维之后就没有直观的效果展示罢了。
+**向量空间的基与维数**。同样可以从高中学到的向量入手，此处的基就是基底，维数就是有几个基底。所有的基之间都是线性无关的，这是显然的。然后整个向量空间中任意一个向量都可以被基线性表示，也就很显然了，此处有三个考点，分别为：
 
-#### 4.4.2 向量空间的基与维数
-
-同样可以从高中学到的向量入手，此处的基就是基底，维数就是有几个基底。所有的基之间都是线性无关的，这是显然的。然后整个向量空间中任意一个向量都可以被基线性表示，也就很显然了，此处有三个考点，分别为：
-
-**考点一：求解空间中的某向量 x 在基 A 下的坐标**
+**考点一**：求解空间中的某向量 x 在基 A 下的坐标。
 
 其实就是求解向量 x 在基 A 的各个“轴”上的投影。我们定义列向量 $\lambda$ 为向量 x 在基 A 下的坐标，那么就有如下的表述：
 
@@ -659,11 +649,11 @@ $$
 x = A \  \lambda
 $$
 
-**考点二：求解过度矩阵 P**
+**考点二**：求解过度矩阵 P。
 
 我们已知一个向量空间中的两个基分别为 A 和 B，若有矩阵 P 满足基变换公式：$B = AP$，我们就称 P 为从基 A 到基 B 的过渡矩阵
 
-**考点三：已知空间中的某向量 x 在基 A 下坐标为 $\lambda$，以及从基 A 到基 B 的过渡矩阵为 P，求解转换基为 B 之后的坐标 $\gamma$**
+**考点三**：已知空间中的某向量 x 在基 A 下坐标为 $\lambda$，以及从基 A 到基 B 的过渡矩阵为 P，求解转换基为 B 之后的坐标 $\gamma$。
 
 ![求解过程](https://cdn.dwj601.cn/images/202406140946474.png)
 
@@ -776,7 +766,7 @@ $$
 
 答案是 n 阶对角矩阵一定是可对角化的。因为有一个定理是这样的：对于一个对称矩阵 A 而言，一定可以找到一个正交矩阵 P 使得 $P^{-1}AP=\Lambda$，又由于正交矩阵一定是可逆矩阵，因此一定可以找到矩阵 A 的 n 个线性无关的特征向量，从而 A 一定可对角化。
 
-**对称矩阵的性质**
+对称矩阵的性质如下：
 
 1. 对称矩阵的特征值均为实数
 2. 对称矩阵 A 的两个特征值 $\lambda _1$ 与 $\lambda _2$ 对应的两个特征向量分别为 $P_1$ 和 $P_2$，若 $\lambda_1 \ne \lambda_2$，相比于一般的矩阵 $P_1$ 与 $P_2$ 线性无关，此时两者关系更强，即：$P_1$ 与 $P_2$ 正交
