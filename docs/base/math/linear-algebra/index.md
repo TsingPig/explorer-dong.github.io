@@ -5,7 +5,7 @@ status: new
 
 本文初稿完成于 2024-01-06，即大二上学期期末。参考《工程数学 线性代数》同济第七版。配套讲义、历年真题、框框老师讲义见百度网盘 [^resource]。
 
-由于初稿写作时笔者的水平有限并且偏向于应试，导致在初窥机器学习的奥秘时，被满屏的矩阵吓软了腿，我一度怀疑自己没学过线代🤡，因此本文会持续更新。后续的更新会对内容进行整合与补充，同时偏向实际的应用，包括 AI 相关的矩阵计算和矩阵微积分。
+由于初稿写作时笔者的水平有限并且偏向于应试，导致在初窥机器学习的奥秘时，被满屏的矩阵吓软了腿，我一度怀疑自己没学过线代 🤡，因此本文会持续更新。后续的更新会对内容进行整合与补充，同时偏向实际的应用，包括 AI 相关的矩阵计算和矩阵微积分。
 
 为什么要学习线性代数？为什么会有线性代数？
 
@@ -73,7 +73,7 @@ print(cnt)
 **若行列式的某一行/列只有一个元素不为零**。则有：
 
 $$
-\mathbf{D}=a_{ij}\mathbf{A}_{ij}
+\mathbf{D}= a_{ij}\mathbf{A}_{ij}
 $$
 
 证明：将某行/列唯一不为零的元素 $a_{ij}$ 经过 $i+j-2$ 次对换后整到 $a_{11}$ 的位置后，剩余的 $\mathbf{M}_{ij}$ 变换为下三角即可，即：
@@ -210,25 +210,21 @@ $$
 
 其中 $\mathbf A_{ij}$ 即代数余子式。
 
-### 逆矩阵的定义与性质
+### 逆矩阵
 
-定义：
+**逆矩阵的定义**。对于 $n$ 阶矩阵 $\mathbf A$，若有 $\mathbf A\mathbf B = \mathbf B\mathbf A = \mathbf E$ ，则称 $\mathbf B$ 为 $\mathbf A$ 的逆矩阵，记作 $\mathbf B=\mathbf A^{-1}$。若 $\vert\mathbf A\vert = 0$，则 $\mathbf A$ 为又称奇异矩阵；若 $\vert\mathbf A\vert \ne 0$，则 $\mathbf A$ 为又称非奇异矩阵。
 
-- 逆矩阵。对于矩阵 $\mathbf A$，若有 $\mathbf A\mathbf B = \mathbf B\mathbf A = \mathbf E$ ，则称 $\mathbf B$ 为 $\mathbf A$ 的逆矩阵，记作 $\mathbf B=\mathbf A^{-1}$；
-- 奇异矩阵。对于方阵 $\mathbf A$，若 $\vert\mathbf A\vert = 0$，则 $\mathbf A$ 为奇异矩阵；
-- 非奇异矩阵。对于方阵 $\mathbf A$，若 $\vert\mathbf A\vert \ne 0$，则 $\mathbf A$ 为非奇异矩阵。
-
-性质：
+**逆矩阵的性质**。如下：
 
 - 唯一性。如果矩阵 $\mathbf A$ 可逆，则 $\mathbf A$ 的逆矩阵是唯一的；
-- 行列式。如果矩阵 $\mathbf A$ 可逆，则 $\vert\mathbf A \vert \ne 0$；
-- 矩阵可逆的必要条件。若 $\mathbf A\mathbf B=\mathbf E$（或 $\mathbf B\mathbf A = \mathbf E$），则 $\mathbf A$ 可逆且 $\mathbf B = \mathbf A^{-1}$。
+- 非奇异性。$\mathbf A$ 可逆 $\iff \vert\mathbf A \vert \ne 0$。
 
-求法：
+**逆矩阵的计算方法**。知道了逆矩阵的定义和性质后，想要求解一个方阵的逆矩阵就有以下两种求法：
 
-- 若 $\vert\mathbf A\vert \ne 0$ ，则矩阵 $\mathbf A$ 可逆，且 $\mathbf A^{-1} = \frac{1}{\vert\mathbf A\vert}\mathbf A^*$。
+1. 方法一：首先判断 $\mathbf A$ 的行列式是否为 $0$，若 $\vert\mathbf A\vert \ne 0$ ，则说明矩阵 $\mathbf A$ 可逆，那么就有 $\mathbf A^{-1} = \frac{1}{\vert\mathbf A\vert}\mathbf A^*$；
+2. 方法二：如果可以找到 $\mathbf A\mathbf B=\mathbf E$ 或 $\mathbf B\mathbf A = \mathbf E$，那么就有 $\mathbf A^{-1}= \mathbf B$。
 
-逆矩阵算律：
+**逆矩阵的运算规律**。如下：
 
 1. ${(\mathbf A^{-1})}^{-1} = \mathbf A$；
 2. $({\lambda \mathbf A})^{-1} = \frac{1}{\lambda} \mathbf A^{-1}$；
@@ -248,33 +244,33 @@ $$
 
 $$
 \begin{cases}
-a_{11}x_{1}+a_{12}x_{2}+&\cdots&+a_{1n}x_{n}=b_{1}\\
-a_{21}x_{1}+a_{22}x_{2}+&\cdots&+a_{2n}x_{n}=b_{2}\\
+a_{11}x_{1}+a_{12}x_{2}+&\cdots&+a_{1n}x_{n}= b_{1}\\
+a_{21}x_{1}+a_{22}x_{2}+&\cdots&+a_{2n}x_{n}= b_{2}\\
 &\vdots&\\
-a_{n1}x_{1}+a_{n2}x_{2}+&\cdots&+a_{nn}x_{n}=b_{n}
+a_{n1}x_{1}+a_{n2}x_{2}+&\cdots&+a_{nn}x_{n}= b_{n}
 \end{cases}
 $$
 
 的系数矩阵 $\mathbf A$ 的行列式不为零：
 
 $$
-\vert\mathbf A\vert=\begin{vmatrix}a_{11}&\cdots&a_{1n}\\\vdots&&\vdots\\a_{n1}&\cdots&a_{nn}\end{vmatrix}\neq0
+\vert\mathbf A\vert =\begin{vmatrix}a_{11}&\cdots&a_{1n}\\\vdots&&\vdots\\a_{n1}&\cdots&a_{nn}\end{vmatrix}\neq0
 $$
 
 则方程组有唯一解：
 
 $$
-x_1=\frac{\vert \mathbf A_1\vert}{\vert\mathbf A\vert},x_2=\frac{\vert \mathbf A_2\vert}{\vert\mathbf A\vert},\cdots,x_n=\frac{\vert\mathbf A_n\vert}{\mid \mathbf A\vert}
+x_1 =\frac{\vert \mathbf A_1\vert}{\vert\mathbf A\vert}, x_2 =\frac{\vert \mathbf A_2\vert}{\vert\mathbf A\vert},\cdots, x_n =\frac{\vert\mathbf A_n\vert}{\mid \mathbf A\vert}
 $$
 
 其中 $\mathbf A_j\ (j=1,2,...,n)$ 是把系数矩阵 $\mathbf A$ 中第 $j$ 列的元素用常数向量 $\mathbf b$ 代替后的 $n$ 阶矩阵：
 
 $$
-\mathbf A_j=
+\mathbf A_j =
 \begin{pmatrix}
-a_{11}&\cdots&a_{1,j-1}&b_1&a_{1,j+1}&\cdots&a_{1n}\\
+a_{11}&\cdots&a_{1, j-1}&b_1&a_{1, j+1}&\cdots&a_{1n}\\
 \vdots&&\vdots&\vdots&\vdots&&\vdots\\
-a_{n1}&\cdots&a_{n,j-1}&b_n&a_{n,j+1}&\cdots&a_{nn}
+a_{n1}&\cdots&a_{n, j-1}&b_n&a_{n, j+1}&\cdots&a_{nn}
 \end{pmatrix}
 $$
 
@@ -284,16 +280,16 @@ $$
 首先将方程组转化为矩阵方程：
 
 $$
-\mathbf A \mathbf x=\mathbf b,\vert \mathbf A\vert\ne 0
+\mathbf A \mathbf x =\mathbf b,\vert \mathbf A\vert\ne 0
 $$
 
 然后应用逆矩阵消元：
 
 $$
-\mathbf x=
+\mathbf x =
 \begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix}=
-\mathbf A^{-1}\mathbf b=
-\frac{\mathbf A^*}{\vert\mathbf A\vert}\mathbf b=
+\mathbf A^{-1}\mathbf b =
+\frac{\mathbf A^*}{\vert\mathbf A\vert}\mathbf b =
 \frac{1}{\vert \mathbf A\vert}
 \begin{pmatrix}
 \mathbf A_{11}&\mathbf A_{21}&\cdots&\mathbf A_{n1}\\
@@ -369,144 +365,147 @@ $$
 \end{pmatrix}
 $$
 
-## 3 矩阵的初等变换
+## 矩阵的初等变换
 
-### 3.1 矩阵的初等变换
+经过前面的学习，我们了解了线性代数中的基本表示单位：矩阵。但不要忘了，线性代数是为了更方便地求解线性方程组。前文介绍了行列式，其本质就是一种矩阵运算法则（针对方阵），本章将会继续介绍矩阵运算法则（初等变换），从而更方便地求解线性方程组。
 
-#### 3.1.1 基本概念
+### 基本概念
 
-**定义**。我们从矩阵的初等行变换出发定义矩阵的初等变换，共有以下三种行变换：
+**矩阵初等变换的定义**。矩阵的初等变换分为行变换和列变换，且都是可逆的。以初等行变换为例（将所有的 $r$ 换成 $c$ 就是矩阵的初等列变换），有以下三种：
 
-1. 第 i 行与第 j 行对换。$r_i \leftrightarrow r_j$
-2. 第 i 行乘以一个常数 k。$r_i \leftarrow r_i \times k\ (k \neq 0)$
-3. 第 i 行加上第 j 行的 k 倍。$r_i \leftarrow r_i + kr_j$​
+1. 第 $i$ 行与第 $j$ 行对换，即 $r_i \leftrightarrow r_j$；
+2. 第 $i$ 行乘一个常数 $k$，即 $r_i \leftarrow r_i \times k\ (k \neq 0)$；
+3. 第 $i$ 行加上第 $j$ 行的 $k$ 倍，即 $r_i \leftarrow r_i + kr_j$​。
 
-将上述的行变换全部置换为列变换，就是矩阵的初等列变换。初等行变换与初等列变化统称初等变换。注意三种变换都是可逆的，也就是说所有的变换都是等价的。
+为了更方便地表示和书写，我们定义以下矩阵初等变换的符号，对于矩阵 $\mathbf A$ 和矩阵 $\mathbf B$ 而言：
 
-**符号表示**。为了更方便的表示和书写，我们定义以下矩阵初等变换的符号，对于矩阵 A 和矩阵 B 而言：
+1. $\mathbf A$ 经过有限次「初等行变换」转化为 $\mathbf B$，就称 $\mathbf A$ 与 $\mathbf B$ 行等价，记作 $\mathbf A \stackrel{r}{\sim} \mathbf B$；
+2. $\mathbf A$ 经过有限次「初等列变换」转化为 $\mathbf B$，就称 $\mathbf A$ 与 $\mathbf B$ 列等价，记作 $\mathbf A \stackrel{c}{\sim} \mathbf B$；
+3. $\mathbf A$ 经过有限次「初等变换」转化为 $\mathbf B$，就称 $\mathbf A$ 与 $\mathbf B$ 等价，记作 $\mathbf A \sim \mathbf B$。
 
-1. $A$ 经过有限次「初等行变换」转化为矩阵 $B$，就称 $A$ 与 $B$ 行等价，记作 $A \stackrel{r}{\sim} B$
-2. $A$ 经过有限次「初等列变换」转化为矩阵 $B$，就称 $A$ 与 $B$ 列等价，记作 $A \stackrel{c}{\sim} B$
-3. $A$ 经过有限次「初等变换」转化为矩阵 $B$，就称 $A$ 与 $B$ 等价，记作 $A \sim B$
+**矩阵初等变换的性质**。初等变换拥有三大特性：
 
-**初等变换的数学意义**。所有的变换都等价于在原始矩阵上左乘或右乘一个初等矩阵 E(Elementary Matrix)。注意初等矩阵表示对单位阵进行上述三种变换后的结果。例如：
+1. 自反性：$\mathbf A \sim \mathbf A$；
+2. 对称性：若 $\mathbf A \sim \mathbf B$，则 $\mathbf B \sim \mathbf A$；
+3. 传递性：若 $\mathbf A\sim \mathbf B$，$\mathbf B\sim \mathbf C$ ，则 $\mathbf A \sim \mathbf C$。
 
-- 对 $A_{m\times n}$ 施行一次初等行变换，相当于在 $A$ 的左边乘以相应的 $m$ 阶初等矩阵。
+**矩阵初等变换的产物**。矩阵初等变换的根本目的是将矩阵变换为某种形式，有以下三种目标产物：
 
-- 对 $A_{m\times n}$ 施行一次初等列变换，相当于在 $A$ 的右边乘以相应的 $n$ 阶初等矩阵。
-
-**性质**。初等变换拥有三大特性：
-
-1. 自反性：$A \sim A$
-2. 对称性：若 $A \sim B$，则 $B \sim A$
-3. 传递性：若 $A\sim B$，$B\sim C$ ，则 $A \sim C$
-
-**三种形式的矩阵**。
-
-1. 行阶梯形矩阵。可划出一条阶梯线，线下方全为零；每个台阶高度只有一行，台阶数即是非零行的行数，阶梯线的竖线后面的第一个元素为非零元。例如：
-
-    $$
-    \begin{pmatrix}
-    \underline{2} & 4 & -1 & 0 & 4 \\
-    0 & \underline{5} & -1 & -7 & 3 \\
-    0 & 0 & 0 & \underline{1} & -3 \\
-    0 & 0 & 0 & 0 & 0
-    \end{pmatrix}
-    $$
-
-2. 行最简形矩阵。是行阶梯形矩阵，且非零行的第一个非零元为1，它所在列的其他元素都为零。例如：
-
-    $$
-    \begin{pmatrix} 1 & 0 & -1 & 0 & 4 \\ 0 & 1 & -1 & 0 & 3 \\ 0 & 0 & 0 & 1 & -3 \\ 0 & 0 & 0 & 0 & 0 \end{pmatrix}
-    $$
-
-3. 标准形。左上角是一个单位矩阵，其余元素全是零。$m \times n$ 的矩阵 $A$ 总可经过初等变换化为标准形。例如：
-
-    $$
-    F = \begin{pmatrix} E_r & O \\ O & O \end{pmatrix}_{m \times n}
-    $$
-
-    此标准形由 $m, n, r$ 三个数唯一确定，其中 $r$ 就是行阶梯形矩阵中非零行的行数。
-
-#### 3.1.2 与逆矩阵的关系
-
-**矩阵初等变换的存在性定理**。对于 $A_{m\times n}$ 和 $B_{m\times n}$：
-
-1. $A \stackrel{r}{\sim} B \iff$ 存在 m 阶可逆阵 P 使得 PA=B
-2. $A \stackrel{c}{\sim} B \iff$ 存在 n 阶可逆阵 Q 使得 AQ=B
-3. $A \sim B \iff$ 存在 m 阶可逆阵 P 及 n 阶可逆阵 Q 使得 PAQ=B
-
-**如何求解变换矩阵呢**？由于 (2) 中的 Q 可以通过转置转化为求解 (1) 中的 P，因此我们以求解上述 (1) 中的 P 为例：
+1）行阶梯形矩阵。例如：
 
 $$
-PA=B \iff
+\begin{pmatrix}
+\underline{2} & 4 & -1 & 0 & 4 \\
+0 & \underline{5} & -1 & -7 & 3 \\
+0 & 0 & 0 & \underline{1} & -3 \\
+0 & 0 & 0 & 0 & 0
+\end{pmatrix}
+$$
+
+定义为非零行在零行的上面，并且非零行的首个非零元素（首元）在其上一行（如果存在）首元的右侧。
+
+2）行最简形矩阵。例如：
+
+$$
+\begin{pmatrix}
+\underline 1 & 0 & -1 & 0 & 4 \\
+0 & \underline 1 & -1 & 0 & 3 \\
+0 & 0 & 0 & \underline 1 & -3 \\
+0 & 0 & 0 & 0 & 0
+\end{pmatrix}
+$$
+
+在满足行阶梯形矩阵的基础上，每行首元为 $1$ 并且其所在列的其他元素都为 $0$。
+
+3）标准形。例如：
+
+$$
+\mathbf F = \begin{pmatrix} \mathbf E_r & \mathbf 0 \\ \mathbf 0 & \mathbf 0 \end{pmatrix}_{m \times n}
+$$
+
+左上角是一个单位阵，其余元素全是 $0$。$m \times n$ 的矩阵 $\mathbf A$ 总可经过初等变换转换标准形，此标准形由 $m, n, r$ 三个数唯一确定，其中 $r$ 就是行阶梯形矩阵中非零行的行数。
+
+**矩阵初等变换的数学意义**。所有的初等变换都等价于在原矩阵左乘或右乘一个初等矩阵 (elementary matrix)。所谓初等矩阵就是对单位阵进行初等变换后的方阵，所以初等矩阵一定是「可逆」的。那么对于 $\mathbf A_{m\times n}$ 和 $\mathbf B_{m\times n}$ 就有：
+
+1. $\mathbf A \stackrel{r}{\sim} \mathbf B \iff$ 存在 $m$ 阶可逆阵 $\mathbf P$ 使得 $\mathbf P\mathbf A=\mathbf B$；
+2. $\mathbf A \stackrel{c}{\sim} \mathbf B \iff$ 存在 $n$ 阶可逆阵 $\mathbf Q$ 使得 $\mathbf A\mathbf Q=\mathbf B$；
+3. $\mathbf A \sim \mathbf B \iff$ 存在 $m$ 阶可逆阵 $\mathbf P$ 和 $n$ 阶可逆阵 $\mathbf Q$ 使得 $\mathbf P\mathbf A\mathbf Q=\mathbf B$。
+
+利用该数学性质，结合 [矩阵分块](#矩阵分块法) 的思想，我们可以进行一些很有意思的运算。
+
+1）求解矩阵初等变换中的初等变换矩阵。以求解初等行变换矩阵 $\mathbf P$ 为例：
+
+$$
+\mathbf P\mathbf A =\mathbf B \iff
 \begin{cases}
-PA=B\\
-PE=P
+\mathbf P\mathbf A =\mathbf B\\
+\mathbf P\mathbf E =\mathbf P
 \end{cases} \iff
-(A\quad E) \stackrel{r}{\sim} (B \quad P)
+(\mathbf A, \mathbf E) \stackrel{r}{\sim} (\mathbf B ,\mathbf P)
 $$
 
-即对 $(A \quad E)$ 作初等行变换，当把 $A$ 变为 $B$ 时，$E$ 就变为了需要求解的可逆阵 $P$。
+即对 $(\mathbf A , \mathbf E)$ 作初等行变换，当把 $\mathbf A$ 变换为 $\mathbf B$ 时，$\mathbf E$ 就变换为了需要求解的可逆阵 $\mathbf P$。
 
-**方阵可逆的等价推导**。方阵 A 可逆 $\iff$ $A \stackrel{r}{\sim} E$。于是证明方阵 $A$ 可逆就又多了一个策略，即将 $A$ 经过有限次的初等行变换之后变成了单位阵，就可以说明 A 是可逆矩阵。求解过程如下：
+2）求解方阵 $\mathbf A$ 的逆矩阵。这里介绍 [逆矩阵](#逆矩阵) 的第二种求法，求解过程如下：
 
 $$
-A\text{ 为可逆方阵} \iff
+\mathbf A\text{ 可逆} \iff
 \begin{cases}
-A^{-1}A=E\\
-A^{-1}E=A^{-1}
+\mathbf A^{-1}\mathbf A =\mathbf E\\
+\mathbf A^{-1}\mathbf E =\mathbf A^{-1}
 \end{cases} \iff
-(A\quad E) \stackrel{r}{\sim} (E \quad A^{-1})
+(\mathbf A,\mathbf E) \stackrel{r}{\sim} (\mathbf E,\mathbf A^{-1})
 $$
 
-即对 $(A \quad E)$ 作初等行变换，当把 $A$ 变为 $E$ 时，$E$ 就变为了 $A^{-1}$。显然此法不仅可以用来证明一个可逆阵，也可以顺带计算出其逆矩阵。
+即对 $(\mathbf A,\mathbf E)$ 作初等行变换，当把 $\mathbf A$ 变换为 $\mathbf E$ 时，$\mathbf E$ 就变换为了 $\mathbf A^{-1}$。此法可以在证明一个方阵可逆的同时顺带计算出其逆矩阵。
 
-#### 3.1.3 让我们解个线性方程组吧
+3）求解线性方程组。已知 $\mathbf A\mathbf X=\mathbf B$，求解 $\mathbf X$。最朴素的做法就是先证明 $\mathbf A$ 可逆，然后计算 $\mathbf A^{-1}\mathbf B$ 即为所求。但这样做有些麻烦，考虑本节学到的知识：求解 $\mathbf A^{-1}\mathbf B$ 的本质是 $\mathbf B$ 进行 $\mathbf A^{-1}$ 的初等行变换，那么仿照上述配凑逻辑，构造 $(\mathbf A,\mathbf B)$ 进行初等行变换：
 
-问题。已知矩阵 $A,B$，且 $AX=B$，现在需要求解 $X$ 矩阵。
+$$
+\begin{cases}
+\mathbf A^{-1}\mathbf A =\mathbf E\\
+\mathbf A^{-1}\mathbf B =\mathbf X
+\end{cases}
+\iff
+(\mathbf A,\mathbf B)\stackrel{r}{\sim}(\mathbf E,\mathbf X)
+$$
 
-求解。首先需要证明 $A$ 可逆，然后计算 $A^{-1}B$ 即为所求。采用本节的知识：如果 $A \stackrel{r}{\sim} E$，则 $A$ 可逆，即 $PA=E$。还需要求 $A^{-1}B$ 怎么办呢？显然可以先算逆矩阵再乘 B，但是！如果我们对 $(A\quad B)$ 作初等行变换，当那么当 $A$ 转化为 $E$ 后，B 就转化为了 $A^{-1}B$，正好就是我们要求的！非常的巧妙。
+### 矩阵的秩
 
-补充。上述求解 $X$ 的过程本质上就是解一个线性方程组，到目前为止我们已经有以下策略了：
+**矩阵秩的定义**。如下：
 
-1. 高中学的。消元。
-2. chapter2.3。先求逆矩阵 $A^{-1}$，再将 $A^{-1}$ 与 $B$ 相乘。
-3. chapter2.4。克拉默法则。
-4. 上面刚学的。矩阵的初等变换。
+- 首先定义 $k$ 阶子式。给定一个 $\mathbf A_{m\times n}$，选择其中的 $k$ 行和 $k$ 列 $(k\le\min⁡(m,n)$，由这些行和列的交点组成的 $k\times k$ 子矩阵的行列式，称为 $\mathbf A$ 的一个 $k$ 阶子式；
+- 然后定义非零子式。如果一个子式的行列式值不等于零，则称它为非零子式；
+- 那么矩阵 $\mathbf A$ 的秩 (rank, R) 就是其非零子式的最高阶数，记作 $R(\mathbf A)$。
 
-### 3.2 矩阵的秩
+**矩阵秩的性质**。如下：
 
-我们定义矩阵秩为矩阵的非零子式的最高阶数，记作 $R(A)$。关于矩阵的秩，有以下性质：
+1. 转置不变性：$R(\mathbf A^T)=R(\mathbf A)$；
+2. 初等变换不变性：若 $\mathbf P,\mathbf Q$ 可逆，则 $R(\mathbf P\mathbf A\mathbf Q)=R(\mathbf A)$；
+3. 上下界：$0 \le R(\mathbf A_{m\times n}) \le \min \{m, n\}$；
+4. 配凑性：$\max(R(\mathbf A),R(\mathbf B))\le R(\mathbf A,\mathbf B)\le R(\mathbf A)+R(\mathbf B)$；
+5. 加法性：$R(\mathbf A+\mathbf B)\le R(\mathbf A)+R(\mathbf B)$；
+6. 压缩性：若 $R(\mathbf A_{m\times n})=r$，则 $\mathbf A$ 一定可以转化为 $\begin{bmatrix}\mathbf B_r & \mathbf 0 \\\mathbf 0 & \mathbf 0\end{bmatrix}$。
 
-1. 转置不变性：$R(A^T)=R(A)$
+### 线性方程组的解
 
-2. 相似不变性：若 $A \sim B$，则 $R(A)=R(B)$
+在求解线性方程组前，需要先预判解的数量。对于线性方程组 $\mathbf A\mathbf x=\mathbf b$，其中 $\mathbf A$ 为 $m\times n$，即 $m$ 个方程 $n$ 个未知数。那么根据 $m$ 和 $n$ 的关系共有以下三种情况：
 
-3. 初等变换不变性：若 $P,Q$ 可逆，则 $R(PAQ)=R(A)$
+- 超定方程，即 $m>n$，此时「约束过多」导致线性方程组无解；
+- 正定方程，即 $m=n$，此时线性方程组有唯一解；
+- 欠定方程，即 $m<n$，此时「约束过少」导致线性方程组有无限个解。
 
-4. 乘法性质：$0 \le R(A_{m\times n}) \le \min \{m, n\}$
+对于正定方程，我们已经有以下求解线性方程组 $\mathbf A\mathbf x=\mathbf b$ 的策略了：
 
-5. 加法性质：
+1. [逆矩阵](#逆矩阵) 中介绍的。先求逆矩阵 $\mathbf A^{-1}$，再将 $\mathbf A^{-1}$ 与 $\mathbf b$ 相乘（最朴素）；
+2. [克拉默法则](#克拉默法则) 中介绍的。求解未知数数量和方程个数相等的线性方程组（有限制）；
+3. [矩阵的初等变换](#矩阵的初等变换) 中介绍的。利用矩阵的初等变换求解线性方程组（最通用，其实就是高斯消元法 [^gauss]）。
 
-    ![加法性质](https://cdn.dwj601.cn/images/202406140946453.png)
+[^gauss]: [高斯消元法 | 百度百科 - (baike.baidu.com)](https://baike.baidu.com/item/高斯消元法/619561)
 
-6. 压缩性：若 $A_{m\times n}$ 的秩为 $r$，则 $A$ 一定可以转化为
+对于超定方程和欠定方程，可以参考 *线性方程组解法总结* [^linear-summary] 这篇博客。
 
-    $$
-    \begin{bmatrix}
-    E_r & O \\
-    O & O
-    \end{bmatrix}
-    $$
-
-### 3.3 线性方程组的解
-
-在利用上面学习到的 **矩阵的初等变换** 和 **矩阵的秩** 尝试求解线性方程组时，需要先**预判解的数量**情况，然后再进行求解。对于形如 $Ax=b$ 的线性方程组，共有以下三种情况：
-
-- 无解的充要条件：$R(A)<R(A,b)$；
-- 有唯一解的充要条件：$R(A)=R(A,b)=n$；
-- 有无限多解的充要条件：$R(A)=R(A,b)<n$。
+[^linear-summary]: [线性方程组解法总结 | Kiritan - (kiritantakechi.github.io)](https://kiritantakechi.github.io/blog/summary-of-linear-system-solutions/)
 
 ## 4 向量组的线性相关性
 
