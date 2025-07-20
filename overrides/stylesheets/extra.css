@@ -1,0 +1,75 @@
+/* 自定义的 CSS 样式 */
+
+
+/* ==================== 颜色 ==================== */
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #2e303e;
+}
+
+
+/* ==================== 文本 ==================== */
+/* 二级标题居中 */
+h2 {
+    text-align: center !important;
+}
+
+/* 外链小箭头 */
+.md-content a[target="_blank"]:not(.md-content__button):not(.md-author):not(:has(img)), .md-tabs__link[target="_blank"] {
+    background: url('data: image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMwMDdCRkYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTggMTN2NmEyIDIgMCAwIDEtMiAySDUuMDAxYTIgMiAwIDAgMS0yLTJWOGEyIDIgMCAwIDEgMi0yaDZaIi8+PHBvbHlsaW5lIHBvaW50cz0iMTUgMyAyMSAzIDIxIDkiLz48bGluZSB4MT0iMTAiIHkxPSIxNCIgeDI9IjIxIiB5Mj0iMyIvPjwvc3ZnPg==') center right no-repeat;
+    padding-right: 13px;
+    margin-right: 3px;
+}
+
+/* 解决超长字符串无法换行的问题 */
+.md-typeset {
+    overflow-wrap: break-word;
+}
+
+/* 限制最大代码长度 */
+/* .md-typeset pre>code {
+    max-height: 25rem;
+} */
+
+
+/* ==================== 表格 ==================== */
+/* 解决 KaTeX 表格在移动端的尾部有异常空白的问题 */
+.md-typeset__table {
+    /* position: sticky; */
+    position: relative;
+}
+
+/* 表格元素垂直居中 */
+td, th {
+    vertical-align: middle !important;
+}
+
+/* 表格居中 */
+.md-typeset__scrollwrap {
+    text-align: center;
+}
+
+
+/* ==================== 图片 ==================== */
+/* 美化图片样式 */
+.md-content img {
+    border-radius: 0.3rem;
+    display: block;
+    margin: 0 auto;
+    box-shadow: var(--md-shadow-z2);
+}
+
+/* 让图片在暗色模式下不那么刺眼 */
+[data-md-color-scheme="slate"] .md-typeset img,
+[data-md-color-scheme="slate"] .md-typeset svg,
+[data-md-color-scheme="slate"] .md-typeset video {
+    filter: brightness(0.85) invert(0.05);
+}
+
+/* 图片的 alt 内容样式 */
+.markdown-img-caption {
+  color: #888;
+  font-size: 0.9em;
+  font-style: normal;
+  text-align: center;
+  margin-top: 0.3em;
+}

@@ -10,17 +10,9 @@ title: 配置 IDLE
 
 ![快捷方式](https://cdn.dwj601.cn/images/202406091642746.png)
 
-/// fc
-快捷方式
-///
-
 我们点击左上角的 File 即可进行新建或打开 `.py` 文件的操作：
 
 ![新建 or 打开](https://cdn.dwj601.cn/images/202406091647404.png)
-
-/// fc
-新建 or 打开
-///
 
 ## 修改样式
 
@@ -28,30 +20,14 @@ title: 配置 IDLE
 
 ![Options 选项](https://cdn.dwj601.cn/images/202406091647404.png)
 
-/// fc
-Options 选项
-///
-
 「字体部分」选择 consoles 字体、13 号大小、4 个标准空格的 tab：
 
 ![选择 consoles 字体、13 号大小、4 个标准空格的 tab](https://cdn.dwj601.cn/images/202406091649022.png)
-
-/// fc
-选择 consoles 字体、13 号大小、4 个标准空格的 tab
-///
 
 「高亮部分」选择 New 主题：
 
 ![选择 New 主题](https://cdn.dwj601.cn/images/202406091650602.png)
 
-/// fc
-选择 New 主题
-///
-
 「快捷键」部分，可修改运行模块快捷键为 Ctrl+F5 从而和 CLion 对应，当然也可以保持默认的 F5：
 
 ![修改运行模块快捷键为 Ctrl+F5 从而和 CLion 对应](https://cdn.dwj601.cn/images/202406091651415.png)
-
-/// fc
-修改运行模块快捷键为 Ctrl+F5 从而和 CLion 对应
-///

@@ -1,105 +1,241 @@
 ---
-title: 代码模板
+title: 代码模板 (C++)
 ---
 
 !!! tip
-    本文记录算法竞赛的代码模板，编程语言采用 C++ 11+ 和 Python 3.11+，全部使用 built-in 模块。产生原因在于：某些场合可以快速抄板子而不用大脑记忆，因此不会涉及到任何原理部分，如果有原理解读的需求，可以跳转到 [理论剖析](./theory/index.md) 部分阅读。
+    本文记录 C++ 语言的算法竞赛代码模板，全部使用 built-in 模块。
 
 ## 基础算法
 
 ### 闭区间二分
 
-```c++
-// 闭区间寻找左边界
-void bisect_left(int target) {
-    int l = 左边界, r = 右边界;
-    while (l < r) {
-        int mid = (l + r) >> 1;
-        if (落在了 target 的左边) {
-            l = mid + 1;
-        } else (落在了 target 上或右边) {
-            r = mid;
-        }
-    }
-}
+![查找区域](https://cdn.dwj601.cn/images/20250515144500232.png)
 
-// 闭区间寻找右边界
-void bisect_right(int target) {
-    int l = 左边界, r = 右边界;
-    while (l < r) {
-        int mid = (l + r + 1) >> 1;
-        if (落在了 target 的右边) {
-            r = mid - 1;
-        } else (落在了 target 上或左边) {
-            l = mid;
+=== "闭区间寻找左边界"
+
+    ```c++
+    void bisect_left(int target) {
+        int l = 左边界, r = 右边界;
+        while (l < r) {
+            int mid = (l + r) >> 1;
+            if (合法 or 偏大) {
+                r = mid;
+            } else {  // 偏小
+                l = mid + 1;
+            }
         }
     }
-}
-```
+    ```
+
+=== "闭区间寻找右边界"
+
+    ```c++
+    void bisect_right(int target) {
+        int l = 左边界, r = 右边界;
+        while (l < r) {
+            int mid = (l + r + 1) >> 1;
+            if (合法 or 偏小) {
+                l = mid;
+            } else {  // 偏大
+                r = mid - 1;
+            }
+        }
+    }
+    ```
+
+### 自定义排序
+
+假设一个数据类型有身高 `height`、分数 `score`  和年龄 `age` 三个字段，现在的排序需求是：分数越高越靠前、若分数相同则年龄越小越靠前。
+
+=== "重载数据类型的小于号"
+
+    ```c++ hl_lines="8-13"
+    #include <iostream>
+    #include <algorithm>
+    using namespace std;
+    using ll = long long;
+    
+    struct Item {
+        int height, score, age;
+        bool operator<(const Item& other) const {
+            if (this->score == other.score) {
+                return this->age < other.age;
+            }
+            return this->score > other.score;
+        }
+    };
+    
+    int main() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    
+        Item a[3] = {
+            {180, 90, 21},
+            {175, 92, 24},
+            {185, 90, 22}
+        };
+    
+        sort(a, a + 3);
+    
+        for (int i = 0; i < 3; i++) {
+            printf("height: %d, score: %d, age: %d\n",
+                a[i].height, a[i].score, a[i].age);
+        }
+    
+        /* 输出
+        *  height: 175, score: 92, age: 24
+        *  height: 180, score: 90, age: 21
+        *  height: 185, score: 90, age: 22
+        */
+    
+        return 0;
+    }
+    ```
+
+=== "重载排序函数的比较规则"
+
+    ```c++ hl_lines="21-24"
+    #include <iostream>
+    #include <algorithm>
+    using namespace std;
+    using ll = long long;
+    
+    struct Item {
+        int height, score, age;
+    };
+    
+    int main() {
+        ios::sync_with_stdio(false);
+        cin.tie(nullptr);
+    
+        Item a[3] = {
+            {180, 90, 21},
+            {175, 92, 24},
+            {185, 90, 22}
+        };
+    
+        sort(a, a + 3, [](Item& x, Item& y){
+            if (x.score == y.score) {
+                return x.age < y.age;
+            }
+            return x.score > y.score;
+        });
+    
+        for (int i = 0; i < 3; i++) {
+            printf("height: %d, score: %d, age: %d\n",
+                a[i].height, a[i].score, a[i].age);
+        }
+    
+        /* 输出
+        *  height: 175, score: 92, age: 24
+        *  height: 180, score: 90, age: 21
+        *  height: 185, score: 90, age: 22
+        */
+    
+        return 0;
+    }
+    ```
 
 ## 数据结构
 
+### 双链表
+
+```c++
+template<class T>
+class myList {
+private:
+    int idx;
+    std::vector<T> val;
+    std::vector<int> left, right;
+
+public:
+    // 初始化，空间地址从 0 开始
+    myList(const int n) {
+        idx = 2;
+        val.resize(n + 10);
+        left.resize(n + 10);
+        right.resize(n + 10);
+        left[1] = 0, right[0] = 1;
+    }
+
+    // 尾插入
+    void push_back(T x) {
+        insert_left(1, x);
+    }
+
+    // 头插入
+    void push_front(T x) {
+        insert_right(0, x);
+    }
+
+    // 在第 k 个插入的数左侧插入一个数
+    void insert_left(int k, T x) {
+        insert_right(left[k], x);
+    }
+
+    // 在第 k 个插入的数右侧插入一个数
+    void insert_right(int k, T x) {
+        val[idx] = x;
+        right[idx] = right[k];
+        left[right[k]] = idx;
+        left[idx] = k;
+        right[k] = idx++;
+    }
+
+    // 将第 k 个插入的数删除
+    void erase(int k) {
+        right[left[k]] = right[k];
+        left[right[k]] = left[k];
+    }
+
+    // 输出整个链表
+    void output() {
+        for (int i = right[0]; i != 1; i = right[i]) {
+            cout << val[i] << " \n"[i == 1];
+        }
+    }
+};
+```
+
 ### 单调队列
 
-=== "C++"
+```c++
+#include <deque>
+#include <functional>
 
-    ```c++
-    #include <deque>
-    #include <functional>
-    
-    template<class T>
-    struct MonotonicQueue {
-        std::deque<T> q;
-        std::function<bool(T, T)> compare;
-        MonotonicQueue(bool is_min_queue) {
-            if (is_min_queue) {
-                compare = [](T a, T b) { return a < b; };
-            } else {
-                compare = [](T a, T b) { return a > b; };
-            }
-        }
-        void pushBack(T x) {
-            while (q.size() && compare(x, q.back())) {
-                q.pop_back();
-            }
-            q.push_back(x);
-        }
-        void popFront(T x) {
-            if (q.size() && q.front() == x) {
-                q.pop_front();
-            }
-        }
-        T getExtremeValue() {
-            return q.front();
-        }
-    };
-    ```
+template<class T>
+struct MonotonicQueue {
+    std::deque<T> q;
+    std::function<bool(T, T)> compare;
 
-=== "Python"
+    MonotonicQueue(bool min_queue) {
+        if (min_queue) {
+            // 队头为最小值：不严格单调递增队列
+            compare = [](T a, T b) { return a < b; };
+        } else {
+            // 队头为最大值：不严格单调递减队列
+            compare = [](T a, T b) { return a > b; };
+        }
+    }
 
-    ```python
-    from collections import deque
-    
-    class MonotonicQueue:
-        def __init__(self, is_min_queue: bool):
-            self.q = deque()
-            if is_min_queue:
-                self.compare = lambda a, b: a < b
-            else:
-                self.compare = lambda a, b: a > b
-    
-        def push_back(self, x):
-            while self.q and self.compare(x, self.q[-1]):
-                self.q.pop()
-            self.q.append(x)
-    
-        def pop_front(self, x):
-            if self.q and self.q[0] == x:
-                self.q.popleft()
-    
-        def get_extreme_value(self):
-            return self.q[0]
-    ```
+    void push_back(T x) {
+        while (q.size() && compare(x, q.back())) {
+            q.pop_back();
+        }
+        q.push_back(x);
+    }
+
+    void pop_front(T x) {
+        if (q.size() && x == q.front()) {
+            q.pop_front();
+        }
+    }
+
+    T get_extreme_value() {
+        return q.front();
+    }
+};
+```
 
 ### 哈希表
 
@@ -125,88 +261,63 @@ std::unordered_map<std::string, int, CustomHash<long long>> f3;
 
 ### 并查集
 
-=== "C++"
+```c++
+struct DisjointSetUnion {
+    std::vector<int> p;  // p[i] 表示 i 号点的祖先结点编号
+    std::vector<int> cnt;  // cnt[i] 表示 i 号点所在集合的元素个数
+    int set_cnt;  // 集合的个数
+    
+    DisjointSetUnion(int n) : p(n), cnt(n) {
+        /* 初始化一个含有 n 个元素的并查集，元素下标范围为 [0, n-1] */
+        for (int i = 0; i < n; i++) {
+            p[i] = i, cnt[i] = 1;
+        }
+        set_cnt = n;
+    }
+    
+    int find(int a) {
+        /* 返回 a 号点的祖先结点 */
+        if (p[a] != a) {
+            // 路径压缩
+            p[a] = find(p[a]);
+        }
+        return p[a];
+    }
+    
+    void merge(int a, int b) {
+        /* 合并结点 a 和结点 b 所在的集合 */
+        int pa = find(a), pb = find(b);
+        if (pa == pb) {
+            return;
+        }
+        set_cnt--;
+        // 按秩合并
+        if (cnt[pa] < cnt[pb]) {
+            p[pa] = pb;
+            cnt[pb] += cnt[pa];
+        } else {
+            p[pb] = pa;
+            cnt[pa] += cnt[pb];
+        }
+    }
 
-    ```c++
-    class DisjointSetUnion {
-        /* 并查集类
-        集合元素定义为从 0 开始的整数。
-        */
+    bool same(int a, int b) {
+        /* 判断结点 a 和 结点 b 是否在同一个集合 */
+        return find(a) == find(b);
+    }
     
-        int sz;                // 集合个数
-        std::vector<int> p;    // p[i]表示第i个结点的祖宗编号
-        std::vector<int> cnt;  // cnt[i]表示第i个结点所在集合中的结点总数
+    int tree_size(int a) {
+        /* 返回结点 a 所在集合的元素个数 */
+        return cnt[find(a)];
+    }
     
-    public:
-        DisjointSetUnion(int n) : p(n), cnt(n, 1) {
-            for (int i = 0; i < n; i++) {
-                p[i] = i;
-            }
-            sz = n;
-        }
-    
-        int find(int x) {
-            if (p[x] != x) {
-                p[x] = find(p[x]);
-            }
-            return p[x];
-        }
-    
-        void merge(int a, int b) {
-            int pa = find(a), pb = find(b);
-            if (pa != pb) {
-                p[pa] = pb;
-                cnt[pb] += cnt[pa];
-                sz--;
-            }
-        }
-    
-        bool same(int a, int b) {
-            return find(a) == find(b);
-        }
-    
-        int size() {
-            return sz;
-        }
-    
-        int size(int a) {
-            int pa = find(a);
-            return cnt[pa];
-        }
-    };
-    ```
+    int forest_size() {
+        /* 返回集合的个数 */
+        return set_cnt;
+    }
+};
 
-=== "Python"
-
-    ```python
-    class DSU:
-        def __init__(self, n: int) -> None:
-            self.n = n
-            self.sz = n                       # 集合个数
-            self.p = [i for i in range(n)]    # p[i]表示第i个结点的祖宗编号
-            self.cnt = [1 for i in range(n)]  # cnt[i]表示第i个结点所在集合中的结点总数
-    
-        def find(self, x: int) -> int:
-            if self.p[x] != x:
-                self.p[x] = self.find(self.p[x])
-            return self.p[x]
-    
-        def merge(self, a: int, b: int) -> None:
-            pa, pb = self.find(a), self.find(b)
-            if pa != pb:
-                self.p[pa] = pb
-                self.cnt[pb] += self.cnt[pa]
-                self.sz -= 1
-    
-        def same(self, a: int, b: int) -> bool:
-            return self.find(a) == self.find(b)
-    
-        def size(self) -> int:
-            return self.sz
-    
-        def size(self, a: int) -> int:
-            return self.cnt[a]
-    ```
+```
 
 ### 树状数组
 
@@ -593,13 +704,38 @@ int main() {
 
 ## 其他
 
-C++ 快读快写：
+### 快读快写
 
-```c++
+同时也绑定了 I/O 流，即程序会在全部执行完成后再执行输出流：
+
+```c++ hl_lines="4-5"
 #include <iostream>
 
 int main() {
     std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr), std::cout.tie(nullptr);
+    std::cin.tie(nullptr);
+    
+    return 0;
 }
 ```
+
+### 读取未知行数且带空格的字符串
+
+```c++ hl_lines="8-11"
+#include <iostream>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    string s;
+    while (getline(cin, s)) {
+        cout << s << "\n";
+    }
+
+    return 0;
+}
+```
+
+![输出结果](https://cdn.dwj601.cn/images/20250607211732054.png)

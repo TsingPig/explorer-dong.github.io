@@ -14,10 +14,6 @@ title: GNU/Linux 进阶 (Ubuntu)
 
 ![root 用户创建的文件和文件夹](https://cdn.dwj601.cn/images/202409271003057.png)
 
-/// fc
-root 用户创建的文件和文件夹
-///
-
 可以看到一共有 $6$ 列信息，从左到右依次为：用户访问权限、与文件链接的个数、文件属主、文件属组、文件大小、最后修改日期、文件/目录名。$2-5$ 列的信息都很显然，我们重点关注第一列信息。
 
 第 $1$ 列一共有 $10$ 个字符，其中第 $1$ 个字符表示当前文件的类型，共有如下几种：
@@ -32,10 +28,6 @@ root 用户创建的文件和文件夹
 | 本地域套接口 | `s`  |
 |   有名管道   | `p`  |
 
-/// tc | <
-符号与文件类型的关系
-///
-
 第 $2-10$ 共 $9$ 个字符分 $3$ 个一组，分别表示：属主 (user) 权限、属组 (group) 权限和其他用户 (other) 权限。
 
 ### 用户和组
@@ -47,6 +39,8 @@ root 用户创建的文件和文件夹
 - 其他用户（others/o）：系统中不属于拥有者或组的其他用户。
 
 对于当前用户 `now_user` 以及当前用户所在的组 `now_group`，同组用户 `adj_user` 和其他用户 `other_user` 可以形象的理解为以下的集合关系：
+
+<div align="center">
 
 ```mermaid
 graph TB
@@ -60,9 +54,7 @@ graph TB
     end
 ```
 
-/// fc
-直观理解用户和组
-///
+</div>
 
 ### 权限类别
 
@@ -73,10 +65,6 @@ graph TB
 | `r`  | 可查看文件 |         能列出目录下内容         |
 | `w`  | 可修改文件 | 能在目录中创建、删除和重命名文件 |
 | `x`  | 可执行文件 |            能进入目录            |
-
-/// tc | <
-权限类别
-///
 
 那么我们平时看到的关于权限还有数字的配置，是怎么回事呢？其实是对上述字符配置的八进制数字化。读 $r$ 对应 $4$，写 $w$ 对应 $2$，可执行 $x$ 对应 $1$，例如如果一个文件对于所有用户都拥有可读、可写、可执行权限，那么就是 `rwxrwxrwx`，对应到数字就是 $777$。
 
@@ -483,7 +471,7 @@ This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
 
-因此我们选择版本最相近的手册 [gcc-11.5.0](https://gcc.gnu.org/onlinedocs/gcc-11.5.0/gcc/) 进行阅读。对于最基本的编译操作和理论，已经在 [计算机系统基础](../base/computer-system-basic/index.md#31-程序转换概述) 课程中有所学习，不再赘述。
+因此我们选择版本最相近的手册 [gcc-11.5.0](https://gcc.gnu.org/onlinedocs/gcc-11.5.0/gcc/) 进行阅读。对于最基本的编译操作和理论，已经在 [计算机系统基础](../base/cs/computer-system-basic/index.md#31-程序转换概述) 课程中有所学习，不再赘述。
 
 **环境变量**。对于当前路径下链接出来的可执行文件 demo，为什么 `demo` 无法正常执行，`./demo` 就可以正常执行？根本原因是 bash 默认执行 PATH 环境变量下的可执行文件，显然上述的 demo 可执行文件并不在 PATH 对应的路径下，那么 PATH 路径都有哪些呢？我们使用 `echo $PATH | tr ':' '\n'` 打印出来：
 
@@ -598,35 +586,3 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.
 最后我们查看一下 p1 和 p2 详细信息，如下图所示。显然静态链接的可执行文件 p1 占用的存储空间远大于动态连接的可执行文件 p2。
 
 ![静态链接的可执行文件 vs. 动态链接的可执行文件](https://cdn.dwj601.cn/images/202410091956946.png)
-
-/// fc
-静态链接的可执行文件 vs. 动态链接的可执行文件
-///
-
-## 工具扩展
-
-### 目录可视化工具 tree
-
-Linux 默认自带，Windows 下载地址：[Tree for Windows](https://gnuwin32.sourceforge.net/packages/tree.htm)，将二进制文件路径加入环境变量即可。
-
-基本命令格式：`tree [-option] [dir]`
-
-- 显示中文：`-N`。如果中文名是中文，不加 `-N` 有些电脑上是乱码的。
-- 选择展示的层级：`-L [n]`。
-- 只显示文件夹：`-d`。
-- 区分文件夹、普通文件、可执行文件：`-FC`。`C` 是加上颜色。
-- 起别名：`alias tree='tree -FCN'`。
-- 输出目录结构到文件： `tree -L 2 -I '*.js|node_modules|*.md|*.json|*.css|*.ht' > tree.txt`。
-
-### URL 下载工具 wget
-
-Linux 默认自带，Windows 下载地址：[Windows binaries of GNU Wget](https://eternallybored.org/misc/wget/)。
-
-基本命令格式：`wget [url]`
-
-- 指定文件名：`-O`。
-- 指定目录：`-P`。
-- 下载多个文件：`wget -i [url.txt]`。
-- 断点续传：`wget -c -t [n] [url]`。`n` 代表尝试的次数，`0` 代表一直尝试。
-- 后台执行：`wget -b [url]`。执行该命令的回显信息都会自动存储在 `wget.log` 文件中。
-- 下载一个网站的所有图片、视频和 pdf 文件：`wget -r -A.pdf url`。

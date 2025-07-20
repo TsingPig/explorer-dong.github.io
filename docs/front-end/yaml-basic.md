@@ -2,7 +2,10 @@
 title: YAML 基础
 ---
 
-本文记录 YAML 格式文件的常见写法。
+本文记录 YAML 格式文件的常见写法 [^chatgpt] [^runoob]。
+
+[^chatgpt]: [YAML 格式简介 | ChatGPT - (chatgpt.com)](https://chatgpt.com/share/67d63271-3fd4-800a-96ba-5ee627562028)
+[^runoob]: [YAML 入门教程 | RUNOOB - (www.runoob.com)](https://www.runoob.com/w3cnote/yaml-intro.html)
 
 YAML (Yet Another Markup Language) 主要用于配置文件，比如：Kubernetes、Docker Compose 和 GitHub Actions 等。后缀名为 .yml 或 .yaml。格式规范和 Python 类似，都是用空格与换行区分不同的逻辑块，但是不能用 tab，至于几个空格无所谓，只要前后文一致即可。
 
@@ -178,12 +181,12 @@ server2:
     defaults: &default_settings
         timeout: 30
         retries: 5
-
+    
     server1:
         timeout: 30
         retries: 5
         host: server1.com
-
+    
     server2:
         timeout: 30
         retries: 5
@@ -210,9 +213,3 @@ server2:
         }
     }
     ```
-
-## 参考
-
-[YAML 格式简介 - ChatGPT](https://chatgpt.com/share/67d63271-3fd4-800a-96ba-5ee627562028)
-
-[YAML 入门教程 - runoob](https://www.runoob.com/w3cnote/yaml-intro.html)

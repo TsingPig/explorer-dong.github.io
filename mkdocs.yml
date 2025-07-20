@@ -1,19 +1,19 @@
-# 站点配置
-site_name: Open Wiki Community
+# ==================== 站点配置 ====================
+site_name: 开放知识社群
 site_url: https://wiki.dwj601.cn/
-repo_url: https://github.com/Explorer-Dong/explorer-dong.github.io
-repo_name: explorer-dong.github.io
+repo_url: https://github.com/Explorer-Dong/wiki
+repo_name: Open Wiki Community
 edit_uri: edit/main/docs/
 
 
-# 主题配置
+# ==================== 主题配置 ====================
 theme:
   name: material
   language: zh
   custom_dir: overrides
   # 图标
-  logo: https://cdn.dwj601.cn/web-imgs/img-static/wiki-16px.svg
-  favicon: https://cdn.dwj601.cn/web-imgs/img-static/wiki-16px.svg
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   icon:
     repo: fontawesome/brands/github
     edit: material/pencil 
@@ -56,7 +56,7 @@ theme:
     - announce.dismiss             # 支持手动关闭公告
 
 
-# md 语法扩展
+# ==================== 语法扩展 ====================
 markdown_extensions:
   # 并列嵌套（需要和 superfences 一起使用）
   - pymdownx.tabbed:
@@ -91,15 +91,6 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
-  # 图表标题
-  - pymdownx.blocks.caption:
-      types:
-        - caption
-        # 自动编号
-        - name: fc            # figure caption
-          prefix: '图 {}. '
-        - name: tc            # table caption
-          prefix: '表 {}. '
   # 代码高亮
   - pymdownx.highlight:
       # auto_title: true           # 自动标题
@@ -113,28 +104,30 @@ markdown_extensions:
       custom_checkbox: true
 
 
-# 注入
+# ==================== 样式注入 ====================
 extra_javascript:
   # KaTeX
-  - asserts/javascripts/katex.js
+  - javascripts/katex.js
   - https://registry.npmmirror.com/katex/0.16.21/files/dist/katex.min.js
   - https://registry.npmmirror.com/katex/0.16.21/files/dist/contrib/auto-render.min.js
   # mermaid
-  - https://cdn.dwj601.cn/cdn-js/mermaid/mermaid.min.js
+  - https://cdn.dwj601.cn/files/mermaid.min.js
   # 外链跳转
-  - asserts/javascripts/link_blank.js
+  - javascripts/link_blank.js
   # 百度统计
-  - asserts/javascripts/baidu_tongji.js
-  # 聊天机器人（暂时不用，后期有机会自己部署到国内服务器）
-  # - asserts/javascripts/robot.js
+  - javascripts/baidu_tongji.js
+  # 解析图片的 alt 属性
+  - javascripts/show_img_alt.js
+  # 首页脚本（暂时不用，会出现屏幕闪烁的情况）
+  # - javascripts/homepage.js
 extra_css:
   # KaTeX
   - https://registry.npmmirror.com/katex/0.16.21/files/dist/katex.min.css
   # 自定义样式
-  - asserts/stylesheets/extra.css
+  - stylesheets/extra.css
 
 
-# 插件配置
+# ==================== 插件配置 ====================
 plugins:
   # 搜索功能
   - search:
@@ -143,136 +136,187 @@ plugins:
   - git-revision-date-localized:
       enable_creation_date: true
       type: date
+      timezone: Asia/Shanghai
   # 显示文章作者（头像与 GitHub Profile 链接）
   - git-committers:
-      repository: Explorer-Dong/explorer-dong.github.io
+      repository: Explorer-Dong/wiki
       branch: main
   # 图片可点击放大
   - glightbox:
-      auto_caption: true
+      auto_caption: false
   # meta 配置
   - meta
 
 
-draft_docs: _*.md
+# ==================== 额外配置 ====================
+extra:
+  # 谷歌分析
+  analytics:
+    provider: google
+    property: G-56NDVC0D5B
+  # 文章状态定义
+  status:
+    new: 待更新
+    deprecated: 即将废弃
+  # 页面底部社交链接
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Explorer-Dong
+      name: GitHub
+    - icon: fontawesome/solid/c
+      link: https://blog.csdn.net/qq_73408594
+      name: CSDN
 
-# 页面导航
+
+# ==================== 文章权限 ====================
+copyright: <a href="https://beian.miit.gov.cn/">苏ICP备2024087610号-1</a>
+
+
+# ==================== 页面导航 ====================
 nav:
   - index.md
   - 基础:
     - base/index.md
     - 人工智能基础:
-      - Python 高级应用:
-        - base/python-application/index.md
       - 数字图像处理:
-        - base/digital-image-processing/index.md
+        - base/ai/digital-image-processing/index.md
       - 语音信号处理:
-        - base/speech-signal-processing/index.md
+        - base/ai/speech-signal-processing/index.md
       - 机器学习:
-        - base/machine-learning/index.md
-        - base/machine-learning/data.md
-        - 模型:
-          - base/machine-learning/model/index.md
-          - base/machine-learning/model/linear-model.md
-          - base/machine-learning/model/decision-tree-model.md
-          - base/machine-learning/model/bayes-model.md
-          - base/machine-learning/model/probability-graph-model.md
-          - base/machine-learning/model/ensemble-learning.md
-          - base/machine-learning/model/lazy-learning.md
-          - base/machine-learning/model/cluster-learning.md
-          - base/machine-learning/model/semi-supervised-learning.md
-        - base/machine-learning/eval.md
-      - 深度学习:
-        - base/deep-learning/index.md
+        - base/ai/machine-learning/index.md
+        - base/ai/machine-learning/data-process.md
+        - base/ai/machine-learning/model-select.md
+        - base/ai/machine-learning/linear-model.md
+        - base/ai/machine-learning/decision-tree-model.md
+        - base/ai/machine-learning/bayes-model.md
+        - base/ai/machine-learning/probability-graph-model.md
+        - base/ai/machine-learning/ensemble-learning.md
+        - base/ai/machine-learning/lazy-learning.md
+        - base/ai/machine-learning/cluster-learning.md
+        - base/ai/machine-learning/semi-supervised-learning.md
       - 数据挖掘:
-        - base/data-mining/index.md
-        - base/data-mining/data-preprocess.md
-        - base/data-mining/association-analysis.md
-        - base/data-mining/anomaly-detection.md
+        - base/ai/data-mining/index.md
+        - base/ai/data-mining/association-analysis.md
+        - base/ai/data-mining/anomaly-detection.md
+      - 深度学习:
+        - base/ai/deep-learning/index.md
+        - base/ai/deep-learning/full-connect-neural-network.md
+        - base/ai/deep-learning/auto-encoder.md
+        - base/ai/deep-learning/convolutional-neural-network.md
+        - base/ai/deep-learning/recurrent-neural-network.md
+        - base/ai/deep-learning/network-enhancement.md
       - 自然语言处理:
-        - base/natural-language-processing/index.md
-        - base/natural-language-processing/sequence-classification.md
-        - base/natural-language-processing/sequence-generation.md
+        - base/ai/natural-language-processing/index.md
+        - base/ai/natural-language-processing/word-embedding.md
+        - base/ai/natural-language-processing/sequence-classification.md
+        - base/ai/natural-language-processing/sequence-generation.md
+        - base/ai/natural-language-processing/pre-training.md
       - 计算机视觉:
-        - base/computer-vision/index.md
-        - base/computer-vision/image-classification.md
-        - base/computer-vision/semantic-segmentation.md
-        - base/computer-vision/object-detection.md
-      - 智慧教育:
-        - base/intelligent-education/index.md
+        - base/ai/computer-vision/index.md
+        - base/ai/computer-vision/image-classification.md
+        - base/ai/computer-vision/object-detection.md
+        - base/ai/computer-vision/image-super-resolution.md
+        - base/ai/computer-vision/video-understanding.md
+      - 知识图谱:
+        - base/ai/knowledge-graph/index.md
+        - base/ai/knowledge-graph/kg-acquisition.md
+        - base/ai/knowledge-graph/kg-representation.md
+        - base/ai/knowledge-graph/kg-aware-application.md
+        - base/ai/knowledge-graph/temporal-kg.md
     - 计算机基础:
       - 面向对象程序设计:
-        - base/object-oriented-programming/index.md
+        - base/cs/object-oriented-programming/index.md
       - 数字逻辑电路:
-        - base/digital-logic-circuit/index.md
+        - base/cs/digital-logic-circuit/index.md
       - 计算机系统基础:
-        - base/computer-system-basic/index.md
+        - base/cs/computer-system-basic/index.md
       - 数据库:
-        - base/database/index.md
+        - base/cs/database/index.md
       - 操作系统:
-        - base/operating-system/index.md
-        - base/operating-system/intro.md
-        - base/operating-system/concurrent.md
-        - base/operating-system/virtualization.md
-        - base/operating-system/persistence.md
+        - base/cs/operating-system/index.md
+        - base/cs/operating-system/concurrent.md
+        - base/cs/operating-system/virtualization.md
+        - base/cs/operating-system/persistence.md
       - 计算机组成:
-        - base/computer-organization/index.md
-        - base/computer-organization/cpu.md
-        - base/computer-organization/memory.md
-        - base/computer-organization/device.md
+        - base/cs/computer-organization/index.md
+        - base/cs/computer-organization/cpu.md
+        - base/cs/computer-organization/memory.md
+        - base/cs/computer-organization/device.md
       - 计算机网络:
-        - base/computer-network/index.md
-        - base/computer-network/application-layer.md
-        - base/computer-network/transport-layer.md
-        - base/computer-network/network-layer.md
-        - base/computer-network/data-link-layer.md
-        - base/computer-network/physical-layer.md
-    - 数理基础:
-      - 大学物理:
-        - base/college-physics/index.md
+        - base/cs/computer-network/index.md
+        - base/cs/computer-network/application-layer.md
+        - base/cs/computer-network/transport-layer.md
+        - base/cs/computer-network/network-layer.md
+        - base/cs/computer-network/data-link-layer.md
+        - base/cs/computer-network/physical-layer.md
+    - 数学基础:
       - 高等数学:
-        - base/advanced-math/index.md
-        - base/advanced-math/differentiation.md
-        - base/advanced-math/integration.md
+        - base/math/advanced-math/index.md
+        - base/math/advanced-math/differentiation.md
+        - base/math/advanced-math/integration.md
       - 线性代数:
-        - base/linear-algebra/index.md
-      - 概率论:
-        - base/probability-and-statistics/index.md
+        - base/math/linear-algebra/index.md
+      - 概率统计:
+        - base/math/probability-and-statistics/index.md
+        - base/math/probability-and-statistics/prob.md
+        - base/math/probability-and-statistics/stat.md
       - 最优化方法:
-        - base/optimization-method/index.md
-        - base/optimization-method/intro.md
-        - base/optimization-method/linear-search.md
-        - base/optimization-method/unconstraint-optimization.md
-        - base/optimization-method/constraint-optimization.md
+        - base/math/optimization-method/index.md
+        - base/math/optimization-method/linear-search.md
+        - base/math/optimization-method/unconstraint-optimization.md
+        - base/math/optimization-method/constraint-optimization.md
+    - 其他:
+      - 大学物理:
+        - base/others/college-physics/index.md
+      - 英语语法:
+        - base/others/english-grammar/index.md
+        - base/others/english-grammar/word-property.md
+        - base/others/english-grammar/sentence-ingredient.md
+        - base/others/english-grammar/sentence-type.md
   - 炼丹:
     - data-science/index.md
-    - data-science/numpy-basic.md
-    - data-science/pandas-basic.md
-    - data-science/matplotlib-basic.md
+    - 数据科学常用第三方库:
+      - data-science/pkgs/numpy.md
+      - data-science/pkgs/pandas.md
+      - data-science/pkgs/matplotlib.md
+      - data-science/pkgs/torch.md
+    - 传统机器学习算法:
+      - data-science/shallow-model/linear.md
+    - 现代深度学习模型:
+      - data-science/deep-model/cpu2gpu.md
+      - data-science/deep-model/gpu2gpus.md
+      - data-science/deep-model/fnn.md
   - 算法:
     - ds-and-algo/index.md
     - ds-and-algo/templates.md
     - ds-and-algo/templates-py.md
-    - 理论剖析:
-      - ds-and-algo/theory/index.md
-      - ds-and-algo/theory/base.md
-      - ds-and-algo/theory/ds.md
-      - ds-and-algo/theory/dp.md
-      - ds-and-algo/theory/string.md
-      - ds-and-algo/theory/geometry.md
-      - ds-and-algo/theory/graph.md
-      - ds-and-algo/theory/game.md
-      - ds-and-algo/theory/math.md
-    - 配套习题:
-      - ds-and-algo/examples/index.md
-      - ds-and-algo/examples/examples-basic-algo.md
-      - ds-and-algo/examples/examples-advanced-algo.md
-      - ds-and-algo/examples/examples-ds.md
+    - 专题解析:
+      - ds-and-algo/topic/index.md
+      - ds-and-algo/topic/base.md
+      - ds-and-algo/topic/ds.md
+      - ds-and-algo/topic/dp.md
+      - ds-and-algo/topic/geometry.md
+      - ds-and-algo/topic/string.md
+      - ds-and-algo/topic/graph.md
+      - ds-and-algo/topic/math.md
+      - ds-and-algo/topic/others.md
     - 蓝桥杯备赛指南:
       - ds-and-algo/lan-qiao-cup/index.md
+      - ds-and-algo/lan-qiao-cup/16th-python-a-nation.md
+      - ds-and-algo/lan-qiao-cup/16th-python-a.md
       - ds-and-algo/lan-qiao-cup/15th-python-a.md
       - ds-and-algo/lan-qiao-cup/14th-python-a.md
-      - ds-and-algo/lan-qiao-cup/13th-python-a.md
+    - 睿抗备赛指南:
+      - ds-and-algo/raicom-caip/index.md
+      - ds-and-algo/raicom-caip/4th-undergraduate-nation.md
+      - ds-and-algo/raicom-caip/4th-undergraduate.md
+      - ds-and-algo/raicom-caip/3rd-undergraduate-nation.md
+      - ds-and-algo/raicom-caip/3rd-undergraduate.md
+      - ds-and-algo/raicom-caip/2nd-undergraduate-nation.md
+      - ds-and-algo/raicom-caip/2nd-undergraduate.md
+      - ds-and-algo/raicom-caip/1st-undergraduate-nation.md
+      - ds-and-algo/raicom-caip/1st-undergraduate-step2.md
+      - ds-and-algo/raicom-caip/1st-undergraduate.md
   - 前端:
     - front-end/index.md
     - front-end/html-basic.md
@@ -287,13 +331,26 @@ nav:
       - front-end/hexo/hexo-enhancement.md
   - 后端:
     - back-end/index.md
-    - C++:
-      - back-end/cplusplus/cpp-basic.md
-      - back-end/cplusplus/cpp-crow.md
-    - Python:
-      - back-end/python/python-basic.md
-      - back-end/python/python-tips.md
-      - back-end/python/python-flask.md
+    - C++ 标准库:
+      - back-end/cpp-std/index.md
+      - back-end/cpp-std/base.md
+      - back-end/cpp-std/io.md
+      - back-end/cpp-std/container.md
+      - back-end/cpp-std/algo.md
+      - back-end/cpp-std/string.md
+      - back-end/cpp-std/utils.md
+      - back-end/cpp-std/pointer.md
+      - back-end/cpp-std/concurrent.md
+      - back-end/cpp-std/datetime.md
+      - back-end/cpp-std/math.md
+      - back-end/cpp-std/exception.md
+    - Python 标准库:
+      - back-end/py-std/index.md
+      - back-end/py-std/setup.md
+      - back-end/py-std/base.md
+    - 网络编程:
+      - back-end/web/flask.md
+      - back-end/web/crow.md
     - MySQL:
       - back-end/mysql/mysql-basic.md
       - back-end/mysql/mysql-problem-solve.md
@@ -311,6 +368,7 @@ nav:
   - 工具:
     - dev-tools/index.md
     - dev-tools/jetbrains-license.md
+    - dev-tools/download.md
     - 软件配置:
       - dev-tools/setup/windows-setup.md
       - dev-tools/setup/devcpp-setup.md
@@ -320,29 +378,6 @@ nav:
       - dev-tools/git/git-commands.md
       - dev-tools/git/git-pull-request.md
       - dev-tools/git/git-self-define-command.md
-      - dev-tools/git/solve-git-problems.md
+      - dev-tools/git/git-branch-conflict.md
+      - dev-tools/git/git-tips.md
   - 博客: https://blog.dwj601.cn/
-
-
-# 额外配置
-extra:
-  # 谷歌分析
-  analytics:
-    provider: google
-    property: G-56NDVC0D5B
-  # 文章状态定义
-  status:
-    new: 最近新增
-    deprecated: 即将废弃
-  # 页面底部社交链接
-  social:
-    - icon: fontawesome/brands/github
-      link: https://github.com/Explorer-Dong
-      name: GitHub
-    - icon: fontawesome/solid/c
-      link: https://blog.csdn.net/qq_73408594
-      name: CSDN
-
-
-# 页脚 Copyright
-copyright: <a href="https://beian.miit.gov.cn/">苏ICP备2024087610号-1</a>

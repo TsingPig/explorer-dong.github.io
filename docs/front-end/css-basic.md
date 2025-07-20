@@ -2,9 +2,9 @@
 title: CSS 基础
 ---
 
-层叠样式表 (Cascading Style Sheets, CSS) 是一种样式表语言，用来描述 HTML 或 XML 文档的呈现方式。CSS 描述了在屏幕、纸质、音频等其他媒体上的元素应该如何被渲染的问题 [^1]。
+层叠样式表 (Cascading Style Sheets, CSS) 是一种样式表语言，用来描述 HTML 或 XML 文档的呈现方式。CSS 描述了在屏幕、纸质、音频等其他媒体上的元素应该如何被渲染的问题 [^MDN]。
 
-[^1]: [CSS 参考文档 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
+[^MDN]: [CSS 参考文档 | MDN - (developer.mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/CSS)
 
 ??? tip "速查清单"
 
