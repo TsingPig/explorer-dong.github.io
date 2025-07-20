@@ -9241,8 +9241,6 @@ $$
 
 #### 乘法逆元
 
-#### 乘法逆元
-
 定义：
 
 对 $\forall a \in \mathbb{Z}$，如果 $a$ 与 $p$ 互质，则 $\exists x \in \mathbb{Z}$ 使得 $ a \times x \equiv 1  (\text{ mod } p)$，则 $x$ 为 $a$ 在模 $p$ 意义下的乘法逆元，记作 $a^{-1}$。
